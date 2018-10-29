@@ -6,5 +6,7 @@ Rails.application.routes.draw do
     resources :products
   end
 
-  root "welcome#index"
+  resources :products
+
+  root "products#index"
 end
