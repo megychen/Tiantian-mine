@@ -1,3 +1,18 @@
 // Place all the styles related to the carts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.cart-wrapper {
+  margin: 30px 0;
+  .carts-list {
+    padding: 20px;
+    .cart-item {
+      border: 1px solid #ebebeb;
+      display: flex;
+      align-items: center;
+      .item-info {
+        width: 40%;
+      }
+    }
+  }
+}
