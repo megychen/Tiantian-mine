@@ -7,7 +7,7 @@
 
 <div class="products-list">
   <% @products.each do |product| %>
-    <div class="col-md-3 col-xs-6 text-center">
+    <div class="col-md-3 col-xs-6 product">
       <%= link_to product_path(product) do %>
         <% if product.image.present? %>
           <div class="product-image">
@@ -19,7 +19,16 @@
           </div>
         <% end %>
       <% end %>
-      <%= product.title %> ￥ <%= product.price %>
+      <div class="product-info">
+        <p class="product-title"><%= product.title %></p>
+        <p class="product-desc"><%= product.description %></p>
+        <span class="product-price pull-left"><%= product.price %></span>
+        <span class="shopping-cart pull-right">
+          <%= link_to add_to_cart_product_path(product), :method => :post do %>
+            <i class="fa fa-shopping-cart"></i>
+          <% end %>
+        </span>
+      </div>
     </div>
   <% end %>
 </div>
