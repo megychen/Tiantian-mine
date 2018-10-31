@@ -1,0 +1,9 @@
+<h2>用户信息编辑</h2>
+
+<p> 邮箱：<%= @user.email %> </p>
+<p> 注册时间：<%= @user.created_at %> </p>
+
+<%= simple_form_for [:admin, @user] do |f| %>
+  <%= f.input :remark, label: "备注信息" %>
+  <%= f.submit "添加备注信息", data: { disable_with: "Submitting..." } %>
+<% end %>
