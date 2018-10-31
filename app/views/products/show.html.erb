@@ -24,3 +24,39 @@
     </div>
   </div>
 </div>
+
+<div class="product-page">
+  <div class="product-container row">
+    <div class="col-md-6 product-img">
+      <% if @product.image.present? %>
+        <%= image_tag(@product.image.medium.url, class: "") %>
+      <% else %>
+        <%= image_tag("http://placehold.it/400x400&text=No Pic", class: "") %>
+      <% end %>
+    </div>
+
+    <div class="col-md-6 product-description">
+      <h1><%= @product.title %> </h1>
+      <h2>发货时间：确认付款后7个工作日左右发货（本产品只适配APW5电源）</h2>
+      <div class="price">
+        ￥<%= @product.price  %>
+      </div>
+      
+    </div>
+
+    <div class="">
+      <% if @product.quantity.present? && @product.quantity > 0 %>
+      <%= link_to("加入购物车", add_to_cart_product_path(@product), :method => :post, :class => "btn button-primary") %>
+      <% else %>
+      已销售一空，无法购买
+      <% end %>
+
+
+      <% if @product.quantity.present? && @product.quantity > 0 %>
+      <%= link_to("现在购买", add_to_cart_product_path(@product), :method => :post, :class => "btn button-secondary") %>
+      <% else %>
+      已销售一空，无法购买
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,108 @@
+// Place all the styles related to the products controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+$color-button-primary: #529BD7;
+$color-button-secondary: #FF9900;
+$color-price: #529BD7;
+$color-price-background: #FBFBFB;
+
+$color-h1: #262626;
+$color-text-secondary: #888888;
+$color-white: #FFFFFF;
+
+.product-page{
+  .product-container{
+    margin: 70px auto 80px auto;
+  }
+
+  .product-img{
+    // display: flex;
+    // width: 50%;
+    // align-items: center;
+  }
+
+  .product-description{
+    width: 50%;
+
+    h1 {
+      font-family: PingFang-SC-Heavy;
+      font-size: 24px;
+      letter-spacing: 0.5px;
+      line-height: 36px;
+
+      margin: 0;
+      padding: 0;
+
+      color: $color-h1;
+
+    }
+    h2 {
+      font-family: PingFang-SC-Regular;
+      font-size: 16px;
+      letter-spacing: 0.5px;
+      line-height: 24px;
+
+      margin: 0;
+      padding: 0;
+
+      color: $color-text-secondary;
+    }
+    .price{
+      height: 80px;
+      width: 590px;
+      margin: 30px 0 0 0;
+      padding: 0 0 0 30px;
+
+      font-family: Arail-BoldMT;
+      font-size: 30px;
+      letter-spacing: 0.5px;
+      line-height: 80px;
+
+      align-items: center;
+      vertical-align: baseline;
+      text-decoration: none solid rgb(82,155,215);
+
+      color: $color-price;
+      background-color: $color-price-background;
+    }
+  }
+
+  .button-primary, .button-primary:hover{
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+
+    margin: 0 20px 0 0;
+
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    line-height: 24px;
+    text-decoration: none solid rgb(0, 0, 0);
+    padding-top: 13px;
+    padding-bottom: 13px;
+    height: 50px;
+    width: 180px;
+
+    color: $color-white;
+    background: $color-button-primary;
+  }
+
+  .button-secondary, .button-secondary:hover{
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    line-height: 24px;
+    text-decoration: none solid rgb(0, 0, 0);
+    padding-top: 13px;
+    padding-bottom: 13px;
+    height: 50px;
+    width: 180px;
+
+    color: $color-white;
+    background: $color-button-secondary;
+  }
+}
