@@ -39,3 +39,20 @@
       }
     }
   }
+
+  /*
+    Footer style
+  */
+  .footer {
+    overflow: hidden;
+    width: 100%;
+    background: #ebebeb;
+    // color: #fff;
+    padding: 50px;
+    .footer-wrapper {
+      box-sizing: border-box;
+      width: 33%;
+      margin: auto;
+      padding: 20px;
+    }
+  }
