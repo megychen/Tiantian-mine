@@ -45,17 +45,7 @@
   */
   .footer {
     overflow: hidden;
+    border-top: 1px solid #ebebeb;
     width: 100%;
-    background: #ebebeb;
-    // color: #fff;
     padding: 50px;
-    .footer-wrapper {
-      box-sizing: border-box;
-      width: 37%;
-      margin: auto;
-      padding: 20px;
-      .logo img {
-        width: 100%;
-      }
-    }
   }
