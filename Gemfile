@@ -32,6 +32,7 @@ gem 'font-awesome-rails'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'aasm'
+gem 'china_city'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'

@@ -47,4 +47,6 @@ Rails.application.routes.draw do
   end
 
   root "products#index"
+
+  mount ChinaCity::Engine => '/china_city'
 end
