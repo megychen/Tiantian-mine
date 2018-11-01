@@ -51,8 +51,11 @@
     padding: 50px;
     .footer-wrapper {
       box-sizing: border-box;
-      width: 33%;
+      width: 37%;
       margin: auto;
       padding: 20px;
+      .logo img {
+        width: 100%;
+      }
     }
   }

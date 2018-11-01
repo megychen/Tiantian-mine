@@ -15,6 +15,34 @@ class CartItemsController < ApplicationController
     redirect_to carts_path
   end
 
+  def increment_quantity
+    @cart = current_cart
+    @cart_item = @cart.cart_items.find_by(product_id: params[:id])
+
+    if @cart_item.quantity < @cart_item.product.quantity
+      @cart_item.quantity = @cart_item.quantity + 1
+      @cart_item.save
+    else
+      flash[:warning] = "数量不足以加入购物车"
+    end
+
+    redirect_to carts_path
+  end
+
+  def subtract_quantity
+    @cart = current_cart
+    @cart_item = @cart.cart_items.find_by(product_id: params[:id])
+
+    if @cart_item.quantity > 1
+      @cart_item.quantity = @cart_item.quantity - 1
+      @cart_item.save
+    else
+      flash[:warning] = "购物车数量不能为0"
+    end
+
+    redirect_to carts_path
+  end
+
   def destroy
     @cart = current_cart
     @cart_item = @cart.cart_items.find_by(product_id: params[:id])

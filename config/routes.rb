@@ -32,7 +32,12 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :cart_items
+  resources :cart_items do
+    member do
+      post :subtract_quantity
+      post :increment_quantity
+    end
+  end
   resources :orders do
     member do
       post :pay_with_alipay
