@@ -1,4 +1,5 @@
 <div class="row">
+  <div class="result pull-right"></div>
   <div class="col-md-6">
     <% if @product.image.present? %>
       <%= image_tag(@product.image.medium.url, class: "thumbnail") %>
@@ -27,7 +28,7 @@
     <div class="product-price"> ￥ <%= @product.price %> </div>
     <div class="pull-right">
       <% if @product.quantity.present? && @product.quantity > 0 %>
-        <%= link_to("加入购物车", add_to_cart_product_path(@product), :remote => true, :method => :post, :class => "btn btn-primary btn-lg btn-danger") %>
+        <%= link_to("加入购物车", add_to_cart_product_path(@product), :class => "btn btn-primary btn-lg btn-danger", id: "add-to-cart-btn") %>
       <% else %>
         已销售一空，无法购买
       <% end %>
@@ -73,21 +74,43 @@
 
 <script>
   var totalQuantity = <%= @product.quantity %>
-  console.log(totalQuantity)
+  var quantityObj = $("#quantity-val")
+  var quantityObjValue = quantityObj.val()
 
   $("#sub-btn").on("click", function () {
-    var quantity = $("#quantity-val").val()
-    if (quantity > 1) {
-      quantity = parseInt(quantity) - 1
-      $("#quantity-val").val(quantity)
+    if (quantityObjValue > 1) {
+      quantityObjValue = parseInt(quantityObjValue) - 1
+      $("#quantity-val").val(quantityObjValue)
     }
   })
 
   $("#inc-btn").on("click", function () {
-    var quantity = $("#quantity-val").val()
-    if (quantity < totalQuantity) {
-      quantity = parseInt(quantity) + 1
-      $("#quantity-val").val(quantity)
+    if (quantityObjValue < totalQuantity) {
+      quantityObjValue = parseInt(quantityObjValue) + 1
+      $("#quantity-val").val(quantityObjValue)
     }
+  })
+
+  // 这会绑 click 事件到所有有 `.delete-post` class 的元素上，也就是所有的删除按钮
+  $("#add-to-cart-btn").click(function(evt){
+    console.log(1);
+    // `evt` 是浏览器的事件物件，evt.preventDefault(); 会终止这个元素的默认行为：
+    // 超连结 a 的默认行为是跳到下一页，如果没有这行的话，送出 ajax 后会跳去 show page
+    evt.preventDefault();
+    // this 是个特别的变量，代表触发事件的元素。使用 attr 可以读取元素的属性，这里要拿到超连结的网址
+    var url = $(this).attr("href");
+
+    // 送出 Ajax
+    $.ajax({
+      url: url,
+      data: { quantity: quantityObj.val() },
+      method: 'POST',
+      dataType: 'json', // 要求服务器回传 javascript
+      success: function (response) {
+        if (response.success === true) {
+          $(".result").html("成功加入购物车")
+        }
+      }
+    })
   })
 </script>
