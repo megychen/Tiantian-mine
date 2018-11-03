@@ -1,4 +1,4 @@
-<div class="row">
+<div class="product-page">
   <div class="result pull-right"></div>
   <div class="col-md-6">
     <% if @product.image.present? %>
@@ -9,14 +9,16 @@
   </div>
   <div class="col-md-6">
     <h2> <%= @product.title %> </h2>
-    <div style="height:100px;">
+    <div class="description">
       <p>
         <%= @product.description %>
       </p>
     </div>
-    <div> 数量 : <%= @product.quantity %> </div>
+
+    <div class="product-price"> ￥ <%= @product.price %> </div>
 
     <div class="quantity">
+      <span class="qua-label">数量 :</span>
       <div class="quantity-action">
         <% quantity = 1 %>
         <button class="button" id="sub-btn">-</button>
@@ -25,48 +27,12 @@
       </div>
     </div>
 
-    <div class="product-price"> ￥ <%= @product.price %> </div>
-    <div class="pull-right">
+    <div class="buy-action">
       <% if @product.quantity.present? && @product.quantity > 0 %>
-        <%= link_to("加入购物车", add_to_cart_product_path(@product), :class => "btn btn-primary btn-lg btn-danger", id: "add-to-cart-btn") %>
+        <%= link_to("加入购物车", add_to_cart_product_path(@product), :class => "btn button-primary", id: "add-to-cart-btn") %>
+        <%= link_to("现在购买", add_to_cart_product_path(@product), :method => :post, :class => "btn button-secondary", id: "instance-buy-btn") %>
       <% else %>
         已销售一空，无法购买
-      <% end %>
-    </div>
-  </div>
-</div>
-
-<div class="product-page">
-  <div class="product-container row">
-    <div class="col-md-6 product-img">
-      <% if @product.image.present? %>
-        <%= image_tag(@product.image.medium.url, class: "") %>
-      <% else %>
-        <%= image_tag("http://placehold.it/400x400&text=No Pic", class: "") %>
-      <% end %>
-    </div>
-
-    <div class="col-md-6 product-description">
-      <h1><%= @product.title %> </h1>
-      <h2>发货时间：确认付款后7个工作日左右发货（本产品只适配APW5电源）</h2>
-      <div class="price">
-        ￥<%= @product.price  %>
-      </div>
-
-    </div>
-
-    <div class="">
-      <% if @product.quantity.present? && @product.quantity > 0 %>
-      <%= link_to("加入购物车", add_to_cart_product_path(@product), :method => :post, :class => "btn button-primary") %>
-      <% else %>
-      已销售一空，无法购买
-      <% end %>
-
-
-      <% if @product.quantity.present? && @product.quantity > 0 %>
-      <%= link_to("现在购买", add_to_cart_product_path(@product), :method => :post, :class => "btn button-secondary") %>
-      <% else %>
-      已销售一空，无法购买
       <% end %>
     </div>
   </div>
@@ -91,13 +57,27 @@
     }
   })
 
-  // 这会绑 click 事件到所有有 `.delete-post` class 的元素上，也就是所有的删除按钮
   $("#add-to-cart-btn").click(function(evt){
-    console.log(1);
-    // `evt` 是浏览器的事件物件，evt.preventDefault(); 会终止这个元素的默认行为：
-    // 超连结 a 的默认行为是跳到下一页，如果没有这行的话，送出 ajax 后会跳去 show page
     evt.preventDefault();
-    // this 是个特别的变量，代表触发事件的元素。使用 attr 可以读取元素的属性，这里要拿到超连结的网址
+    var url = $(this).attr("href");
+
+    // 加入购物车
+    $.ajax({
+      url: url,
+      data: { quantity: quantityObj.val() },
+      method: 'POST',
+      dataType: 'json', // 要求服务器回传 json
+      success: function (response) {
+        if (response.success === true) {
+          $(".result").html("成功加入购物车")
+        }
+      }
+    })
+  })
+
+  // 现在购买
+  $("#instance-buy-btn").click(function(evt){
+    evt.preventDefault();
     var url = $(this).attr("href");
 
     // 送出 Ajax
@@ -105,10 +85,10 @@
       url: url,
       data: { quantity: quantityObj.val() },
       method: 'POST',
-      dataType: 'json', // 要求服务器回传 javascript
+      dataType: 'json', // 要求服务器回传 json
       success: function (response) {
         if (response.success === true) {
-          $(".result").html("成功加入购物车")
+          $(location).attr('href', '/carts')
         }
       }
     })
