@@ -18,7 +18,7 @@
       <% end %>
       <div class="product-info">
         <p class="product-title"><%= product.title %></p>
-        <p class="product-desc"><%= product.description %></p>
+        <p class="product-desc"><%=h truncate(product.description, :length => 60) %></p>
         <span class="product-price pull-left"><%= product.price %></span>
         <span class="shopping-cart pull-right">
           <%= link_to add_to_cart_product_path(product), :remote => true, :method => :post do %>
