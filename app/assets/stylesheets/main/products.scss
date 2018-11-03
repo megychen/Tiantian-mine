@@ -1,15 +1,4 @@
-// Place all the styles related to the products controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-
-$color-button-primary: #529BD7;
-$color-button-secondary: #FF9900;
-$color-price: #529BD7;
-$color-price-background: #FBFBFB;
-
-$color-h1: #262626;
-$color-text-secondary: #888888;
-$color-white: #FFFFFF;
+@import "global";
 
 .banner {
   margin-bottom: 30px;

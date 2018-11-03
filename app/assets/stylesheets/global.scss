@@ -1,0 +1,42 @@
+$color-button-primary: #529BD7;
+$color-button-secondary: #FF9900;
+$color-price: #529BD7;
+$color-price-background: #FBFBFB;
+
+$color-h1: #262626;
+$color-text-secondary: #888888;
+$color-white: #FFFFFF;
+
+.button-base {
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+
+  margin: 0 20px 0 0;
+
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  line-height: 24px;
+  text-decoration: none solid rgb(0, 0, 0);
+  padding-top: 13px;
+  padding-bottom: 13px;
+  height: 50px;
+  width: 200px;
+  color: $color-white;
+  border-radius: 3px;
+  transition: all 0.2s;
+}
+
+.button-primary {
+  background: $color-button-primary;
+}
+
+.button-secondary {
+  background: $color-button-secondary;
+}
+
+.button-base:hover {
+  text-decoration: none solid rgb(0, 0, 0);
+  color: $color-white;
+  opacity: 0.8;
+}

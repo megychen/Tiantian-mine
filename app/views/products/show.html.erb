@@ -29,8 +29,8 @@
 
     <div class="buy-action">
       <% if @product.quantity.present? && @product.quantity > 0 %>
-        <%= link_to("加入购物车", add_to_cart_product_path(@product), :class => "btn button-primary", id: "add-to-cart-btn") %>
-        <%= link_to("现在购买", add_to_cart_product_path(@product), :method => :post, :class => "btn button-secondary", id: "instance-buy-btn") %>
+        <%= link_to("加入购物车", add_to_cart_product_path(@product), :class => "button-base button-primary", id: "add-to-cart-btn") %>
+        <%= link_to("现在购买", add_to_cart_product_path(@product), :method => :post, :class => "button-base button-secondary", id: "instance-buy-btn") %>
       <% else %>
         已销售一空，无法购买
       <% end %>
