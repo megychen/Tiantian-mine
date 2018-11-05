@@ -49,3 +49,14 @@
     width: 100%;
     padding: 50px;
   }
+
+  /*
+    payment description
+  */
+  .payment-desc {
+    clear: both;
+    padding: 30px 15px;
+    .payment-label {
+      color: #529BD7;
+    }
+  }

@@ -28,10 +28,12 @@ $color-white: #FFFFFF;
 }
 
 .button-primary {
+  color: $color-white;
   background: $color-button-primary;
 }
 
 .button-secondary {
+  color: $color-white;
   background: $color-button-secondary;
 }
 
