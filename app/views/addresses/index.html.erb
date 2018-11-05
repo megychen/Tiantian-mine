@@ -1,22 +1,26 @@
-<h4>管理收货地址</h4>
+<div class="col-md-8 col-md-offset-2 col-sm-12">
+  <div class="pull-right new-address"><%= link_to("新增收货地址", new_address_path, class: "btn btn-primary btn-sm") %></div>
 
-<div class="pull-right"><%= link_to("新增收货地址", new_address_path, class: "btn btn-primary") %></div>
-
-<div class="address-wrapper">
-  <% @addresses.each do |address| %>
-    <div class="name">收货人：<%= address.name %></div>
-    <div class="region">
-      所在地区：
-      <%= ChinaCity.get(address.province) %> -
-      <%= ChinaCity.get(address.city) %> -
-      <%= ChinaCity.get(address.district) %> 
-    </div>
-    <div class="address">地址：<%= address.detail %></div>
-    <div class="mobile">手机：<%= address.mobile %></div>
-    <div class="zip">邮政编码：<%= address.zip_code %></div>
-    <div class="options pull-right">
-      <%= link_to("编辑", edit_address_path(address), class: "btn btn-default btn-sm") %> |
-      <%= link_to("删除", address_path(address), :method => :delete, class: "btn btn-default btn-sm") %>
-    </div>
-  <% end %>
+  <h4>管理收货地址</h4>
+  <hr>
+  <div class="address-wrapper">
+    <% @addresses.each do |address| %>
+      <div class="address-list">
+        <div class="options pull-right">
+          <%= link_to("编辑", edit_address_path(address), class: "btn btn-default btn-sm") %> |
+          <%= link_to("删除", address_path(address), :method => :delete, class: "btn btn-default btn-sm") %>
+        </div>
+        <div class="name">收货人：<%= address.name %></div>
+        <div class="region">
+          所在地区：
+          <%= ChinaCity.get(address.province) %> -
+          <%= ChinaCity.get(address.city) %> -
+          <%= ChinaCity.get(address.district) %>
+        </div>
+        <div class="address">地址：<%= address.detail %></div>
+        <div class="mobile">手机：<%= address.mobile %></div>
+        <div class="zip">邮政编码：<%= address.zip_code %></div>
+      </div>
+    <% end %>
+  </div>
 </div>
