@@ -46,6 +46,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :addresses
+
   root "products#index"
 
   mount ChinaCity::Engine => '/china_city'
