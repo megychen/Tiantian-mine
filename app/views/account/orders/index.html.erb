@@ -1,11 +1,12 @@
 <h2>订单列表 </h2>
 
-<table class="table table-bordered">
+<table class="table table-bordered table-hover">
   <thead>
     <tr>
       <th>#</th>
       <th>生成时间</th>
       <th>订单状态</th>
+      <th>操作</th>
     </tr>
   </thead>
   <tbody>
@@ -15,6 +16,13 @@
       <td> <%= link_to(order.id, order_path(order.token)) %> </td>
       <td> <%= order.created_at.to_s(:long) %> </td>
       <td> <%= render_order_state(order) %> </td>
+      <td>
+        <% if order.certificates.present? %>
+          <%= link_to("查看付款证明", order_certificates_path(order.token), class: "btn btn-default btn-sm") %>
+        <% else %>
+          <%= link_to("上传付款证明", new_order_certificate_path(order.token), class: "btn btn-default btn-sm") %>
+        <% end %>
+      </td>
     </tr>
     <% end %>
 

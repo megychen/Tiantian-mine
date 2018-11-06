@@ -67,5 +67,9 @@
       </tbody>
     </table>
 
+    <h4>付款证明</h4>
+
+    <%= render :partial => "certificates/certificate_item", :collection => @certificates, :as => :certificate %>
+
   </div>
 </div>

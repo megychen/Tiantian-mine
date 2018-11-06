@@ -1,0 +1,14 @@
+<div class="certificate-list">
+  <div class="row">
+    <div class="col-md-6 image"><%= image_tag(certificate.image.medium.url, class: "thumbnail") %></div>
+    <div class="col-md-6 info">
+      <p>付款人：<%= certificate.name %></p>
+      <p>付款金额：<%= certificate.amount %></p>
+      <p>上传时间：<%= certificate.created_at.to_s(:long) %></p>
+      <p>
+        <%= link_to("编辑", edit_order_certificate_path(@order, certificate), class: "btn btn-default btn-sm") %> |
+        <%= link_to("删除", order_certificate_path(@order, certificate), class: "btn btn-default btn-sm") %>
+      </p>
+    </div>
+  </div>
+</div>
