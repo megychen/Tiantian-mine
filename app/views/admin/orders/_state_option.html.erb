@@ -32,4 +32,8 @@
 
   <% end %>
 
+  <% if !order.is_paid? && order.certificates.present? %>
+    <%= link_to("设为已付款", pay_admin_order_path(@order), :method => :post, class: "btn btn-danger btn-sm") %>
+  <% end %>
+
 </div>

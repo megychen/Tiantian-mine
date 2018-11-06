@@ -11,6 +11,7 @@ Rails.application.routes.draw do
         post :ship
         post :shipped
         post :return
+        post :pay
       end
     end
   end

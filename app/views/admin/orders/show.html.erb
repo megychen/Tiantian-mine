@@ -69,7 +69,13 @@
 
     <h4>付款证明</h4>
 
-    <%= render :partial => "certificates/certificate_item", :collection => @certificates, :as => :certificate %>
+    <% if @order.certificates.present? %>
+      <%= render :partial => "certificates/certificate_item", :collection => @certificates, :as => :certificate %>
+    <% else %>
+      <p class="label label-warning">此用户还未上传付款证明</p>
+    <% end %>
+
+
 
   </div>
 </div>
