@@ -1,66 +1,43 @@
 <div class="row">
   <div class="col-md-12">
 
-    <h2> 商品列表 </h2>
+    <div class="page-header">
+      <h4><i class="fa fa-list-alt"></i> 商品列表</h4>
+    </div>
 
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th width="80%">商品明细</th>
-          <th>单价</th>
-        </tr>
-      </thead>
-      <tbody>
+    <% @product_lists.each do |product_list| %>
+      <div class="col-md-4 col-sm-6">
+        <div class="thumbnail">
+          <h4 class="media-heading"><%= product_list.product_name %></h4>
+          <p>价格: <%= product_list.product_price %></p>
+          <p>数量: <%= product_list.quantity %></p>
+        </div>
 
-        <% @product_lists.each do |product_list| %>
-          <tr>
-            <td>
-              <%= product_list.product_name %>
-            </td>
-            <td>
-              <%= product_list.product_price %>
-            </td>
-          </tr>
-        <% end %>
+      </div>
+    <% end %>
 
-      </tbody>
-    </table>
+    <div class="clearfix"></div>
 
-    <div class="total clearfix">
+    <div class="total">
       <span class="pull-right">
-        总计 <%= @order.total %> CNY
+        <strong>总计: <%= @order.total %> CNY</strong>
       </span>
     </div>
 
+    <div class="page-header">
+      <h4><i class="fa fa-map-marker"></i> 收货地址</h4>
+    </div>
+    <div class="address">
+      <%= @order.address.name %>
+      <%= @order.address.mobile %>
+      <%= ChinaCity.get(@order.address.province) %> -
+      <%= ChinaCity.get(@order.address.city) %> -
+      <%= ChinaCity.get(@order.address.district) %>-
+      <%= @order.address.detail %>
+      <%= @order.address.zip_code %>
+    </div>
+
      <hr>
-
-     <h2> 邮寄地址</h2>
-
-     <table class="table table-striped table-bordered">
-       <tbody>
-         <th>姓名</th>
-         <th>电话</th>
-         <th>地址</th>
-         <th>邮政编码</th>
-         <tr>
-           <td>
-             <%= @order.address.name %>
-           </td>
-           <td>
-             <%= @order.address.mobile %>
-           </td>
-           <td>
-             <%= ChinaCity.get(@order.address.province) %> -
-             <%= ChinaCity.get(@order.address.city) %> -
-             <%= ChinaCity.get(@order.address.district) %>-
-             <%= @order.address.detail %>
-           </td>
-           <td>
-             <%= @order.address.zip_code %>
-           </td>
-         </tr>
-       </tbody>
-    </table>
 
     <div class="pull-left">
       <% if @order.order_placed? || @order.paid? %>
