@@ -1,69 +1,49 @@
-<div class="row">
+<div class="row checkout-page">
    <div class="col-md-12">
 
-    <h2> 购物明细 </h2>
+    <div class="page-header">
+      <h4><i class="fa fa-list-alt"></i> 商品列表</h4>
+    </div>
 
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th width="80%">商品明细</th>
-          <th>单价</th>
-          <th>数量</th>
-        </tr>
-      </thead>
-      <tbody>
-
-        <% current_cart.cart_items.each do |cart_item| %>
-          <tr>
-            <td>
-              <%= link_to(cart_item.product.title, product_path(cart_item.product)) %>
-            </td>
-            <td>
-              <%= cart_item.product.price %>
-            </td>
-
-            <td>
-              <%= cart_item.quantity %>
-            </td>
-
-          </tr>
-        <% end %>
-
-      </tbody>
-    </table>
+    <% current_cart.cart_items.each do |cart_item| %>
+      <div class="media">
+        <div class="media-left">
+          <%= link_to product_path(cart_item.product) do %>
+            <% if cart_item.product.image.present? %>
+              <%= image_tag(cart_item.product.image.thumb.url, class: 'media-object') %>
+            <% else %>
+              <%= image_tag("http://placehold.it/200x200&text=No Pic", class: 'media-object') %>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="media-body">
+          <h4 class="media-heading"><%= cart_item.product.title %></h4>
+          <p><%= cart_item.product.description %></p>
+          <p>数量: <%= cart_item.quantity %></p>
+          <p>价格: <%= cart_item.product.price %></p>
+        </div>
+      </div>
+    <% end %>
 
     <div class="total clearfix">
       <span class="pull-right">
-        总计 <%= render_cart_total_price(current_cart) %> CNY
+        <strong>总计: ￥<%= render_cart_total_price(current_cart) %></strong>
       </span>
     </div>
 
-    <hr>
-
-    <h2> 订单资讯 </h2>
+    <div class="page-header">
+      <h4><i class="fa fa-map-marker"></i> 收货地址</h4>
+    </div>
+    <div id="address_list">
+      <%= render "address", addresses: @addresses %>
+      <%= render "new_address" %>
+    </div>
 
     <div class="order-form">
-
-      <%= simple_form_for @order do |f| %>
-
-          <legend> 订购人</legend>
-          <div class="form-group col-lg-6">
-            <%= f.input :billing_name, label: "订购名称"  %>
-          </div>
-          <div class="form-group col-lg-6">
-            <%= f.input :billing_address, label: "订购地址"  %>
-          </div>
-
-          <legend> 收货人</legend>
-          <div class="form-group col-lg-6">
-           <%= f.input :shipping_name, label: "邮寄名称"  %>
-          </div>
-          <div class="form-group col-lg-6">
-            <%= f.input :shipping_address, label: "订购地址"  %>
-          </div>
-
+      <%= simple_form_for @order, method: :post, class: "create-order-form" do |f| %>
         <div class="checkout">
-          <%= f.submit "生成订单", class: "btn btn-lg btn-danger pull-right",
+          <%= f.input :address_id, :as => :hidden, :input_html => { :id => 'input_address_id' } %>
+          <%= f.submit "提交订单", class: "button-base button-secondary pull-right",
                        data: { disable_with: "Submitting..." } %>
         </div>
       <% end %>
@@ -71,3 +51,53 @@
     </div>
   </div>
 </div>
+
+<script>
+  (function () {
+    $(document).on("turbolinks:load", function () {
+      $('.city-group').china_city()
+    })
+
+    // 收货地址
+    $(document).on('click', '.new-address-btn', function() {
+      $('#address_form_modal').modal();
+    })
+
+    // $(".address-form").on('ajax:success', function(e, data) {
+    //   if (data["success"] === true) {
+    //     $('#address_form_modal').modal('hide');
+    //   }
+    // })
+
+    //生成订单
+    var addressID;
+    $('.create-order-form').submit(function() {
+      var addressID = $('input[name="address_id"]:checked').val(),
+          $form = $(this);
+
+      if (!addressID) {
+        alert("请选择收货地址!");
+        return false;
+      } else {
+        $("#input_address_id").val(addressID);
+        return true;
+      }
+    })
+
+    $("input[name='address_id']").on("change", function(){
+      addressID = $('input[name="address_id"]:checked').val();
+      if (addressID) {
+        $("#input_address_id").val(addressID);
+      }
+    });
+
+    $('.create-order-form').submit(function() {
+      if (!addressID) {
+        alert("请选择收货地址!");
+        return false;
+      }
+    })
+
+
+  })()
+</script>

@@ -8,10 +8,12 @@ class OrdersController < ApplicationController
 
   def create
     @order = Order.new(order_params)
+    @address = Address.find(params[:order][:address_id])
     @order.user = current_user
     @order.total = current_cart.total_price
+    @order.address = @address
 
-    if @order.save
+    if @order.save!
 
       current_cart.cart_items.each do |cart_item|
         product_list = ProductList.new
@@ -55,6 +57,6 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:billing_name, :billing_address, :shipping_name, :shipping_address)
+    params.require(:order).permit(:address_id)
   end
 end

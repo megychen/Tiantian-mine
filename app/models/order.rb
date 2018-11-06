@@ -5,11 +5,7 @@ class Order < ApplicationRecord
   belongs_to :user
   has_many :product_lists
   has_many :certificates
-
-  validates :billing_name, presence: true
-  validates :billing_address, presence: true
-  validates :shipping_name, presence: true
-  validates :shipping_address, presence: true
+  belongs_to :address
 
   def generate_token
     self.token = SecureRandom.uuid

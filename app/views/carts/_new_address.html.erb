@@ -1,0 +1,41 @@
+<div class="modal fade" id="address_form_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">添加收货地址</h4>
+      </div>
+      <%= simple_form_for current_user.addresses.build, remote: true, class: "address-form" do |f| %>
+        <div class="modal-body">
+          <div class="group">
+            <%= f.input :name, label: "收货人姓名" %>
+          </div>
+
+          <div class="group">
+            <%= f.input :mobile, label: "手机号码" %>
+          </div>
+
+          <div class="city-group">
+            <label>省、市、区</label><br>
+            <%= f.select :province,  ChinaCity.list.unshift(["--省份--", 420000]), {}, class: "city-select "%>
+            <%= f.select :city,      ChinaCity.list(f.object.province).presence || [["--城市--", 422800]],    {}, class: "city-select " %>
+            <%= f.select :district,  ChinaCity.list(f.object.city).presence     || [["--地区--", 422827]],    {}, class: "city-select " %>
+          </div>
+
+          <br>
+
+          <div class="group">
+            <%= f.input :zip_code, label: "邮政编码" %>
+          </div>
+
+          <div class="group">
+            <%= f.input :detail, label: "详细地址" %>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <%= f.submit "提交", data: { disable_with: "Submitting..." }, class: "btn btn-primary btn-sm" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
