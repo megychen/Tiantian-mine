@@ -12,14 +12,9 @@ class AddressesController < ApplicationController
   def create
     @address = Address.new(address_params)
     @address.user = current_user
-    puts request
-    if @address.save
-      if request.xhr?
-        render :json => { "success": true }
-      else
-        redirect_to addresses_path
-      end
 
+    if @address.save
+      redirect_to addresses_path
     else
       render :new
     end

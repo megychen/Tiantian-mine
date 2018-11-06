@@ -36,7 +36,6 @@
     </div>
     <div id="address_list">
       <%= render "address", addresses: @addresses %>
-      <%= render "new_address" %>
     </div>
 
     <div class="order-form">
@@ -63,26 +62,16 @@
       $('#address_form_modal').modal();
     })
 
-    // $(".address-form").on('ajax:success', function(e, data) {
-    //   if (data["success"] === true) {
-    //     $('#address_form_modal').modal('hide');
-    //   }
-    // })
+    $(".address-form").on('ajax:success', function(data) {
+      console.log(1, data)
+      if (data.success === true) {
+        $('#address_form_modal').css("display", "none");
+      }
+    })
+
 
     //生成订单
     var addressID;
-    $('.create-order-form').submit(function() {
-      var addressID = $('input[name="address_id"]:checked').val(),
-          $form = $(this);
-
-      if (!addressID) {
-        alert("请选择收货地址!");
-        return false;
-      } else {
-        $("#input_address_id").val(addressID);
-        return true;
-      }
-    })
 
     $("input[name='address_id']").on("change", function(){
       addressID = $('input[name="address_id"]:checked').val();
@@ -97,7 +86,6 @@
         return false;
       }
     })
-
 
   })()
 </script>
