@@ -69,7 +69,7 @@
 
     <div class="group pull-right">
       <% if !@order.is_paid? %>
-        <%= link_to("上传付款证明", "#", class: "btn btn-info") %>
+        <%= link_to("上传付款证明", new_order_certificate_path(@order.token), class: "btn btn-info") %>
       <% else %>
         <p class="text-center">此订单已完成付款</p>
       <% end %>
