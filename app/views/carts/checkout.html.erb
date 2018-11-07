@@ -80,6 +80,8 @@
       addressID = $('input[name="address_id"]:checked').val();
       if (addressID) {
         $("#input_address_id").val(addressID);
+      } else {
+        alert("请添加收货地址")
       }
     });
 
