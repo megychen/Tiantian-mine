@@ -13,7 +13,6 @@
 //= require jquery
 //= require rails-ujs
 //= require activestorage
-//= require turbolinks
 //= require 'china_city/jquery.china_city'
 //= require bootstrap-sprockets
 //= require_tree .

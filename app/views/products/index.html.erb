@@ -1,3 +1,5 @@
+<%= render "cart_hint" %>
+
 <div class="banner">
   <img src="/assets/banner-2.jpg" alt="轮播图-1" class="banner-image-1">
 </div>
@@ -21,7 +23,7 @@
         <p class="product-desc"><%=h truncate(product.description, :length => 60) %></p>
         <span class="product-price pull-left"><%= product.price %></span>
         <span class="shopping-cart pull-right">
-          <%= link_to add_to_cart_product_path(product), :remote => true, :method => :post do %>
+          <%= link_to add_to_cart_product_path(product), class: "index-add-to-cart-btn" do %>
             <i class="fa fa-shopping-cart"></i>
           <% end %>
         </span>
@@ -29,3 +31,26 @@
     </div>
   <% end %>
 </div>
+
+<script>
+$(document).on("ready", function(){
+  $(".index-add-to-cart-btn").click(function(evt){
+    evt.preventDefault();
+    var url = $(this).attr("href");
+
+    // 加入购物车
+    $.ajax({
+      url: url,
+      data: { quantity: 1 },
+      method: 'POST',
+      dataType: 'json', // 要求服务器回传 json
+      success: function (response) {
+        if (response.success === true) {
+          $('#add-to-shopping-cart-hint').modal()
+          $('#add-to-shopping-cart-hint').modal('show')
+        }
+      }
+    })
+  })
+})
+</script>
