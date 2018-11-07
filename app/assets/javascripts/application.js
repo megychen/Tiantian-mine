@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-
+//= require turbolinks
 //= require activestorage
 //= require 'china_city/jquery.china_city'
 //= require bootstrap-sprockets

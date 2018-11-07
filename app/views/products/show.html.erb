@@ -14,6 +14,7 @@
       <p>
         <%= @product.description %>
       </p>
+      <p id="total-quantity" style="display:none;"><%= @product.quantity %></p>
     </div>
 
     <div class="product-price"> ￥ <%= @product.price %> </div>
@@ -61,7 +62,8 @@
 </div>
 
 <script>
-  var totalQuantity = <%= @product.quantity %>
+  var totalQuantity = $("#total-quantity").text()
+  console.log(totalQuantity)
   var quantityObj = $("#quantity-val")
   var quantityObjValue = quantityObj.val()
 
