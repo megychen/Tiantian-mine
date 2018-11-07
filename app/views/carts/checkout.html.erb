@@ -34,9 +34,12 @@
     <div class="page-header">
       <h4><i class="fa fa-map-marker"></i> 收货地址</h4>
     </div>
+
     <div id="address_list">
       <%= render "address", addresses: @addresses %>
+      <%#= render "new_address" %>
     </div>
+    <%= render "new_address" %>
 
     <div class="order-form">
       <%= simple_form_for @order, method: :post, class: "create-order-form" do |f| %>
@@ -53,7 +56,7 @@
 
 <script>
   (function () {
-    $(document).on("turbolinks:load", function () {
+    $(document).on("ready", function () {
       $('.city-group').china_city()
     })
 
@@ -62,10 +65,10 @@
       $('#address_form_modal').modal();
     })
 
-    $(".address-form").on('ajax:success', function(data) {
-      console.log(1, data)
+    $(document).bind("ajax:success", ".address-form", function (evt, data, status, xhr) {
       if (data.success === true) {
-        $('#address_form_modal').css("display", "none");
+        $('#address_form_modal').modal("hide");
+        window.location.reload()
       }
     })
 

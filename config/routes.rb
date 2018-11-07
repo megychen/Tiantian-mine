@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   resources :carts do
     collection do
       delete :clean
-      post :checkout
+      get :checkout
     end
   end
 
@@ -51,6 +51,8 @@ Rails.application.routes.draw do
   resources :addresses
 
   root "products#index"
+
+  get '/addresses/get_address_list', to: 'addresses#get_address_list', as: 'address_list'
 
   mount ChinaCity::Engine => '/china_city'
 end

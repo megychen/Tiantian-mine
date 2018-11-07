@@ -14,7 +14,11 @@ class AddressesController < ApplicationController
     @address.user = current_user
 
     if @address.save
-      redirect_to addresses_path
+      if request.xhr? || request.format.js?
+        render :json => { "success": true }
+      else
+        redirect_to addresses_path
+      end
     else
       render :new
     end
@@ -38,6 +42,10 @@ class AddressesController < ApplicationController
     @address = Address.find(params[:id])
     @address.destroy
     redirect_to addresses_path
+  end
+
+  def load_address_list
+    render :partial => "carts/_address"
   end
 
   private

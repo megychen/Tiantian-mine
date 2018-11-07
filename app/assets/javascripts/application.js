@@ -11,7 +11,8 @@
 // about supported directives.
 //
 //= require jquery
-//= require rails-ujs
+//= require jquery_ujs
+
 //= require activestorage
 //= require 'china_city/jquery.china_city'
 //= require bootstrap-sprockets
