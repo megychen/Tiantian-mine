@@ -40,6 +40,9 @@
             text-decoration: none;
           }
         }
+        #sub-btn {
+          border-right: 1px solid #ebebeb;
+        }
         .quantity-value {
           min-width: 100px;
           max-width: 150px;
@@ -47,6 +50,9 @@
           border: none;
           text-align: center;
           outline: none;
+        }
+        #inc-btn {
+          border-left: 1px solid #ebebeb;
         }
       }
     }
