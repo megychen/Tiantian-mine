@@ -5,7 +5,7 @@
 
   <div class="cart-list">
     <% current_cart.cart_items.each do |cart_item| %>
-      <div class="row cart-item">
+      <div class="cart-item">
         <div class="image col-md-3 col-xs-6">
           <%= link_to product_path(cart_item.product) do %>
             <% if cart_item.product.image.present? %>

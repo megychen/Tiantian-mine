@@ -98,7 +98,7 @@
   }
   .quantity-action {
     border: 1px solid #ebebeb;
-    max-width: 150px;
+    max-width: 250px;
     display: inline-block;
     text-align: center;
     margin-bottom: 30px;
@@ -111,12 +111,17 @@
         text-decoration: none;
       }
     }
+    #sub-btn {
+      border-right: 1px solid #ebebeb;
+    }
     .quantity-value {
-      max-width: 60px;
-      padding: 5px 20px;
       border: none;
+      display: inline-block;
       text-align: center;
       outline: none;
+    }
+    #inc-btn {
+      border-left: 1px solid #ebebeb;
     }
   }
 }
