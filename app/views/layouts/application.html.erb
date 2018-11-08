@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-
     <title>天天矿业</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="turbolinks-cache-control" content="no-cache">
   </head>
 
@@ -16,10 +16,10 @@
       <div class="row">
         <%= render "common/navbar" %>
         <%= render "common/flashes" %>
-        <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
+
+        <div class="col-md-10 col-md-offset-1 col-sm-12 body-wrapper">
           <%= yield %>
         </div>
-
 
         <%= render "common/footer" %>
       </div>

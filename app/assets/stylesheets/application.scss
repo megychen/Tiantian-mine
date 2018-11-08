@@ -22,26 +22,30 @@
   Navbar style
  */
 
-  .navbar-inverse {
+  .navbar {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border: 0;
     border-radius: 0;
-    font-size: 16px;
-    padding: 15px;
-    height: 80px;
+    margin-bottom: 0;
+    font-size: 14px;
+    letter-spacing: 5px;
+  }
+
+  .navbar-inverse {
     .navbar-wrapper {
       padding: 0;
-      .navbar-header {
-        .navbar-brand {
-          padding: 0 30px 0 0;
-          img {
-            margin-top: -10px;
-          }
-        }
-      }
       .fa-shopping-cart {
         color: #fff;
         font-size: 18px;
       }
     }
+  }
+
+  /* body wrapper */
+
+  .body-wrapper {
+    margin-top: 20px;
   }
 
   /*

@@ -1,55 +1,39 @@
-<div class="row cart-wrapper">
-  <div class="col-md-12 col-sm-12">
+<div class="cart-wrapper">
+  <%= link_to("清空购物车", clean_carts_path, method: :delete, class: "pull-right btn btn-default", data: { confirm: "你确定要清空整个购物车吗？" }) %>
 
-    <%= link_to("清空购物车", clean_carts_path, method: :delete, class: "pull-right btn btn-default", data: { confirm: "你确定要清空整个购物车吗？" }) %>
+  <h4 class="cart-title"> 购物车 </h4>
 
-    <h4 class="cart-title"> 购物车 </h4>
-
-    <div class="cart-list col-md-12 col-sm-12">
-      <% current_cart.cart_items.each do |cart_item| %>
-        <div class="cart-item">
-          <div class="image col-md-2 col-sm-6">
-            <%= link_to product_path(cart_item.product) do %>
-              <% if cart_item.product.image.present? %>
-                <%= image_tag(cart_item.product.image.thumb.url) %>
-              <% else %>
-                <%= image_tag("http://placehold.it/200x200&text=No Pic") %>
-              <% end %>
+  <div class="cart-list">
+    <% current_cart.cart_items.each do |cart_item| %>
+      <div class="row cart-item">
+        <div class="image col-md-3 col-xs-6">
+          <%= link_to product_path(cart_item.product) do %>
+            <% if cart_item.product.image.present? %>
+              <%= image_tag(cart_item.product.image.thumb.url) %>
+            <% else %>
+              <%= image_tag("http://placehold.it/200x200&text=No Pic") %>
             <% end %>
-          </div>
-          <div class="info col-md-4 col-sm-6">
-            <p><%= link_to(cart_item.product.title, product_path(cart_item.product)) %></p>
-            <p><%= cart_item.product.description %></p>
-          </div>
-          <div class="price col-md-2 col-sm-4">
-            <strong><%= cart_item.product.price %></strong>
-          </div>
-          <div class="quantity col-md-2 col-sm-4">
-            <div class="quantity-action">
-              <% cart_item = current_cart.cart_items.find_by(product_id: cart_item.product_id)%>
-              <button class="button">
-                <%= link_to("-", subtract_quantity_cart_item_path(cart_item.product_id), method: :post) %>
-              </button>
-              <input class="quantity-value" type="text" value="<%= cart_item.quantity %>">
-              <button class="button">
-                <%= link_to("+", increment_quantity_cart_item_path(cart_item.product_id), method: :post) %>
-              </button>
-            </div>
-          </div>
-          <div class="remove col-md-2 col-sm-4">
-            <%= link_to("移除商品", cart_item_path(cart_item.product_id), method: :delete, class: "btn btn-sm btn-default")  %>
-          </div>
+          <% end %>
         </div>
-      <% end %>
-      <div class="total clearfix">
-        <div class="pull-right">
-          总计：<%= render_cart_total_price(current_cart) %> RMB <br><br>
-          <div class="checkout clearfix">
-            <%= link_to("确认结账", checkout_carts_path, class: "button-base button-secondary") %>
+        <div class="info col-md-5 col-xs-6">
+          <p><%= link_to(cart_item.product.title, product_path(cart_item.product)) %></p>
+          <p><%= cart_item.product.description %></p>
+          <strong>￥<%= cart_item.product.price %></strong>
+        </div>
+        <div class="quantity col-md-4 col-xs-12">
+          <div class="quantity-action pull-left">
+            <% cart_item = current_cart.cart_items.find_by(product_id: cart_item.product_id)%>
+            <button class="button">
+              <%= link_to("-", subtract_quantity_cart_item_path(cart_item.product_id), method: :post) %>
+            </button>
+            <input class="quantity-value" type="text" value="<%= cart_item.quantity %>">
+            <button class="button">
+              <%= link_to("+", increment_quantity_cart_item_path(cart_item.product_id), method: :post) %>
+            </button>
           </div>
+          <span class="pull-right"><%= link_to("移除商品", cart_item_path(cart_item.product_id), method: :delete, class: "btn btn-sm btn-default")  %></span>
         </div>
       </div>
-    </div>
-
+    <% end %>
   </div>
 </div>
