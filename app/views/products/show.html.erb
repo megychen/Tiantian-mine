@@ -1,5 +1,4 @@
 <div class="product-page">
-  <%= render "cart_hint" %>
   <div class="result pull-right"></div>
   <div class="col-md-6">
     <% if @product.image.present? %>
@@ -94,6 +93,10 @@ $(document).on('turbolinks:load', function () {
       success: function (response) {
         if (response.success === true) {
           $(".modal-content").text("成功加入购物车")
+          $('#message').modal()
+          $('#message').modal('show')
+        } else {
+          $(".modal-content").text(response.message)
           $('#message').modal()
           $('#message').modal('show')
         }
