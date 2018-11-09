@@ -5,7 +5,7 @@
       <h4><i class="fa fa-list-alt"></i> 商品列表</h4>
     </div>
 
-    <% current_cart.cart_items.each do |cart_item| %>
+    <% @cart_items.each do |cart_item| %>
       <div class="media">
         <div class="media-left">
           <%= link_to product_path(cart_item.product) do %>
