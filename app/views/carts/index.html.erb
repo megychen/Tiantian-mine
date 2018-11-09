@@ -1,53 +1,59 @@
 <div class="cart-wrapper">
-  <%= link_to("清空购物车", clean_carts_path, method: :delete, class: "pull-right btn btn-default", data: { confirm: "你确定要清空整个购物车吗？" }) %>
+  <% if current_cart.cart_items.count != 0 %>
+    <%= link_to("清空购物车", clean_carts_path, method: :delete, class: "pull-right btn btn-default", data: { confirm: "你确定要清空整个购物车吗？" }) %>
 
-  <h4 class="cart-title"> 购物车 </h4>
+    <h4 class="cart-title"> 购物车 </h4>
 
-  <div class="cart-list">
-    <% current_cart.cart_items.each do |cart_item| %>
-      <div class="cart-item">
-        <div class="image col-md-3 col-xs-6">
-          <%= link_to product_path(cart_item.product) do %>
-            <% if cart_item.product.image.present? %>
-              <%= image_tag(cart_item.product.image.thumb.url) %>
-            <% else %>
-              <%= image_tag("http://placehold.it/200x200&text=No Pic") %>
+    <div class="cart-list">
+      <% current_cart.cart_items.each do |cart_item| %>
+        <div class="cart-item">
+          <div class="image col-md-3 col-xs-6">
+            <%= link_to product_path(cart_item.product) do %>
+              <% if cart_item.product.image.present? %>
+                <%= image_tag(cart_item.product.image.thumb.url) %>
+              <% else %>
+                <%= image_tag("http://placehold.it/200x200&text=No Pic") %>
+              <% end %>
             <% end %>
-          <% end %>
-          <p class="total-product-quantity" id="<%= cart_item.id %>" style="display: none;"><%= cart_item.product.quantity %></p>
-        </div>
-        <div class="info col-md-5 col-xs-6">
-          <p><%= link_to(cart_item.product.title, product_path(cart_item.product)) %></p>
-          <p><%= cart_item.product.description %></p>
-          <strong>￥<%= cart_item.product.price %></strong>
-        </div>
-        <div class="quantity col-md-4 col-xs-12">
-          <div class="quantity-action pull-left">
-            <% cart_item = current_cart.cart_items.find_by(product_id: cart_item.product_id)%>
-
-            <a class="button sub-btn" href="/cart_items/<%= cart_item.product_id %>/change_quantity" data-index-number="<%= cart_item.id %>">-</a>
-
-            <input class="quantity-value" id="cart-item-quantity-<%= cart_item.id %>" type="text" value="<%= cart_item.quantity > cart_item.product.quantity ? cart_item.product.quantity : cart_item.quantity %>">
-            <a class="button inc-btn" href="/cart_items/<%= cart_item.product_id %>/change_quantity" data-index-number="<%= cart_item.id %>">+</a>
+            <p class="total-product-quantity" id="<%= cart_item.id %>" style="display: none;"><%= cart_item.product.quantity %></p>
           </div>
-
-          <span class="pull-right"><%= link_to("移除商品", cart_item_path(cart_item.product_id), method: :delete, class: "btn btn-sm btn-default")  %></span>
-        </div>
-      </div>
-    <% end %>
-
-    <div class="total clearfix">
-      <span class="pull-right">
-        <span>
-          总计：<%= render_cart_total_price(current_cart) %> RMB <br><br>
-          <div class="checkout clearfix">
-            <%= link_to("确认结账", checkout_carts_path, class: "button-base button-secondary pull-right") %>
+          <div class="info col-md-5 col-xs-6">
+            <p><%= link_to(cart_item.product.title, product_path(cart_item.product)) %></p>
+            <p><%= cart_item.product.description %></p>
+            <strong>￥<%= cart_item.product.price %></strong>
           </div>
+          <div class="quantity col-md-4 col-xs-12">
+            <div class="quantity-action pull-left">
+              <% cart_item = current_cart.cart_items.find_by(product_id: cart_item.product_id)%>
+
+              <a class="button sub-btn" href="/cart_items/<%= cart_item.product_id %>/change_quantity" data-index-number="<%= cart_item.id %>">-</a>
+
+              <input class="quantity-value" id="cart-item-quantity-<%= cart_item.id %>" type="text" value="<%= cart_item.quantity > cart_item.product.quantity ? cart_item.product.quantity : cart_item.quantity %>">
+              <a class="button inc-btn" href="/cart_items/<%= cart_item.product_id %>/change_quantity" data-index-number="<%= cart_item.id %>">+</a>
+            </div>
+
+            <span class="pull-right"><%= link_to("移除商品", cart_item_path(cart_item.product_id), method: :delete, class: "btn btn-sm btn-default")  %></span>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="total clearfix">
+        <span class="pull-right">
+          <span>
+            总计：<%= render_cart_total_price(current_cart) %> RMB <br><br>
+            <div class="checkout clearfix">
+              <%= link_to("确认结账", checkout_carts_path, class: "button-base button-secondary pull-right") %>
+            </div>
+          </span>
         </span>
-      </span>
+      </div>
     </div>
-  </div>
+  <% else %>
+    <h4 class="text-center">购物车空空如也~~</h4>
+  <% end %>
 </div>
+
+
 
 <script>
 $(document).on('turbolinks:load', function () {

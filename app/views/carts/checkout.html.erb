@@ -37,7 +37,6 @@
 
     <div id="address_list">
       <%= render "address", addresses: @addresses %>
-      <%#= render "new_address" %>
     </div>
     <%= render "new_address" %>
 
@@ -45,7 +44,7 @@
       <%= simple_form_for @order, method: :post, class: "create-order-form" do |f| %>
         <div class="checkout">
           <%= f.input :address_id, :as => :hidden, :input_html => { :id => 'input_address_id' } %>
-          <%= f.submit "提交订单", class: "button-base button-secondary pull-right",
+          <%= f.submit "提交订单", class: "button-base button-secondary pull-right create-order-button",
                        data: { disable_with: "Submitting..." } %>
         </div>
       <% end %>
@@ -80,14 +79,14 @@
       addressID = $('input[name="address_id"]:checked').val();
       if (addressID) {
         $("#input_address_id").val(addressID);
-      } else {
-        alert("请添加收货地址")
       }
     });
 
-    $('.create-order-form').submit(function() {
+    $('.create-order-button').click(function() {
       if (addressID === undefined) {
-        alert("请选择收货地址!");
+        $(".modal-content").text("请选择收货地址")
+        $('#message').modal()
+        $('#message').modal('show')
         return false;
       }
     })

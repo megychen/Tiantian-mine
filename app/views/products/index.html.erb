@@ -31,10 +31,10 @@
 </div>
 
 <script>
-$(document).on("ready", function(){
+$(document).on('turbolinks:load', function(){
   $(".index-add-to-cart-btn").each(function () {
-    $(this).click(function(evt){
-      evt.preventDefault();
+    $(this).click(function(e){
+      e.preventDefault();
       var url = $(this).attr("href");
 
       // 加入购物车
