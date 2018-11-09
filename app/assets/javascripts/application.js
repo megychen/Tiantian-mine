@@ -17,3 +17,9 @@
 //= require activestorage
 //= require 'china_city/jquery.china_city'
 //= require_tree .
+
+
+$(document).ready(function () {
+  // 购物车
+  var quantity = $("#cart-item-quantity").val()
+})

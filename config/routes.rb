@@ -35,8 +35,7 @@ Rails.application.routes.draw do
 
   resources :cart_items do
     member do
-      post :subtract_quantity
-      post :increment_quantity
+      post :change_quantity
     end
   end
   resources :orders do

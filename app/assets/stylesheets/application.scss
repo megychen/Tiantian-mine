@@ -17,6 +17,15 @@
  @import "bootstrap-sprockets";
  @import "bootstrap";
  @import "font-awesome";
+ @import "global";
+
+  /* Message hint  */
+  #message .modal-content {
+    padding: 20px 50px;
+    text-align: center;
+    color: $color-button-secondary;
+  }
+
 
  /*
   Navbar style

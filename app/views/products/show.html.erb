@@ -64,7 +64,6 @@
 <script>
 $(document).on('turbolinks:load', function () {
   var totalQuantity = $("#total-quantity").text()
-  console.log(totalQuantity)
   var quantityObj = $("#quantity-val")
   var quantityObjValue = quantityObj.val()
 
@@ -94,8 +93,9 @@ $(document).on('turbolinks:load', function () {
       dataType: 'json', // 要求服务器回传 json
       success: function (response) {
         if (response.success === true) {
-          $('#add-to-shopping-cart-hint').modal()
-          $('#add-to-shopping-cart-hint').modal('show')
+          $(".modal-content").text("成功加入购物车")
+          $('#message').modal()
+          $('#message').modal('show')
         }
       }
     })
