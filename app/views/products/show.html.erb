@@ -117,7 +117,7 @@ $(document).on('turbolinks:load', function () {
       dataType: 'json', // 要求服务器回传 json
       success: function (response) {
         if (response.success === true) {
-          $(location).attr('href', "/carts/checkout?product_id=<%= @product.id %>")
+          $(location).attr('href', "/carts?product_id=<%= @product.id %>")
         }
       }
     })

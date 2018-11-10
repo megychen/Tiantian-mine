@@ -27,7 +27,7 @@
 
     <div class="total clearfix">
       <span class="pull-right">
-        <strong>总计: ￥<%= render_cart_total_price(current_cart) %></strong>
+        <strong>总计: ￥<%= render_cart_total_price(current_cart, @cart_items) %></strong>
       </span>
     </div>
 
@@ -43,6 +43,7 @@
     <div class="order-form">
       <%= simple_form_for @order, method: :post, class: "create-order-form" do |f| %>
         <div class="checkout">
+          <input type="hidden" class="cart-item-ids" name="cart_item_ids">
           <%= f.input :address_id, :as => :hidden, :input_html => { :id => 'input_address_id' } %>
           <%= f.submit "提交订单", class: "button-base button-secondary pull-right create-order-button",
                        data: { disable_with: "Submitting..." } %>
@@ -73,7 +74,9 @@
 
 
     //生成订单
-    var addressID;
+    var addressID,
+    cartItemIds = "<%= params[:cart_item_ids] %>"
+    $(".cart-item-ids").val(cartItemIds.split(","))
 
     $("input[name='address_id']").on("change", function(){
       addressID = $('input[name="address_id"]:checked').val();

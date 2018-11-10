@@ -21,7 +21,7 @@
           <div class="info col-md-5 col-xs-6">
             <p><%= link_to(cart_item.product.title, product_path(cart_item.product)) %></p>
             <p><%= cart_item.product.description %></p>
-            <strong>￥<%= cart_item.product.price %></strong>
+            <strong id="price-<%= cart_item.id %>">￥<%= cart_item.product.price %></strong>
           </div>
           <div class="quantity col-md-4 col-xs-12">
             <div class="quantity-action pull-left">
@@ -39,14 +39,12 @@
       <% end %>
 
       <div class="total clearfix">
-        <span class="pull-right">
-          <span>
-            总计：<%= render_cart_total_price(current_cart) %> RMB <br><br>
-            <div class="checkout clearfix">
-              <%= link_to("确认结账", checkout_carts_path, class: "button-base button-secondary pull-right submit-checkout-btn") %>
-            </div>
-          </span>
-        </span>
+        <div class="pull-right">
+          总计：<span class="cart-item-total-price"><%#= render_cart_total_price(current_cart) %>0</span> RMB <br><br>
+          <div class="checkout clearfix">
+            <%= link_to("确认结账", checkout_carts_path, class: "button-base button-secondary pull-right submit-checkout-btn") %>
+          </div>
+        </div>
       </div>
     </div>
   <% else %>
@@ -60,6 +58,13 @@
 $(document).on('turbolinks:load', function () {
 
   var indexNumber, totalQuantity, quantityObj, quantityObjValue;
+  var findCartItem = <%= params[:product_id].present? ? current_cart.cart_items.find_by(product_id: params[:product_id]).id : "undefined" %>
+  if (findCartItem !== undefined) {
+    $("#" + findCartItem).prop("checked", true)
+    var cartItemPrice = parseInt($("#price-" + findCartItem).text().split("￥")[1])
+    var quantity = parseInt($("#cart-item-quantity-" + findCartItem).val())
+    $(".cart-item-total-price").text(cartItemPrice * quantity)
+  }
 
   $(".sub-btn").on("click", function (e) {
     e.preventDefault()
@@ -72,6 +77,7 @@ $(document).on('turbolinks:load', function () {
     if (parseInt(quantityObjValue) > 1) {
       quantityObjValue = parseInt(quantityObjValue) - 1
       quantityObj.val(quantityObjValue)
+      calculateTotalPrice()
 
       var url = $(this).attr("href");
       sendQauntityChangeRequest(url, quantityObjValue)
@@ -90,6 +96,7 @@ $(document).on('turbolinks:load', function () {
     if (parseInt(quantityObjValue) <= totalQuantity - 1) {
       quantityObjValue = parseInt(quantityObjValue) + 1
       quantityObj.val(quantityObjValue)
+      calculateTotalPrice()
 
       var url = $(this).attr("href");
       sendQauntityChangeRequest(url, quantityObjValue)
@@ -97,11 +104,14 @@ $(document).on('turbolinks:load', function () {
       messageHint("库存不足")
     }
   })
+
   $(".cart-list .quantity-value").each(function () {
     $(this).on("change", function () {
       indexNumber = $(this).next().data("indexNumber")
       totalQuantity = parseInt($(document).find("#" +indexNumber).text())
       quantityObjValue = parseInt($(this).val())
+
+      calculateTotalPrice()
 
       var url = $(this).next().attr("href")
 
@@ -139,13 +149,39 @@ $(document).on('turbolinks:load', function () {
     $('#message').modal('show')
   }
 
+  // 监听复选框的变化
+  $('input[name="cart_item_id"]').each(function () {
+    $(this).on("change", function(){
+      calculateTotalPrice()
+    });
+  })
+
+  function calculateTotalPrice() {
+    var sum = 0
+    $('input[name="cart_item_id"]:checked').each(function () {
+      var cartItemId= $(this).attr("id")
+      var cartItemPrice = parseInt($("#price-" + cartItemId).text().split("￥")[1])
+      var quantity = parseInt($("#cart-item-quantity-" + cartItemId).val())
+      sum += cartItemPrice * quantity
+    })
+    $(".cart-item-total-price").text(sum)
+  }
+
+
   // 确认结账
   $(".submit-checkout-btn").click(function (e) {
     e.preventDefault()
 
+    var checkedItem = $('input[name="cart_item_id"]:checked')
+
+    if (checkedItem.length === 0) {
+      messageHint("您还没有选中商品")
+      return
+    }
+
     var url = $(this).attr("href")
     var cartItemId = []
-    $('input[name="cart_item_id"]:checked').each(function () {
+    checkedItem.each(function () {
       cartItemId.push($(this).attr("id"))
     })
 

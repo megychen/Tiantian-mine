@@ -9,13 +9,14 @@ class OrdersController < ApplicationController
   def create
     @order = Order.new(order_params)
     @address = Address.find(params[:order][:address_id])
+    @cart_items = current_cart.cart_items.where(id: params[:cart_item_ids].split(","))
     @order.user = current_user
-    @order.total = current_cart.total_price
+    @order.total = current_cart.total_price(@cart_items)
     @order.address = @address
 
     if @order.save!
 
-      current_cart.cart_items.each do |cart_item|
+      @cart_items.each do |cart_item|
         product_list = ProductList.new
         product_list.order = @order
         product_list.product_name = cart_item.product.title
@@ -24,7 +25,7 @@ class OrdersController < ApplicationController
         product_list.save
       end
 
-      current_cart.clean!
+      current_cart.clean_item(@cart_items)
       OrderMailer.notify_order_placed(@order).deliver!
       redirect_to order_path(@order.token)
     else

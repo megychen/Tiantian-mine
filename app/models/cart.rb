@@ -9,7 +9,7 @@ class Cart < ApplicationRecord
     ci.save
   end
 
-  def total_price
+  def total_price(cart_items)
     sum = 0
     cart_items.each do |cart_item|
       if cart_item.product.price.present?
@@ -17,6 +17,10 @@ class Cart < ApplicationRecord
       end
     end
     sum
+  end
+
+  def clean_item(cart_items)
+    cart_items.destroy_all
   end
 
   def clean!
