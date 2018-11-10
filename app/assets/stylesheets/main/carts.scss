@@ -13,9 +13,6 @@
       overflow: auto;
       border: 1px solid #ebebeb;
       padding: 10px 0;
-      // display: flex;
-      // order: 2;
-      // align-items: center;
       .price, .info, .quantity {
         text-align: center;
         margin-top: 7%;
@@ -25,8 +22,9 @@
         margin-top: 10%;
       }
       .image {
+        text-align: center;
         img {
-          width: 100%;
+          width: 80%;
         }
       }
       .quantity-action {

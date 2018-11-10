@@ -19,6 +19,13 @@
  @import "font-awesome";
  @import "global";
 
+  /* body wrapper */
+  .body-wrapper {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 10px;
+  }
+
   /* Message hint  */
   #message .modal-content {
     padding: 20px 50px;
@@ -51,11 +58,11 @@
     }
   }
 
-  /* body wrapper */
-
-  .body-wrapper {
-    margin-top: 20px;
+  .navbar-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
   }
+
 
   /*
     Footer style

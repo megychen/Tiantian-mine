@@ -8,6 +8,7 @@
       <% current_cart.cart_items.each do |cart_item| %>
         <div class="cart-item">
           <div class="image col-md-3 col-xs-6">
+            <input type="checkbox" name="cart_item_id" id="<%= cart_item.id %>">
             <%= link_to product_path(cart_item.product) do %>
               <% if cart_item.product.image.present? %>
                 <%= image_tag(cart_item.product.image.thumb.url) %>
@@ -15,7 +16,7 @@
                 <%= image_tag("http://placehold.it/200x200&text=No Pic") %>
               <% end %>
             <% end %>
-            <p class="total-product-quantity" id="<%= cart_item.id %>" style="display: none;"><%= cart_item.product.quantity %></p>
+            <p class="total-product-quantity" id="total-<%= cart_item.id %>" style="display: none;"><%= cart_item.product.quantity %></p>
           </div>
           <div class="info col-md-5 col-xs-6">
             <p><%= link_to(cart_item.product.title, product_path(cart_item.product)) %></p>
@@ -42,7 +43,7 @@
           <span>
             总计：<%= render_cart_total_price(current_cart) %> RMB <br><br>
             <div class="checkout clearfix">
-              <%= link_to("确认结账", checkout_carts_path, class: "button-base button-secondary pull-right") %>
+              <%= link_to("确认结账", checkout_carts_path, class: "button-base button-secondary pull-right submit-checkout-btn") %>
             </div>
           </span>
         </span>
@@ -63,7 +64,7 @@ $(document).on('turbolinks:load', function () {
   $(".sub-btn").on("click", function (e) {
     e.preventDefault()
     indexNumber = $(this).data("indexNumber")
-    totalQuantity = $(document).find("#" + indexNumber).text()
+    totalQuantity = $(document).find("#total-" + indexNumber).text()
 
     quantityObj = $("#cart-item-quantity"+ '-' + indexNumber)
     quantityObjValue = quantityObj.val()
@@ -81,7 +82,7 @@ $(document).on('turbolinks:load', function () {
   $(".inc-btn").on("click", function (e) {
     e.preventDefault()
     indexNumber =  $(this).data("indexNumber")
-    totalQuantity = parseInt($(document).find("#" +indexNumber).text())
+    totalQuantity = parseInt($(document).find("#total-" +indexNumber).text())
 
     quantityObj = $("#cart-item-quantity"+ '-' + indexNumber)
     quantityObjValue = quantityObj.val()
@@ -137,6 +138,21 @@ $(document).on('turbolinks:load', function () {
     $('#message').modal()
     $('#message').modal('show')
   }
+
+  // 确认结账
+  $(".submit-checkout-btn").click(function (e) {
+    e.preventDefault()
+
+    var url = $(this).attr("href")
+    var cartItemId = []
+    $('input[name="cart_item_id"]:checked').each(function () {
+      cartItemId.push($(this).attr("id"))
+    })
+
+    url = '/carts/checkout?cart_item_ids=' + cartItemId
+
+    $(location).attr('href', url)
+  })
 })
 
 </script>
