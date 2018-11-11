@@ -1,42 +1,50 @@
-<h2> 产品列表 </h2>
-<div class="pull-right" style="padding-bottom: 20px;">
+<div class="pull-right">
   <%= link_to("新增产品", new_admin_product_path, class: "btn btn-primary btn-sm") %>
 </div>
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th width="220">Product Pic</th>
-      <th>名称</th>
-      <th>价格</th>
-      <th width="100">管理</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @products.each do |product| %>
+
+<h4 class="text-center"><i class="fa fa-list-alt"></i> 商品列表</h4>
+
+<div class="table-responsive">
+  <table>
+    <thead>
       <tr>
-        <td>
-          <%= product.id %>
-        </td>
-        <td>
-          <%= link_to product_path(product) do %>
-            <% if product.image.present? %>
-              <%= image_tag(product.image.thumb.url, class: "thumbnail") %>
-            <% else %>
-              <%= image_tag("http://placehold.it/200x200&text=No Pic", class: "thumbnail") %>
-            <% end %>
-          <% end %>
-        </td>
-        <td>
-          <%= product.title %>
-        </td>
-        <td>
-          <%= product.price %>
-        </td>
-        <td>
-          <%= link_to("Edit", edit_admin_product_path(product)) %>
-        </td>
+        <th>图片</th>
+        <th>名称</th>
+        <th>描述</th>
+        <th>价格</th>
+        <th>库存</th>
+        <th width="100">管理</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @products.each do |product| %>
+        <tr>
+          <td>
+            <%= link_to product_path(product) do %>
+              <% if product.image.present? %>
+                <%= image_tag(product.image.thumb.url, class: "thumbnail", style: "max-width: 80px;") %>
+              <% else %>
+                <%= image_tag("http://placehold.it/200x200&text=No Pic", class: "thumbnail", style: "max-width: 80px;") %>
+              <% end %>
+            <% end %>
+          </td>
+          <td>
+            <%= product.title %>
+          </td>
+          <td>
+            <%= product.description %>
+          </td>
+          <td>
+            <%= product.price %>
+          </td>
+          <td>
+            <%= product.quantity %>
+          </td>
+          <td>
+            <%= link_to("Edit", edit_admin_product_path(product), class: "btn btn-default btn-sm") %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

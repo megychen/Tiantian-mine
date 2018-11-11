@@ -1,27 +1,29 @@
-<h2>新增产品</h2>
+<h4 class="text-center">新增产品</h4>
 
-<%= simple_form_for [:admin, @product] do |f| %>
+<div class="col-md-10 col-md-offset-1 col-sm-12">
+  <%= simple_form_for [:admin, @product] do |f| %>
 
-  <div class="group">
-    <%= f.input :title, label: "名称" %>
-  </div>
+    <div class="group">
+      <%= f.input :title, label: "名称" %>
+    </div>
 
-  <div class="group">
-    <%= f.input :description, label: "描述" %>
-  </div>
+    <div class="group">
+      <%= f.input :description, label: "描述" %>
+    </div>
 
-  <div class="group">
-    <%= f.input :quantity, label: "数量" %>
-  </div>
+    <div class="group">
+      <%= f.input :quantity, label: "数量" %>
+    </div>
 
-  <div class="group">
-    <%= f.input :price, label: "价钱" %>
-  </div>
+    <div class="group">
+      <%= f.input :price, label: "价钱" %>
+    </div>
 
-  <div class="group">
-    <%= f.input :image, as: :file %>
-  </div>
+    <div class="group">
+      <%= f.input :image, as: :file %>
+    </div>
 
-  <%= f.submit "提交", data: { disable_with: "Submitting..." } %>
+    <%= f.submit "提交", data: { disable_with: "Submitting..." }, class: "btn btn-primary btn-sm" %>
 
-<% end %>
+  <% end %>
+</div>

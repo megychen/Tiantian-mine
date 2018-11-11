@@ -1,4 +1,4 @@
-<h2>订单列表 </h2>
+<h4 class="text-center"><i class="fa fa-list-alt"></i> 订单列表 </h2>
 
 <table class="table table-bordered table-hover">
   <thead>
@@ -12,13 +12,13 @@
   </thead>
   <tbody>
     <% @orders.each do |order| %>
-    <tr>
-      <td> <%= link_to(order.id, admin_order_path(order) ) %> </td>
-      <td> <%= order.created_at.to_s(:long) %> </td>
-      <td> <%= order.user.email %></td>
-      <td> <%= render_order_state(order) %> </td>
-      <td> <%= order.certificates.size %> </td>
-    </tr>
+      <tr>
+        <td> <%= link_to(order.id, admin_order_path(order) ) %> </td>
+        <td> <%= order.created_at.to_s(:long) %> </td>
+        <td> <%= order.user.email %></td>
+        <td> <%= render_order_state(order) %> </td>
+        <td> <%= order.certificates.size %> </td>
+      </tr>
     <% end %>
 
   </tbody>
