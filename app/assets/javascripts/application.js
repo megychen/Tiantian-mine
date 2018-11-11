@@ -17,3 +17,7 @@
 //= require activestorage
 //= require 'china_city/jquery.china_city'
 //= require_tree .
+
+$(document).ready(function () {
+  $(".alert").fadeOut(2000);
+})
