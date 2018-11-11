@@ -14,6 +14,10 @@ class OrdersController < ApplicationController
     @order.total = current_cart.total_price(@cart_items)
     @order.address = @address
 
+    unless current_cart.have_stock(@cart_items)
+      render 'carts/checkout', alert: "库存不足，下单失败"
+    end
+
     if @order.save!
 
       @cart_items.each do |cart_item|

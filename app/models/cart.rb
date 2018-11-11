@@ -26,4 +26,17 @@ class Cart < ApplicationRecord
   def clean!
     cart_items.destroy_all
   end
+
+  def have_stock(cart_items)
+    cart_items.each do |cart_item|
+      product = cart_item.product
+      if product.quantity < 1 || cart_item.quantity > product.quantity
+        return false
+      else
+        product.quantity = product.quantity - cart_item.quantity
+        product.save
+      end
+    end
+    return true
+  end
 end
