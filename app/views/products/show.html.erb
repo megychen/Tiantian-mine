@@ -1,8 +1,8 @@
 <div class="product-page">
   <div class="result pull-right"></div>
-  <div class="col-md-6">
+  <div class="col-md-6 text-center">
     <% if @product.image.present? %>
-      <%= image_tag(@product.image.medium.url) %>
+      <%= image_tag(@product.image.medium.url, style: "width: 80%;") %>
     <% else %>
       <%= image_tag("http://placehold.it/400x400&text=No Pic") %>
     <% end %>
