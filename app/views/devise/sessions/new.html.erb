@@ -1,34 +1,24 @@
 <div class="col-md-6 col-md-offset-3 col-sm-12">
-  <h2 class="text-center">登录</h2>
+  <h2 class="text-center"><%= t(".sign_in") %></h2>
 
-  <br>
-  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-    <%= devise_error_messages! %>
-
-    <div class="form-group">
-      <%= f.email_field :email, label: "邮箱", autofocus: true , class: "form-control", placeholder: "邮箱"%>
+  <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <div class="form-inputs">
+      <%= f.input :email,
+                  required: false,
+                  autofocus: true,
+                  input_html: { autocomplete: "email" } %>
+      <%= f.input :password,
+                  required: false,
+                  input_html: { autocomplete: "current-password" } %>
+      <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
     </div>
 
-    <div class="form-group">
-      <%= f.password_field :password, label: "密码", required: true, class: "form-control", placeholder: "密码" %>
-    </div>
-
-    <div class="form-group">
-          <%= f.submit "登录", class: "btn btn-primary",:style => "width:100%;" %>
-    </div>
-
-    <div class="form-group">
-      <% if devise_mapping.rememberable? -%>
-        <div class="field">
-          <%= f.check_box :remember_me %>
-          <%= f.label :remember_me %>
-        </div>
-      <% end -%>
-    </div>
-
-    <div class="form-group">
-      <%= render "devise/shared/links" %>
+    <div class="form-actions">
+      <%= f.button :submit, t(".sign_in"), class: "btn btn-primary session",:style => "width:100%;" %>
     </div>
   <% end %>
 
+  <div class="form-group">
+          <%= render "devise/shared/links" %>
+    </div>
 </div>

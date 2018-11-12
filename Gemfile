@@ -35,6 +35,7 @@ gem 'aasm'
 gem 'china_city'
 gem 'carrierwave-qiniu', '~> 1.1.5'
 gem 'figaro'
+gem 'devise-i18n'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'

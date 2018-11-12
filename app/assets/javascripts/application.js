@@ -18,6 +18,36 @@
 //= require 'china_city/jquery.china_city'
 //= require_tree .
 
-$(document).ready(function () {
+$(document).on('turbolinks:load', function () {
   $(".alert").fadeOut(2000);
+
+  $(".registration").on("click", function() {
+    if (!isValidEmailAddress()) {
+      modalMessage()
+      return false
+    }
+  })
+
+  $(".session").on("click", function() {
+    if (!isValidEmailAddress()) {
+      modalMessage()
+      return false
+    }
+  })
+
+  function isValidEmailAddress() {
+    var $email = $('form input[name="user[email]');
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i;
+    console.log($email.val(), $email.val() == '', re.test($email.val()))
+    if ($email.val() == '' || !re.test($email.val())) {
+      return false;
+    }
+    return true
+  }
+
+  function modalMessage() {
+    $(".modal-content").text("请输入有效的邮箱地址")
+    $('#message').modal()
+    $('#message').modal('show')
+  }
 })
