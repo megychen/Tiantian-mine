@@ -9,9 +9,7 @@ class CartsController < ApplicationController
     @order = Order.new
     @addresses = current_user.addresses
 
-    if params[:product_id].present?
-      @cart_items = current_cart.cart_items.where(product_id: params[:product_id])
-    elsif params[:cart_item_ids].present?
+    if params[:cart_item_ids].present?
       @cart_items = current_cart.cart_items.where(id: params[:cart_item_ids].split(","))
     else
       @cart_items = current_cart.cart_items
