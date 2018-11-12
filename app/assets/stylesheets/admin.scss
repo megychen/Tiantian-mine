@@ -5,11 +5,20 @@
     // border: 1px solid #ebebeb;
     .list-group-item {
       text-align: center;
+      background: #777;
+      padding: 12px 15px;
+      a {
+        color: #fff;
+        text-decoration: none;
+      }
       &:first-child {
         border-radius: 0;
       }
       &:last-child {
         border-radius: 0;
+      }
+      &:hover {
+        background: #444;
       }
     }
 

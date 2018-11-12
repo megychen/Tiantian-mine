@@ -1,32 +1,34 @@
-<h4 class="text-center"><i class="fa fa-list-alt"></i> 我的订单 </h4>
+<div class="col-md-10 col-md-offset-1 col-sm-12">
+  <h4 class="text-center"><i class="fa fa-list-alt"></i> 我的订单 </h4>
 
-<div class="table-responsive">
-  <table class="table table-bordered table-hover">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>生成时间</th>
-        <th>订单状态</th>
-        <th>操作</th>
-      </tr>
-    </thead>
-    <tbody>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>生成时间</th>
+          <th>订单状态</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
 
-      <% @orders.each do |order| %>
-      <tr>
-        <td> <%= link_to(order.id, order_path(order.token)) %> </td>
-        <td> <%= order.created_at.to_s(:long) %> </td>
-        <td> <%= render_order_state(order) %> </td>
-        <td>
-          <% if order.certificates.present? %>
-            <%= link_to("查看付款证明", order_certificates_path(order.token), class: "btn btn-default btn-sm") %>
-          <% else %>
-            <%= link_to("上传付款证明", new_order_certificate_path(order.token), class: "btn btn-default btn-sm") %>
-          <% end %>
-        </td>
-      </tr>
-      <% end %>
+        <% @orders.each do |order| %>
+        <tr>
+          <td> <%= link_to(order.id, order_path(order.token)) %> </td>
+          <td> <%= order.created_at.to_s(:long) %> </td>
+          <td> <%= render_order_state(order) %> </td>
+          <td>
+            <% if order.certificates.present? %>
+              <%= link_to("查看付款证明", order_certificates_path(order.token), class: "btn btn-default btn-sm") %>
+            <% else %>
+              <%= link_to("上传付款证明", new_order_certificate_path(order.token), class: "btn btn-default btn-sm") %>
+            <% end %>
+          </td>
+        </tr>
+        <% end %>
 
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
 </div>

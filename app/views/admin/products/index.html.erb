@@ -1,5 +1,5 @@
 <div class="pull-right">
-  <%= link_to("新增产品", new_admin_product_path, class: "btn btn-primary btn-sm") %>
+  <%= link_to("新增产品", new_admin_product_path, class: "btn btn-default btn-sm") %>
 </div>
 
 <h4 class="text-center"><i class="fa fa-list-alt"></i> 商品列表</h4>
@@ -41,7 +41,7 @@
             <%= product.quantity %>
           </td>
           <td>
-            <%= link_to("Edit", edit_admin_product_path(product), class: "btn btn-default btn-sm") %>
+            <%= link_to("编辑", edit_admin_product_path(product), class: "btn btn-default btn-sm") %>
           </td>
         </tr>
       <% end %>
