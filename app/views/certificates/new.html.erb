@@ -8,12 +8,9 @@
       <%= f.input :amount, label: "付款金额" %>
     </div>
 
-    <!-- <div class="group">
-      <%#= f.input :image, as: :file %>
-    </div> -->
-
     <div class="group">
-      <%= f.file_field :image, :multiple => true, name: "photos[image][]" %>（"按Ctrl可以选择多张图片"）
+      <span><b>（按Ctrl可以选择多张图片）</b></span>
+      <%= f.file_field :image, :multiple => true, name: "photos[image][]" %><br>
     </div>
 
     <%= f.submit "提交", data: { disable_with: "提交中..." }, class: "btn btn-primary" %>
