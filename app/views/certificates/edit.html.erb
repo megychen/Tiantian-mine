@@ -1,0 +1,30 @@
+<div class="col-md-8 col-md-offset-2 col-sm-12">
+  <%= simple_form_for @certificate, :url =>"/orders/#{@order.token}/certificates/#{@certificate.id}", :method => :put do |f| %>
+    <div class="group">
+      <%= f.input :name, label: "付款人姓名" %>
+    </div>
+
+    <div class="group">
+      <%= f.input :amount, label: "付款金额" %>
+    </div>
+
+    <div class="group">
+      <% if @certificate.photos.present? %>
+        <span>目前商品图</span><br>
+        <% @certificate.photos.each do |p| %>
+          <div class="col-md-4 col-sm-6"><%= image_tag(p.image.thumb.url, class: "thumbnail") %></div>
+        <% end %>
+      <% else %>
+        <div class="col-md-3 col-sm-6"><%= image_tag("http://placehold.it/200x200&text=No Pic", class: "thumbnail") %></div>
+      <% end %>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="group">
+      <span>（"按Ctrl可以选择多张图片"）</span>
+      <%= f.file_field :image, :multiple => true, name: "photos[image][]" %><br>
+    </div>
+
+    <%= f.submit "提交", data: { disable_with: "提交中..." }, class: "btn btn-primary" %>
+  <% end %>
+</div>

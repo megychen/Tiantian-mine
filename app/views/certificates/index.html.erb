@@ -19,6 +19,12 @@
 </div>
 
 <div class="page-header">
+  <div class="pull-right"><%= link_to("添加付款证明", new_order_certificate_path(@order.token), class: "btn btn-info btn-sm") %></div>
   <h4><i class="fa fa-credit-card"></i> 付款证明</h4>
 </div>
-<%= render :partial => "certificate_item", :collection => @certificates, :as => :certificate %>
+
+<% if @order.certificates.present? %>
+  <%= render :partial => "certificate_item", :collection => @certificates, :as => :certificate %>
+<% else %>
+  <p class="label label-warning">还未上传付款证明</p>
+<% end %>

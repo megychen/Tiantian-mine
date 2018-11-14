@@ -12,6 +12,7 @@ class CertificatesController < ApplicationController
 
   def new
     @certificate = Certificate.new
+    @photos = @certificate.photos.build
   end
 
   def create
@@ -19,6 +20,11 @@ class CertificatesController < ApplicationController
     @certificate.order = @order
 
     if @certificate.save
+      if params[:photos] != nil
+        params[:photos]['image'].each do |i|
+          @phots = @certificate.photos.create(:image => i)
+        end
+      end
       redirect_to order_certificates_path(@order.token)
     else
       render :new
@@ -32,7 +38,15 @@ class CertificatesController < ApplicationController
   def update
     @certificate = @order.certificates.find(params[:id])
 
-    if @certificate.update(certificate_params)
+    if params[:photos] != nil
+      @certificate.photos.destroy_all
+      params[:photos]['image'].each do |i|
+        @phots = @certificate.photos.create(:image => i)
+      end
+      @certificate.update(certificate_params)
+
+      redirect_to order_certificates_path(@order.token)
+    elsif @certificate.update(certificate_params)
       redirect_to order_certificates_path(@order.token)
     else
       render :edit
@@ -42,6 +56,7 @@ class CertificatesController < ApplicationController
   def destroy
     @certificate = @order.certificates.find(params[:id])
     @certificate.destroy
+    @certificate.photos.destroy
 
     redirect_to order_certificates_path(@order.token)
   end

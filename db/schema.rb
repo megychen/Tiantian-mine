@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_06_070209) do
+ActiveRecord::Schema.define(version: 2018_11_14_063614) do
 
   create_table "addresses", force: :cascade do |t|
     t.string "province"
@@ -58,6 +58,13 @@ ActiveRecord::Schema.define(version: 2018_11_06_070209) do
     t.string "aasm_state", default: "order_placed"
     t.integer "address_id"
     t.index ["aasm_state"], name: "index_orders_on_aasm_state"
+  end
+
+  create_table "photos", force: :cascade do |t|
+    t.integer "certificate_id"
+    t.string "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "product_lists", force: :cascade do |t|
