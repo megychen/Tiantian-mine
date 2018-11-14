@@ -5,7 +5,6 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">添加收货地址</h4>
       </div>
-      <%#= form_for current_user.addresses.build, url: addresses_path, method: :post, remote: true, html: { class: "form-horizontal address-form" } do |f| %>
       <%= simple_form_for current_user.addresses.build, :remote => true, "data-type" => :json, class: "address-form" do |f| %>
         <div class="modal-body">
           <div class="group">

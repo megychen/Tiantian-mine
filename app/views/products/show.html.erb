@@ -115,11 +115,6 @@ $(document).on('turbolinks:load', function () {
       data: { quantity: quantityObj.val() },
       method: 'POST',
       dataType: 'json', // 要求服务器回传 json
-      success: function (response) {
-        if (response.success === true) {
-          $(location).attr('href', "/carts?product_id=<%= @product.id %>")
-        }
-      }
     })
   })
 })

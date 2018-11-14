@@ -22,6 +22,24 @@
               </td>
               <td>
                 <%= product_list.product_price %>
+                <button type="button" class="btn btn-default btn-xs update-product-list-price" data-toggle="modal" data-target="#update-price-modal-<%= product_list.id %>">更新价格</button>
+                <div class="modal fade" id="update-price-modal-<%= product_list.id %>" role="dialog">
+                  <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"><%=  product_list.product_name %><span class="product-price-errors" style="font-size:12px;color:red;"></span></h4>
+                      </div>
+                      <div class="modal-body">
+                        <label>价格</label>
+                        <input type="number" value="<%= product_list.product_price %>" class="form-control" id="product_list_product_price-<%= product_list.id %>" name="product_list[product_price]">
+                      </div>
+                      <div class="modal-footer">
+                        <%= link_to(" 更新价格", admin_product_list_path(product_list), method: :put, class: "btn btn-primary btn-xs update-product-price-button", id: "#{product_list.id}") %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </td>
               <td>
                 <%= product_list.quantity %>
@@ -35,7 +53,7 @@
 
     <div class="total clearfix">
       <span class="pull-right">
-        总计 <%= @order.total %> CNY
+        总计 <%#= @order.total %> <%= render_product_list_total_price(@product_lists) %> CNY
       </span>
     </div>
 
@@ -79,8 +97,38 @@
     <% else %>
       <p class="label label-warning">此用户还未上传付款证明</p>
     <% end %>
-
-
-
   </div>
 </div>
+
+<script>
+
+  $(document).on("turbolinks:load", function () {
+    $('.update-product-price-button').click(function(e) {
+      e.preventDefault()
+
+      var productListId = $(this).attr("id")
+      var productPrice = parseInt($("#product_list_product_price-" + productListId).val())
+      var url = $(this).attr("href")
+
+      if (productPrice === "" || productPrice < 0) {
+        $(".product-price-errors").text(" 无效价格")
+        return false;
+      }
+
+      // 送出 Ajax
+      $.ajax({
+        url: url,
+        data: {  product_price:  productPrice },
+        method: 'PUT',
+        dataType: 'json', // 要求服务器回传 json
+        success: function (response) {
+          if (response.success === true) {
+            $('#address_form_modal').modal("hide");
+            window.location.reload()
+          }
+        }
+      })
+    })
+  })
+
+</script>
