@@ -40,8 +40,13 @@
           <td>
             <%= product.quantity %>
           </td>
-          <td>
-            <%= link_to("编辑", edit_admin_product_path(product), class: "btn btn-default btn-sm") %>
+          <td width="150">
+            <%= link_to("编辑", edit_admin_product_path(product), class: "btn btn-default btn-xs") %> |
+            <% if product.is_maintainable %>
+              <%= link_to("恢复交易", start_trading_admin_product_path(product), :method => :post, class: "btn btn-warning btn-xs") %>
+            <% else %>
+              <%= link_to("暂停交易", stop_trading_admin_product_path(product), :method => :post, class: "btn btn-danger btn-xs", data: { confirm: '你确定要暂停该商品交易吗?'}) %>
+            <% end %>
           </td>
         </tr>
       <% end %>

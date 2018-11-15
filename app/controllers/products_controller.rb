@@ -25,7 +25,7 @@ class ProductsController < ApplicationController
       current_cart.add_product_to_cart(@product, quantity)
     else
       @cart_item = current_cart.cart_items.find_by(product_id: params[:id])
-      @cart_item.quantity = quantity
+      @cart_item.quantity += quantity
       @cart_item.save!
     end
 

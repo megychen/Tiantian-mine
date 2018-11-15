@@ -16,37 +16,37 @@ class Admin::OrdersController < ApplicationController
 
   def ship
     @order.ship!
-    current_user.logs.create(model: "Order", action: "确认订单出货中")
+    current_user.logs.create(model: "Order", action: "#{current_user.email} 确认订单出货中")
     redirect_to admin_order_path(@order)
   end
 
   def shipped
     @order.deliver!
-    current_user.logs.create(model: "Order", action: "确认订单已出货")
+    current_user.logs.create(model: "Order", action: "#{current_user.email} 确认订单已出货")
     redirect_to admin_order_path(@order)
   end
 
   def cancel
     @order.cancel_order!
-    current_user.logs.create(model: "Order", action: "取消订单")
+    current_user.logs.create(model: "Order", action: "#{current_user.email} 取消订单")
     redirect_to admin_order_path(@order)
   end
 
   def return
     @order.return_good!
-    current_user.logs.create(model: "Order", action: "确认订单已退货")
+    current_user.logs.create(model: "Order", action: "#{current_user.email} 确认订单已退货")
     redirect_to admin_order_path(@order)
   end
 
   def pay
     @order.make_payment!
-    current_user.logs.create(model: "Order", action: "确认订单已付款")
+    current_user.logs.create(model: "Order", action: "#{current_user.email} 确认订单已付款")
     redirect_to admin_order_path(@order)
   end
 
   def unpay
     @order.unpay!
-    current_user.logs.create(model: "Order", action: "撤销订单已付款确认")
+    current_user.logs.create(model: "Order", action: "#{current_user.email} 撤销订单已付款确认")
     redirect_to admin_order_path(@order)
   end
 

@@ -36,6 +36,20 @@ class Admin::ProductsController < ApplicationController
     end
   end
 
+  def start_trading
+    @product = Product.find(params[:id])
+    @product.start!
+    current_user.logs.create(model: "Product", action: "恢复 #{@product.title} 的交易")
+    redirect_to admin_products_path, notice: "#{@product.title} 已恢复交易"
+  end
+
+  def stop_trading
+    @product = Product.find(params[:id])
+    @product.stop!
+    current_user.logs.create(model: "Product", action: "暂停 #{@product.title} 的交易")
+    redirect_to admin_products_path, alert: "#{@product.title} 已暂停交易"
+  end
+
   private
 
   def product_params

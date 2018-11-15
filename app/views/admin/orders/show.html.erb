@@ -102,26 +102,24 @@
 
 <script>
 
-  $(document).on("turbolinks:load", function () {
-    $('.update-product-price-button').click(function(e) {
-      e.preventDefault()
+  $('.update-product-price-button').click(function(e) {
+    e.preventDefault()
 
-      var productListId = $(this).attr("id")
-      var productPrice = parseInt($("#product_list_product_price-" + productListId).val())
-      var url = $(this).attr("href")
+    var productListId = $(this).attr("id")
+    var productPrice = parseInt($("#product_list_product_price-" + productListId).val())
+    var url = $(this).attr("href")
 
-      if (productPrice === "" || productPrice < 0) {
-        $(".product-price-errors").text(" 无效价格")
-        return false;
-      }
+    if (productPrice === "" || productPrice < 0) {
+      $(".product-price-errors").text(" 无效价格")
+      return false;
+    }
 
-      // 送出 Ajax
-      $.ajax({
-        url: url,
-        data: {  product_price:  productPrice },
-        method: 'PUT',
-        dataType: 'json'
-      })
+    // 送出 Ajax
+    $.ajax({
+      url: url,
+      data: {  product_price:  productPrice },
+      method: 'PUT',
+      dataType: 'json'
     })
   })
 
