@@ -21,9 +21,10 @@
         <p class="product-desc"><%=h truncate(product.description, :length => 60) %></p>
         <span class="product-price pull-left"><%= product.price %></span>
         <span class="shopping-cart pull-right">
-          <%= link_to add_to_cart_product_path(product), class: "index-add-to-cart-btn" do %>
-            <i class="fa fa-shopping-cart"></i>
-          <% end %>
+          <%#= link_to add_to_cart_product_path(product), :remote => true, :method => :post, class: "index-add-to-cart-btn" do %>
+            <!-- <i class="fa fa-shopping-cart"></i> -->
+          <%# end %>
+          <a href="/products/<%= product.id %>/add_to_cart" class="index-add-to-cart-btn"><i class="fa fa-shopping-cart"></i></a>
         </span>
       </div>
     </div>
@@ -36,6 +37,7 @@ $(document).on('turbolinks:load', function(){
     $(this).click(function(e){
       e.preventDefault();
       var url = $(this).attr("href");
+      console.log(1)
 
       // 加入购物车
       $.ajax({

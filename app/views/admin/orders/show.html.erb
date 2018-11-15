@@ -120,13 +120,7 @@
         url: url,
         data: {  product_price:  productPrice },
         method: 'PUT',
-        dataType: 'json', // 要求服务器回传 json
-        success: function (response) {
-          if (response.success === true) {
-            $('#address_form_modal').modal("hide");
-            window.location.reload()
-          }
-        }
+        dataType: 'json'
       })
     })
   })
