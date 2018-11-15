@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resources :users
     resources :products
     resources :product_lists, only: [:update]
+    resources :logs, only: [:index]
     resources :orders do
       member do
         post :cancel
