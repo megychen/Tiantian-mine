@@ -13,6 +13,7 @@ Rails.application.routes.draw do
         post :shipped
         post :return
         post :pay
+        post :unpay
       end
     end
   end

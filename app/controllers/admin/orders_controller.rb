@@ -39,6 +39,11 @@ class Admin::OrdersController < ApplicationController
     redirect_to admin_order_path(@order)
   end
 
+  def unpay
+    @order.unpay!
+    redirect_to admin_order_path(@order)
+  end
+
   private
 
   def find_order

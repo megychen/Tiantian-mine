@@ -19,6 +19,10 @@ class Order < ApplicationRecord
     self.update_columns(is_paid: true)
   end
 
+  def unpay!
+    self.update_columns(is_paid: false, aasm_state: "order_placed")
+  end
+
   aasm do
     state :order_placed, initial: true
     state :paid

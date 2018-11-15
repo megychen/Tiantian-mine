@@ -13,6 +13,9 @@
     <%= link_to("出货",
                 ship_admin_order_path(order),
                 class: "btn btn-default btn-sm", method: :post) %>
+    <%= link_to("撤销已付款",
+                unpay_admin_order_path(order),
+                class: "btn btn-default btn-danger", method: :post) %>
 
   <% when "shipping" %>
     <%= link_to("设为已出货",
