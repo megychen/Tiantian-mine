@@ -29,6 +29,10 @@ class Admin::ProductsController < ApplicationController
   def update
     @product = Product.find(params[:id])
 
+    if @product.price != params[:product][:price].to_i
+      current_user.logs.create(model: "Product", action: "#{@product.title} 价格#{@product.price}更改为#{params[:product][:price]}")
+    end
+
     if @product.update(product_params)
       redirect_to admin_products_path
     else
