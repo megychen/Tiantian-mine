@@ -60,6 +60,7 @@ Rails.application.routes.draw do
   root "products#index"
 
   get '/addresses/get_address_list', to: 'addresses#get_address_list', as: 'address_list'
+  resources :welcome
 
   mount ChinaCity::Engine => '/china_city'
 end

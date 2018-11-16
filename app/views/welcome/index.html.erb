@@ -1,1 +1,22 @@
-<h1>Hello Wolrd!</h1>
+<h4 class="text-center">BTC信息咨询</h4>
+
+<table>
+  <tr>
+    <th>币种</th>
+    <th>难度</th>
+    <th>价格($)</th>
+    <th>一小时浮动率</th>
+    <th>24小时浮动率</th>
+    <th>7天浮动率</th>
+    <th>更新时间</th>
+  </tr>
+  <tr>
+    <td>BTC</td>
+    <td><%= @btc_difficulty["difficulty"] %></td>
+    <td><%= @btc_price["quotes"]["USD"]["price"] %></td>
+    <td><%= @btc_price["quotes"]["USD"]["percent_change_1h"] %></td>
+    <td><%= @btc_price["quotes"]["USD"]["percent_change_24h"] %></td>
+    <td><%= @btc_price["quotes"]["USD"]["percent_change_7d"] %></td>
+    <td><%= @btc_price["quotes"]["USD"]["last_updated"] %></td>
+  </tr>
+</table>
