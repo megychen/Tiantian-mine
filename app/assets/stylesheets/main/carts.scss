@@ -30,32 +30,6 @@
           width: 80%;
         }
       }
-      .quantity-action {
-        border: 1px solid #ebebeb;
-        .button {
-          border: none;
-          padding: 5px 10px;
-          font-size: 16px;
-          a {
-            color: #000;
-            text-decoration: none;
-          }
-        }
-        .sub-btn {
-          border-right: 1px solid #ebebeb;
-        }
-        .quantity-value {
-          min-width: 100px;
-          max-width: 150px;
-          padding: 5px 20px;
-          border: none;
-          text-align: center;
-          outline: none;
-        }
-        .inc-btn {
-          border-left: 1px solid #ebebeb;
-        }
-      }
     }
   }
   .total {

@@ -22,11 +22,12 @@
       <span class="qua-label">数量 :</span>
       <div class="quantity-action">
         <% quantity = 1 %>
-        <button class="button" id="sub-btn">-</button>
+        <button class="button sub-btn">-</button>
         <input class="quantity-value" id="quantity-val" type="text" value="<%= quantity %>">
-        <button class="button" id="inc-btn">+</button>
+        <button class="button inc-btn">+</button>
       </div>
     </div>
+    <br>
 
     <div class="buy-action">
       <% if @product.is_maintainable %>
@@ -69,14 +70,14 @@
   var quantityObj = $("#quantity-val")
   var quantityObjValue = quantityObj.val()
 
-  $("#sub-btn").on("click", function () {
+  $(".sub-btn").on("click", function () {
     if (quantityObjValue > 1) {
       quantityObjValue = parseInt(quantityObjValue) - 1
       $("#quantity-val").val(quantityObjValue)
     }
   })
 
-  $("#inc-btn").on("click", function () {
+  $(".inc-btn").on("click", function () {
     if (quantityObjValue < totalQuantity) {
       quantityObjValue = parseInt(quantityObjValue) + 1
       $("#quantity-val").val(quantityObjValue)

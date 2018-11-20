@@ -6,7 +6,8 @@
     </div>
 
     <% @cart_items.each do |cart_item| %>
-      <div class="media">
+      <div class="media checkout-list">
+        <p id="<%= cart_item.id %>" style="display:none;"></p>
         <div class="media-left">
           <%= link_to product_path(cart_item.product) do %>
             <% if cart_item.product.image.present? %>
@@ -15,19 +16,31 @@
               <%= image_tag("http://placehold.it/200x200&text=No Pic", class: 'media-object') %>
             <% end %>
           <% end %>
+          <p class="total-product-quantity" id="total-<%= cart_item.id %>" style="display: none;"><%= cart_item.product.quantity %></p>
         </div>
         <div class="media-body">
           <h4 class="media-heading"><%= cart_item.product.title %></h4>
           <p><%= cart_item.product.description %></p>
-          <p>数量: <%= cart_item.quantity %></p>
-          <p>价格: <%= cart_item.product.price %></p>
+
+          <span>数量:</span>
+          <div class="quantity-action">
+            <% cart_item = current_cart.cart_items.find_by(product_id: cart_item.product_id)%>
+
+            <a class="button sub-btn" href="/cart_items/<%= cart_item.product_id %>/change_quantity" data-index-number="<%= cart_item.id %>">-</a>
+
+            <input class="quantity-value" id="cart-item-quantity-<%= cart_item.id %>" type="text" value="<%= cart_item.quantity %>">
+            <a class="button inc-btn" href="/cart_items/<%= cart_item.product_id %>/change_quantity" data-index-number="<%= cart_item.id %>">+</a>
+          </div>
+          <br>
+
+          <p>价格: <span id="cart-item-product-price-<%= cart_item.id %>"><%= cart_item.product.price %><span></p>
         </div>
       </div>
     <% end %>
 
     <div class="total clearfix">
       <span class="pull-right">
-        <strong>总计: ￥<%= render_cart_total_price(current_cart, @cart_items) %></strong>
+        <strong>总计: ￥<span class="checkout-item-total-price"><%= render_cart_total_price(current_cart, @cart_items) %></span></strong>
       </span>
     </div>
 
