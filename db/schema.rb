@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_20_091655) do
+ActiveRecord::Schema.define(version: 2018_11_20_145527) do
 
   create_table "addresses", force: :cascade do |t|
     t.string "province"
@@ -65,7 +65,10 @@ ActiveRecord::Schema.define(version: 2018_11_20_091655) do
     t.string "payment_method"
     t.string "aasm_state", default: "order_placed"
     t.integer "address_id"
+    t.string "order_no"
     t.index ["aasm_state"], name: "index_orders_on_aasm_state"
+    t.index ["order_no"], name: "index_orders_on_order_no", unique: true
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "photos", force: :cascade do |t|

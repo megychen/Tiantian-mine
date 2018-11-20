@@ -2,7 +2,7 @@
   <div class="col-md-12">
     <%= render "admin/orders/state_option", order: @order %>
     <br>
-    <h4> 商品列表 (<%= render_order_paid_state(@order) %>) </h4>
+    <h4> 商品列表 (<%= render_order_paid_state(@order) %>) <span><%= @order.order_no %></span> </h4>
 
     <div class="table-responsive">
       <table>
