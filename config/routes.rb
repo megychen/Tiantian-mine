@@ -46,6 +46,13 @@ Rails.application.routes.draw do
       post :change_quantity
     end
   end
+
+  resources :verifications do
+    collection do
+      post :verify
+    end
+  end
+
   resources :orders do
     member do
       post :pay_with_alipay

@@ -78,13 +78,34 @@
     <div class="pull-right"><input type="checkbox" id="disclaimer"> <b>协议条款</b></div>
     <br><br>
 
+    <!-- 手机验证码提交 -->
+    <div class="verification-content-wrapper">
+      <div class="verification-content" style="padding: 30px;">
+        <div class="hint">请按照以下步骤完成验证：</div>
+        <div class="code">
+          <input type="text" name="verification_code" class="verification-code form-control">
+
+          <%= simple_form_for @verification, method: :post, :remote => true, html: {class: "create-verification-code"} do |f| %>
+            <input type="hidden" name="verification[identity]" value="<%= current_user.email %>">
+            <%= f.submit "获取邮箱验证码", class: "btn btn-info" %>
+          <% end %>
+        </div>
+
+        <br></br>
+        <div class="code-success-message"></div>
+
+        <input type="submit" value="提交" class="btn btn-primary code-submit" style="width:100%;">
+
+      </div>
+    </div>
+
     <div class="order-form clearfix">
-      <%= simple_form_for @order, method: :post, class: "create-order-form" do |f| %>
+      <%= simple_form_for @order, method: :post, html: { class: "create-order-form" } do |f| %>
         <div class="checkout">
           <input type="hidden" class="cart-item-ids" name="cart_item_ids">
           <%= f.input :address_id, :as => :hidden, :input_html => { :id => 'input_address_id' } %>
           <%= f.submit "提交订单", class: "button-base button-secondary pull-right create-order-button",
-                       data: { disable_with: "Submitting..." } %>
+                       data: { disable_with: "提交中..." } %>
         </div>
       <% end %>
 
@@ -111,7 +132,7 @@
     $(document).bind("ajax:success", ".address-form", function (evt, data, status, xhr) {
       if (data.success === true) {
         $('#address_form_modal').modal("hide");
-        window.location.reload()
+        // window.location.reload()
       }
     })
 
@@ -140,6 +161,50 @@
       $(".create-order-button").prop("disabled", true)
     })
 
+    // 验证码审核
+
+    function verificationCodeValid() {
+      var result = false;
+      var emailAddress = "<%= current_user.email %>";
+
+      $(".verification-content-wrapper").css("display", "block");
+      $(".verification-content-wrapper").css("z-index", "3000");
+
+      $(document).bind("ajax:success", ".create-order-form", function (evt, data, status, xhr) {
+        evt.preventDefault()
+
+        if (data.success === true) {
+          $(".code-success-message").text("验证码已发送至" + emailAddress)
+        }
+      })
+
+      $(".code-submit").on("click", function(e) {
+        e.preventDefault()
+
+        var textCode = $(".verification-code").val()
+        data = "identity=" + emailAddress + "&code=" + textCode
+
+        $.ajax({
+          url: "/verifications/verify",
+          data: data,
+          method: 'POST',
+          dataType: 'json', // 要求服务器回传 json
+          success: function (response) {
+            if (response.success === true) {
+              $(".verification-content-wrapper").css("display", "none");
+              $(".verification-content-wrapper").css("z-index", "-10");
+
+              result = true
+              $(".create-order-form").submit()
+            } else {
+              $(".code-success-message").text("验证码错误")
+            }
+          }
+        })
+      })
+      return result
+    }
+
 
     //生成订单
     var addressID,
@@ -153,12 +218,18 @@
       }
     });
 
-    $('.create-order-button').click(function() {
+    $('.create-order-button').click(function(e) {
+      e.preventDefault()
+
       if (addressID === undefined) {
         $(".modal-content").text("请选择收货地址")
         $('#message').modal()
         $('#message').modal('show')
         return false;
+      }
+
+      if (!verificationCodeValid()) {
+        return false
       }
     })
 

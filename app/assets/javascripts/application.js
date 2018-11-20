@@ -208,7 +208,7 @@ $(document).on('turbolinks:load', function () {
     var checkedItem = $('input[name="cart_item_id"]:checked')
 
     if (checkedItem.length === 0) {
-      messageHint("您还没有选中商品")
+      modalMessage("您还没有选中商品")
       return
     }
 

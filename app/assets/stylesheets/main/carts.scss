@@ -51,7 +51,7 @@
       margin-top: 5%;
     }
   }
-  .disclaimer-content-wrapper {
+  .disclaimer-content-wrapper, .verification-content-wrapper {
     overflow: auto;
     position: fixed;
     top: 0;
@@ -62,7 +62,7 @@
     background: rgba(0,0,0,0.3);
     z-index: -10;
     display: none;
-    .disclaimer-content {
+    .disclaimer-content, .verification-content {
       max-width: 700px;
       padding: 15px;
       position: fixed;
@@ -74,6 +74,34 @@
       border-radius: 5px;
       box-shadow: 0 1px 3px rgba(0,0,0,.3);
     }
+  }
+
+  .hint {
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  .code {
+    width: 400px;
+    .verification-code {
+      width: 68%;
+      display: inline-block;
+      float: left;
+    }
+    .new_verification {
+      width: 30%;
+      display: inline-block;
+      float: right;
+    }
+  }
+
+  .code-success-message {
+    color: red;
+  }
+
+  .code-submit {
+    width: 100%;
+    margin-top: 20px;
   }
 
   .total {
