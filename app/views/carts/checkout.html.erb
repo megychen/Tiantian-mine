@@ -53,7 +53,32 @@
     </div>
     <%= render "new_address" %>
 
-    <div class="order-form">
+
+    <!-- 协议条款 -->
+
+    <div class="disclaimer-content-wrapper">
+      <div class="disclaimer-content">
+        <p>请仔细阅读以下风险提示：</p>
+        <p>(1)您所购买的商品不属于生活消费品，不适用《中华人民共和国消费者权益保护法》、《网络购买商品七日无理由退货暂行办法》等规定。</p>
+        <p>(2)您所购买的商品不同于生活消费类电子产品，而是根据客户需求特殊定制的产品。</p>
+        <p>(3)无论是否发货，您付款后均不能退款、退货、换货</p>
+
+        <p>注：上述风险提示不适用与R1、R3等产品。</p>
+
+        <p>在您点击提交订单之前，请您认真阅读并遵守本网络各项条款及上述风险提示。您点击提交订单后，即视为您完全接受本网站各项条款及上述风险提示，
+           能够独立承担法律责任</p>
+
+        <p class="text-center">
+          <button class="btn btn-info agree-btn">同意</button>
+          <button class="btn btn-default disagree-btn">不同意</button>
+        </p>
+      </div>
+    </div>
+
+    <div class="pull-right"><input type="checkbox" id="disclaimer"> <b>协议条款</b></div>
+    <br><br>
+
+    <div class="order-form clearfix">
       <%= simple_form_for @order, method: :post, class: "create-order-form" do |f| %>
         <div class="checkout">
           <input type="hidden" class="cart-item-ids" name="cart_item_ids">
@@ -73,6 +98,11 @@
       $('.city-group').china_city()
     })
 
+    // 协议条款未选择，提交订单按钮disabled
+    if ($('#disclaimer').is(':checked') === false) {
+      $(".create-order-button").prop("disabled", true)
+    }
+
     // 收货地址
     $(document).on('click', '.new-address-btn', function() {
       $('#address_form_modal').modal();
@@ -83,6 +113,31 @@
         $('#address_form_modal').modal("hide");
         window.location.reload()
       }
+    })
+
+    // 监听协议条款复选框变化
+    $("#disclaimer").on("change", function () {
+      if(this.checked) {
+        $(".disclaimer-content-wrapper").css("display", "block");
+        $(".disclaimer-content-wrapper").css("z-index", "3000");
+      } else {
+        $(".create-order-button").prop("disabled", true)
+      }
+    })
+
+    // 同意协议条款
+    $(".agree-btn").on("click", function() {
+      $(".disclaimer-content-wrapper").css("display", "none");
+      $(".disclaimer-content-wrapper").css("z-index", "-10");
+      $(".create-order-button").prop("disabled", false)
+    })
+
+    // 不同意协议条款
+    $(".disagree-btn").on("click", function() {
+      $(".disclaimer-content-wrapper").css("display", "none");
+      $(".disclaimer-content-wrapper").css("z-index", "-10");
+      $("#disclaimer").prop("checked", false)
+      $(".create-order-button").prop("disabled", true)
     })
 
 
