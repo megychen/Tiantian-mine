@@ -1,9 +1,10 @@
-<table class="table table-bordered table-hover order-list">
+<table class="table table-bordered table-hover">
   <thead>
     <tr>
       <th>订单编号</th>
       <th>生成时间</th>
       <th>订购者</th>
+      <th>审核状态</th>
       <th>订单状态</th>
       <th>付款证明</th>
     </tr>
@@ -14,7 +15,8 @@
         <td> <%= link_to(order.order_no, admin_order_path(order) ) %> </td>
         <td> <%= order.created_at.to_s(:long) %> </td>
         <td> <%= order.user.email %></td>
-        <td> <%= render_order_state(order) %> </td>
+        <td> <%= render_order_confirmed_state(order) %> </td>
+        <td> <%= render_order_payment_state(order) %> </td>
         <td> <%= order.certificates.size %> </td>
       </tr>
     <% end %>

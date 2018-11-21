@@ -1,8 +1,23 @@
 <div class="row">
   <div class="col-md-12">
-    <%= render "admin/orders/state_option", order: @order %>
+    <h4 class="text-center">
+      <%= @order.order_no %>
+      <% if @order.is_confirmed? %>
+        <span class="label label-success"><%= render_order_paid_state(@order) %></span>
+      <% else %>
+        <span class="label label-warning"><%= render_order_confirmed_state(@order) %></span>
+      <% end %>
+    </h4>
+    <% if @order.is_confirmed? %>
+      <%= render "admin/orders/state_option", order: @order %>
+    <% else %>
+      <span style="padding-top:20px; float:right;">
+        <%= link_to("审核通过", confirm_admin_order_path(@order), :method => :post, class: "btn btn-danger btn-sm") %>
+      </span>
+    <% end %>
+
     <br>
-    <h4> 商品列表 (<%= render_order_paid_state(@order) %>) <span><%= @order.order_no %></span> </h4>
+    <h4> 商品列表</h4>
 
     <div class="table-responsive">
       <table>

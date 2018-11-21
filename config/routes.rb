@@ -20,6 +20,7 @@ Rails.application.routes.draw do
         post :return
         post :pay
         post :unpay
+        post :confirm
       end
     end
   end

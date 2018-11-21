@@ -10,12 +10,20 @@ class Order < ApplicationRecord
 
   scope :recent, -> { order("created_at DESC") }
 
+  def generate_token
+    self.token = SecureRandom.uuid
+  end
+
   def generate_order_no
     self.order_no = RandomCode.generate_order_uuid
   end
 
   def set_payment_with!(method)
     self.update_columns(payment_method: method)
+  end
+
+  def confirm!
+    self.update_columns(is_confirmed: true)
   end
 
   def pay!

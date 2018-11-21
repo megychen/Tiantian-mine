@@ -7,6 +7,7 @@
         <tr>
           <th>订单编号</th>
           <th>生成时间</th>
+          <th>审核状态</th>
           <th>订单状态</th>
           <th>操作</th>
         </tr>
@@ -17,12 +18,15 @@
         <tr>
           <td> <%= link_to(order.order_no, order_path(order.token)) %> </td>
           <td> <%= order.created_at.to_s(:long) %> </td>
-          <td> <%= render_order_state(order) %> </td>
+          <td> <%= render_order_confirmed_state(order) %> </td>
+          <td> <%= render_order_payment_state(order) %> </td>
           <td>
             <% if order.certificates.present? %>
               <%= link_to("查看付款证明", order_certificates_path(order.token), class: "btn btn-default btn-sm") %>
-            <% else %>
+            <% elsif order.is_confirmed? %>
               <%= link_to("上传付款证明", new_order_certificate_path(order.token), class: "btn btn-default btn-sm") %>
+            <% else %>
+              订单等待审核中
             <% end %>
           </td>
         </tr>

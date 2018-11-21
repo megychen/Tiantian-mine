@@ -7,7 +7,7 @@ module OrdersHelper
     end
   end
 
-  def render_order_state(order)
+  def render_order_payment_state(order)
     case order.aasm_state
     when "order_placed"
       "已下单"
@@ -21,6 +21,14 @@ module OrdersHelper
       "订单已取消"
     when "good_returned"
       "已退货"
+    end
+  end
+
+  def render_order_confirmed_state(order)
+    if order.is_confirmed?
+       "已通过"
+    else
+       "待确认"
     end
   end
 end

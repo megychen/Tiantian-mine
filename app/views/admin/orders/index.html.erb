@@ -8,7 +8,10 @@
   <%= link_to("已付款", admin_orders_path(:order => "paid"), :remote => true, class: "btn button-primary order-filter") %>
 </div>
 
-<%= render "partial" %>
+<div class="order-list">
+  <%= render "partial" %>
+</div>
+
 
 <script>
 
@@ -17,8 +20,8 @@
     $(this).addClass("button-active")
 
     var url = $(this).attr("href")
-    $.get(url, function(data) {
-      $('.order-list').replaceWith(data);
+    $.get(url, function(response) {
+      $('.order-list').html(response.data);
     })
   })
 

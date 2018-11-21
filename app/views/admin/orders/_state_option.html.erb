@@ -1,4 +1,4 @@
-<div style="padding:10px; float:right;">
+<div style="padding-top:20px; float:right;">
 
   <% case order.aasm_state %>
   <% when "order_placed" %>
@@ -15,7 +15,7 @@
                 class: "btn btn-default btn-sm", method: :post) %>
     <%= link_to("撤销已付款",
                 unpay_admin_order_path(order),
-                class: "btn btn-default btn-danger", method: :post) %>
+                class: "btn btn-danger btn-sm", method: :post) %>
 
   <% when "shipping" %>
     <%= link_to("设为已出货",
