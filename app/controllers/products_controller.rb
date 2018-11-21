@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   def index
     @products = Product.all
-    @orders = current_user.orders.where(:is_confirmed => true, :is_paid => false).recent.limit(3)
+    @orders = current_user.orders.where(:is_confirmed => true, :is_paid => false).recent.limit(3) if current_user.present?
   end
 
   def show
