@@ -6,7 +6,34 @@ class Admin::OrdersController < ApplicationController
   before_action :find_order, except: [:index]
 
   def index
-    @orders = Order.order("id DESC")
+    if params[:order] == "checking"
+      @orders = Order.where(:is_confirmed => false).recent
+      render json: {
+        success: 'true',
+        data: render_to_string(file: 'admin/orders/_partial', :layout => false)
+      }
+    end
+
+    if params[:order] == "obligation"
+      @orders = Order.where(:is_confirmed => true, :is_paid => false).recent
+      render json: {
+        success: 'true',
+        data: render_to_string(file: 'admin/orders/_partial', :layout => false)
+      }
+    end
+
+    if params[:order] == "paid"
+      @orders = Order.where(:is_confirmed => true, :is_paid => true).recent
+      render json: {
+        success: 'true',
+        data: render_to_string(file: 'admin/orders/_partial', :layout => false)
+      }
+    end
+
+    if params[:order].nil?
+      @orders = Order.all.recent
+    end
+
   end
 
   def show

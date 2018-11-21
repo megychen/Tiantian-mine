@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col-md-12">
-
+    <span class="pull-right"><%= link_to("返回我的订单", account_orders_path, class: "btn btn-default") %></span>
+    <h4 class="text-center">订单编号：<%= @order.order_no %></h4>
     <div class="page-header">
       <h4><i class="fa fa-list-alt"></i> 商品列表</h4>
     </div>
@@ -46,11 +47,16 @@
     </div>
 
     <div class="group pull-right">
-      <% if !@order.is_paid? %>
-        <%= link_to("上传付款证明", new_order_certificate_path(@order.token), class: "btn btn-info") %>
+      <% if @order.is_confirmed? %>
+        <% if !@order.is_paid? %>
+          <%= link_to("上传付款证明", new_order_certificate_path(@order.token), class: "btn btn-info") %>
+        <% else %>
+          <p class="text-center">此订单已完成付款</p>
+        <% end %>
       <% else %>
-        <p class="text-center">此订单已完成付款</p>
+        <span class="label label-warning">订单已提交，等待审核中……</span>
       <% end %>
+
 
     </div>
 

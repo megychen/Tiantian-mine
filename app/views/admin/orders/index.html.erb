@@ -1,25 +1,25 @@
-<h4 class="text-center"><i class="fa fa-list-alt"></i> 订单列表 </h2>
+<h4 class="text-center"><i class="fa fa-list-alt"></i> 订单列表 </h4>
 
-<table class="table table-bordered table-hover">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>生成时间</th>
-      <th>订购者</th>
-      <th>订单状态</th>
-      <th>付款证明</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @orders.each do |order| %>
-      <tr>
-        <td> <%= link_to(order.order_no, admin_order_path(order) ) %> </td>
-        <td> <%= order.created_at.to_s(:long) %> </td>
-        <td> <%= order.user.email %></td>
-        <td> <%= render_order_state(order) %> </td>
-        <td> <%= order.certificates.size %> </td>
-      </tr>
-    <% end %>
 
-  </tbody>
-</table>
+<div class="btn-group" role="group">
+  <%= link_to("全部", admin_orders_path, class: "btn button-primary order-filter button-active") %>
+  <%= link_to("待审核", admin_orders_path(:order => "checking"), :remote => true, class: "btn button-primary order-filter") %>
+  <%= link_to("待付款", admin_orders_path(:order => "obligation"), :remote => true, class: "btn button-primary order-filter") %>
+  <%= link_to("已付款", admin_orders_path(:order => "paid"), :remote => true, class: "btn button-primary order-filter") %>
+</div>
+
+<%= render "partial" %>
+
+<script>
+
+  $(".order-filter").on("click", function () {
+    $('.order-filter').removeClass('button-active');
+    $(this).addClass("button-active")
+
+    var url = $(this).attr("href")
+    $.get(url, function(data) {
+      $('.order-list').replaceWith(data);
+    })
+  })
+
+</script>
