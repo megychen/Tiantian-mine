@@ -2,6 +2,23 @@
   <img src="/assets/banner-2.jpg" alt="轮播图-1" class="banner-image-1">
 </div>
 
+<% if @orders.present? %>
+  <div class="unpayment-order">
+    <p class="text-center order-title"><strong>待付款订单</strong></p>
+    <ul class="list-group">
+      <% @orders.each do |order| %>
+        <li class="list-group-item" style="overflow: auto;">
+          <div class="col-md-3 text-center"><b>NO </b> <%= order.order_no %></div>
+          <div class="col-md-3 text-center"><b>商品 </b> <%= order.product_lists.pluck(:product_name).join(",") %></div>
+          <div class="col-md-3 text-center"><b>总计</b> <%= render_product_list_total_price(order.product_lists) %> CNY</div>
+          <div class="col-md-3 text-center"><%= link_to("去付款", order_path(order.token), class: "instant-pay") %></div>
+        </li>
+      <% end %>
+    </ul>
+  </div>  
+<% end %>
+
+
 <div class="products-list">
   <% @products.each do |product| %>
     <div class="col-md-3 col-xs-12 product">
