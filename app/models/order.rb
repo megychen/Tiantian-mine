@@ -6,6 +6,7 @@ class Order < ApplicationRecord
   belongs_to :user
   has_many :product_lists
   has_many :certificates
+  has_one :invoice
   belongs_to :address, optional: true
 
   scope :recent, -> { order("created_at DESC") }

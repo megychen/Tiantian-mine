@@ -3,7 +3,6 @@ class CertificatesController < ApplicationController
   before_action :find_order
 
   def index
-    puts action_name
     @certificates = @order.certificates
   end
 
