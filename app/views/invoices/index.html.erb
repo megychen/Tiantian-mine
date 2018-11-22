@@ -1,0 +1,57 @@
+<span class="pull-right"><%= link_to("返回订单列表", account_orders_path, class: "btn btn-default btn-sm") %></span>
+<div class="page-header">
+  <h4><i class="fa fa-list-alt"></i> 订单信息</h4>
+</div>
+<div class="order-info" style="overflow: auto;">
+  <% @order.product_lists.each do |product_list| %>
+    <div class="col-md-4 col-sm-6">
+      <div class="thumbnail">
+        <h4 class="media-heading"><%= product_list.product_name %></h4>
+        <p>价格: <%= product_list.product_price %></p>
+        <p>数量: <%= product_list.quantity %></p>
+      </div>
+
+    </div>
+  <% end %>
+  <span class="pull-right">
+    <strong>总计: <%= @order.total %> CNY</strong>
+  </span>
+</div>
+
+<div class="page-header">
+  <h4><i class="fa fa-credit-card"></i> 发票信息</h4>
+</div>
+<div class="panel panel-info">
+  <% if @invoice.invoice_type == "电子普通发票" %>
+    <div class="panel-heading">电子普通发票</div>
+    <div class="panel-body">
+      <% if @invoice.organization == "个人" %>
+        <p>付款人名称：<%= @invoice.person_name %></p>
+        <p>身份证号码：<%= @invoice.identity_no %></p>
+      <% else %>
+        <p>公司名称：<%= @invoice.company_name %></p>
+        <p>纳税人识别号：<%= @invoice.taxpayer_no %></p>
+      <% end %>
+      <p>收票人邮箱：<%= @invoice.receiver_email %></p>
+    </div>
+  <% else %>
+    <div class="panel-heading">增值税专用发票</div>
+    <div class="panel-body">
+      <p>公司名称：<%= @invoice.company_name %></p>
+      <p>纳税人识别号：<%= @invoice.taxpayer_no %></p>
+      <p>注册地址：<%= @invoice.register_address %></p>
+      <p>注册电话：<%= @invoice.register_phone %></p>
+      <p>开户银行：<%= @invoice.deposit_bank %></p>
+      <p>银行账号：<%= @invoice.bank_no %></p>
+    </div>
+  <% end %>
+  <div class="panel-footer">
+    <p>收件人姓名：<%= @invoice.receiver_name %></p>
+    <p>收件人电话：<%= @invoice.receiver_mobile %></p>
+    <p>收件人地址：
+      <%= ChinaCity.get(@invoice.receiver_province) %> -
+      <%= ChinaCity.get(@invoice.receiver_city) %> -
+      <%= @invoice.receiver_address %>
+    </p>
+  </div>
+</div>
