@@ -2,15 +2,19 @@ class InvoicesController < ApplicationController
   before_action :authenticate_user!
   before_action :find_order
 
+  def index
+    @invoice = @order.invoice
+  end
+
   def new
-    @invoice = @order.build_invoice
+    @invoice = Invoice.new
   end
 
   def create
     @invoice = Invoice.new(invoice_params)
-    @invoice.order = order
+    @invoice.order = @order
 
-    if @order.save
+    if @invoice.save!
       redirect_to order_path(@order.token)
     else
       render :new
@@ -37,7 +41,7 @@ class InvoicesController < ApplicationController
   end
 
   def invoice_params
-    params.require(:invoice).permit(:type, :organization, :person_name, :identity_no, :company_name, :taxpayer_no, :receiver_email,
+    params.require(:invoice).permit(:invoice_type, :organization, :person_name, :identity_no, :company_name, :taxpayer_no, :receiver_email,
                                     :receiver_name, :receiver_mobile, :receiver_province, :receiver_city, :receiver_address,
                                     :register_address, :register_phone, :deposit_bank, :bank_no)
   end

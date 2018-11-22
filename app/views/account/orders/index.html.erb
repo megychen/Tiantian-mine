@@ -9,7 +9,8 @@
           <th>生成时间</th>
           <th>审核状态</th>
           <th>订单状态</th>
-          <th>操作</th>
+          <th>付款证明</th>
+          <th>发票信息</th>
         </tr>
       </thead>
       <tbody>
@@ -25,6 +26,15 @@
               <%= link_to("查看付款证明", order_certificates_path(order.token), class: "btn btn-default btn-sm") %>
             <% elsif order.is_confirmed? %>
               <%= link_to("上传付款证明", new_order_certificate_path(order.token), class: "btn btn-default btn-sm") %>
+            <% else %>
+              订单等待审核中
+            <% end %>
+          </td>
+          <td>
+            <% if order.invoice.present? %>
+              <%= link_to("查看发票信息", order_invoices_path(order.token), class: "btn btn-default btn-sm") %>
+            <% elsif order.is_confirmed? %>
+              <%= link_to("填写发票信息", new_order_invoice_path(order.token), class: "btn btn-default btn-sm") %>
             <% else %>
               订单等待审核中
             <% end %>

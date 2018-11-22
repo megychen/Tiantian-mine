@@ -1,0 +1,106 @@
+<div class="col-md-8 col-md-offset-2 col-sm-12">
+  <%= simple_form_for @invoice, :url => order_invoices_path(@order.token), :method => :post do |f| %>
+    <ul class="nav nav-tabs">
+      <li class="active"><a data-toggle="tab" href="#normal">电子普通发票</a></li>
+      <li><a data-toggle="tab" href="#special">增值税专用发票</a></li>
+    </ul>
+    <br>
+
+    <div class="tab-content">
+      <div id="normal" class="tab-pane fade in active">
+        <div class="group">
+          <%= f.input :organization, label: "发票种类", :collection => ["个人", "公司"], selected: "个人", required: true %>
+        </div>
+        <div class="group person-name-tab">
+          <%= f.input :person_name, label: "付款人名称", placeholder: "请填写付款人名称" %>
+        </div>
+        <div class="group person-identity-tab">
+          <%= f.input :identity_no, label: "身份证号码", placeholder: "请填写付款人身份证号码" %>
+        </div>
+        <div class="group company-name-tab">
+          <%= f.input :company_name, label: "公司名称", placeholder: "请输入公司名称" %>
+        </div>
+        <div class="group taxpayer-no-tab">
+          <%= f.input :taxpayer_no, label: "纳税人识别号", placeholder: "请输入纳税人识别号" %>
+        </div>
+        <div class="group">
+          <%= f.input :receiver_email, label: "收票人邮箱", placeholder: "邮箱" %>
+        </div>
+      </div>
+      <div id="special" class="tab-pane fade">
+        <div class="group">
+          <%= f.input :company_name, label: "公司名称", placeholder: "请输入公司名称" %>
+        </div>
+        <div class="group">
+          <%= f.input :taxpayer_no, label: "纳税人识别号", placeholder: "请输入纳税人识别号" %>
+        </div>
+        <div class="group">
+          <%= f.input :register_address, label: "注册地址", placeholder: "请输入注册地址" %>
+        </div>
+        <div class="group">
+          <%= f.input :register_phone, label: "注册电话", placeholder: "请输入注册电话" %>
+        </div>
+        <div class="group">
+          <%= f.input :deposit_bank, label: "开户银行", placeholder: "请输入开户银行" %>
+        </div>
+        <div class="group">
+          <%= f.input :bank_no, label: "银行账号", placeholder: "请输入银行账号" %>
+        </div>
+      </div>
+    </div>
+
+    <p><strong>合同发票回寄地址信息</strong></p>
+    <div class="group">
+      <%= f.input :receiver_name, label: "收件人姓名", placeholder: "请填写合同发票收件人的姓名" %>
+    </div>
+    <div class="group">
+      <%= f.input :receiver_mobile, label: "收件人电话", placeholder: "请填写合同发票收件人的联系电话" %>
+    </div>
+    <div class="city-group">
+      <label>收件人省、市</label><br>
+      <%= f.select :receiver_province,  ChinaCity.list.unshift(["--省份--", 420000]), {}, class: "city-select "%>
+      <%= f.select :receiver_city,      ChinaCity.list(f.object.receiver_province).presence || [["--城市--", 422800]],    {}, class: "city-select " %>
+    </div>
+    <div class="group">
+      <%= f.input :receiver_address, label: "详细地址", placeholder: "请填写详细地址以便我司邮寄合同与发票" %>
+    </div>
+
+    <input type="hidden" id="invoice-type" name="invoice[invoice_type]">
+
+    <%= f.submit "提交", data: { disable_with: "提交中..." }, class: "btn btn-primary invoice-submit-button" %>
+  <% end %>
+</div>
+
+<script>
+  $(document).on("turbolinks:load", function () {
+    $('.city-group').china_city()
+
+    $(".company-name-tab").css("display", "none")
+    $(".taxpayer-no-tab").css("display", "none")
+
+    // 监听选择框的变化
+    $("#invoice_organization").on("change", function () {
+      var organizationType = $("#invoice_organization option:selected").text()
+      if (organizationType === "个人") {
+        $(".company-name-tab").css("display", "none")
+        $(".taxpayer-no-tab").css("display", "none")
+        $(".person-name-tab").css("display", "block")
+        $(".person-identity-tab").css("display", "block")
+      } else {
+        $(".company-name-tab").css("display", "block")
+        $(".taxpayer-no-tab").css("display", "block")
+        $(".person-name-tab").css("display", "none")
+        $(".person-identity-tab").css("display", "none")
+      }
+    })
+
+    // 点击提交按钮事件
+    $(".invoice-submit-button").on("click", function () {
+      if ($("#normal").hasClass("active")) {
+        $("#invoice-type").val("电子普通发票")
+      } else {
+        $("#invoice-type").val("增值税专用发票")
+      }
+    })
+  })
+</script>

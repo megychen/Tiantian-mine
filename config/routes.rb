@@ -61,6 +61,7 @@ Rails.application.routes.draw do
       post :apply_to_cancel
     end
     resources :certificates
+    resources :invoices
   end
 
   resources :addresses

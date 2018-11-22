@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   has_many :orders
   has_many :addresses
+  has_many :invoices
   has_many :logs
 
   def admin?
