@@ -13,6 +13,7 @@ class InvoicesController < ApplicationController
   def create
     @invoice = Invoice.new(invoice_params)
     @invoice.order = @order
+    @invoice.user = current_user
 
     if @invoice.save!
       redirect_to order_path(@order.token)

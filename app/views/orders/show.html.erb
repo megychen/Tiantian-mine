@@ -41,8 +41,12 @@
      <hr>
 
     <div class="pull-left">
-      <% if @order.order_placed? || @order.paid? %>
-        <%= link_to("申请取消订单", apply_to_cancel_order_path(@order), method: :post, class: "btn btn-info") %>
+      <% if @order.certificates.present? %>
+        <%= link_to("查看已上传付款证明 ", order_certificates_path(@order.token), style: "text-decoration: underline;") %>
+      <% end %>
+
+      <% if @order.invoice.present? %>
+        <%= link_to(" 查看已填写发票信息", order_invoices_path(@order.token), style: "text-decoration: underline;") %>
       <% end %>
     </div>
 
