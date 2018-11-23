@@ -4,15 +4,16 @@ class OrdersController < ApplicationController
   def show
     @order = Order.find_by_token(params[:id])
     @product_lists = @order.product_lists
+    @addresses = current_user.addresses
   end
 
   def create
     @order = Order.new(order_params)
-    @address = Address.find(params[:order][:address_id])
+    # @address = Address.find(params[:order][:address_id])
     @cart_items = current_cart.cart_items.where(id: params[:cart_item_ids].split(","))
     @order.user = current_user
     @order.total = current_cart.total_price(@cart_items)
-    @order.address = @address
+    # @order.address = @address
 
     unless current_cart.have_stock(@cart_items)
       render 'carts/checkout', alert: "库存不足，下单失败"
@@ -30,7 +31,7 @@ class OrdersController < ApplicationController
       end
 
       current_cart.clean_item(@cart_items)
-      OrderMailer.notify_order_placed(@order).deliver!
+      # OrderMailer.notify_order_placed(@order).deliver!
       redirect_to order_path(@order.token)
     else
       render 'carts/checkout'
@@ -54,9 +55,15 @@ class OrdersController < ApplicationController
   end
 
   def apply_to_cancel
-    @order = Order.find(params[:id])
+    @order = Order.find_by_token(params[:id])
     flash[:notice] = "已提交申请"
     redirect_to order_path(@order.token)
+  end
+
+  def update_address
+    @order = Order.find_by_token(params[:id])
+    @order.update_columns(address_id: params[:address_id])
+    render :json => { "success": true }
   end
 
   private

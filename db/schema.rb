@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_22_082611) do
+ActiveRecord::Schema.define(version: 2018_11_22_100445) do
 
   create_table "addresses", force: :cascade do |t|
     t.string "province"
@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(version: 2018_11_22_082611) do
     t.integer "address_id"
     t.string "order_no"
     t.boolean "is_confirmed", default: false
+    t.string "delivery"
     t.index ["aasm_state"], name: "index_orders_on_aasm_state"
     t.index ["order_no"], name: "index_orders_on_order_no", unique: true
     t.index ["user_id"], name: "index_orders_on_user_id"

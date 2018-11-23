@@ -44,16 +44,6 @@
       </span>
     </div>
 
-    <div class="page-header">
-      <h4><i class="fa fa-map-marker"></i> 收货地址</h4>
-    </div>
-
-    <div id="address_list">
-      <%= render "address", addresses: @addresses %>
-    </div>
-    <%= render "new_address" %>
-
-
     <!-- 协议条款 -->
 
     <div class="disclaimer-content-wrapper">
@@ -127,13 +117,6 @@
     // 收货地址
     $(document).on('click', '.new-address-btn', function() {
       $('#address_form_modal').modal();
-    })
-
-    $(document).bind("ajax:success", ".address-form", function (evt, data, status, xhr) {
-      if (data.success === true) {
-        $('#address_form_modal').modal("hide");
-        // window.location.reload()
-      }
     })
 
     // 监听协议条款复选框变化
@@ -220,13 +203,6 @@
 
     $('.create-order-button').click(function(e) {
       e.preventDefault()
-
-      if (addressID === undefined) {
-        $(".modal-content").text("请选择收货地址")
-        $('#message').modal()
-        $('#message').modal('show')
-        return false;
-      }
 
       if (!verificationCodeValid()) {
         return false

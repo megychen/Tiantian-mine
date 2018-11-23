@@ -28,17 +28,35 @@
     <div class="page-header">
       <h4><i class="fa fa-map-marker"></i> 收货地址</h4>
     </div>
-    <div class="address">
-      <%= @order.address.name %>
-      <%= @order.address.mobile %>
-      <%= ChinaCity.get(@order.address.province) %> -
-      <%= ChinaCity.get(@order.address.city) %> -
-      <%= ChinaCity.get(@order.address.district) %>-
-      <%= @order.address.detail %>
-      <%= @order.address.zip_code %>
-    </div>
 
-     <hr>
+    <% if @order.address.present? %>
+      <div class="address">
+        <%= @order.address.name %>
+        <%= @order.address.mobile %>
+        <%= ChinaCity.get(@order.address.province) %> -
+        <%= ChinaCity.get(@order.address.city) %> -
+        <%= ChinaCity.get(@order.address.district) %>-
+        <%= @order.address.detail %>
+        <%= @order.address.zip_code %>
+      </div>
+    <% else %>
+      <div class="complete-address">
+        <p class="text-center">
+          <button class="btn btn-default btn-sm" type="button" data-toggle="collapse" data-target="#collapseAddress" aria-expanded="false" aria-controls="collapseExample">
+            填加收货地址 <i class="fa fa-plus"></i>
+          </button>
+        </p>
+        <div class="collapse" id="collapseAddress">
+          <div class="card card-body">
+            <div id="address_list">
+              <%= render "address", addresses: @addresses %>
+            </div>
+            <%= render "new_address" %>
+        </div>
+      </div>
+    <% end %>
+
+    <hr>
 
     <div class="pull-left">
       <% if @order.order_placed? || @order.paid? %>
@@ -57,8 +75,6 @@
       <% else %>
         <span class="label label-warning">订单已提交，等待审核中……</span>
       <% end %>
-
-
     </div>
 
     <div class="payment-desc">
@@ -83,3 +99,36 @@
     </div>
   </div>
 </div>
+
+<script>
+  $(document).on("turbolinks:load", function () {
+    $('.city-group').china_city()
+  })
+
+  // 选择收货地址
+  $(".submit-order-address").on("click", function (e) {
+    e.preventDefault()
+
+    var addressID = $('input[name="address_id"]:checked').val();
+    var url = $(this).attr("href")
+    $.ajax({
+      url: url,
+      data: { address_id: addressID },
+      method: 'POST',
+      dataType: 'json', // 要求服务器回传 json
+      success: function (response) {
+        if (response.success === true) {
+          window.location.reload()
+        }
+      }
+    })
+  })
+
+  // 新增收货地址
+  $(document).bind("ajax:success", ".address-form", function (evt, data, status, xhr) {
+    if (data.success === true) {
+      $('#address_form_modal').modal("hide");
+      window.location.reload()
+    }
+  })
+</script>
