@@ -1,26 +1,3 @@
-<span class="pull-right"><%= link_to("返回订单列表", account_orders_path, class: "btn btn-default btn-sm") %></span>
-<div class="page-header">
-  <h4><i class="fa fa-list-alt"></i> 订单信息</h4>
-</div>
-<div class="order-info" style="overflow: auto;">
-  <% @order.product_lists.each do |product_list| %>
-    <div class="col-md-4 col-sm-6">
-      <div class="thumbnail">
-        <h4 class="media-heading"><%= product_list.product_name %></h4>
-        <p>价格: <%= product_list.product_price %></p>
-        <p>数量: <%= product_list.quantity %></p>
-      </div>
-
-    </div>
-  <% end %>
-  <span class="pull-right">
-    <strong>总计: <%= @order.total %> CNY</strong>
-  </span>
-</div>
-
-<div class="page-header">
-  <h4><i class="fa fa-credit-card"></i> 发票信息</h4>
-</div>
 <div class="panel panel-info">
   <% if @invoice.invoice_type == "电子普通发票" %>
     <div class="panel-heading">电子普通发票</div>
@@ -55,5 +32,3 @@
     </p>
   </div>
 </div>
-
-<%= render "invoice_item" %>

@@ -10,7 +10,21 @@
       <div class="col-md-4 col-sm-6">
         <div class="thumbnail">
           <h4 class="media-heading"><%= product_list.product_name %></h4>
-          <p>价格: <%= product_list.product_price %></p>
+          <p>价格:
+            <%= product_list.product_price %>
+
+            <% if product_list.new_product_price.present? %>
+              <span class="badge">
+                <% if product_list.new_product_price > product_list.product_price %>
+                  上调
+                <% else %>
+                  下调
+                <% end %>
+                <%= render_product_price_change(product_list) %>
+              </span>
+              调整后价格：<%= product_list.new_product_price %>
+            <% end %>
+          </p>
           <p>数量: <%= product_list.quantity %></p>
         </div>
 
@@ -21,24 +35,77 @@
 
     <div class="total">
       <span class="pull-right">
-        <strong>总计: <%= @order.total %> CNY</strong>
+        <strong>总计: <%= render_product_list_total_price(@product_lists) %> CNY</strong>
       </span>
     </div>
 
     <div class="page-header">
       <h4><i class="fa fa-map-marker"></i> 收货地址</h4>
     </div>
-    <div class="address">
-      <%= @order.address.name %>
-      <%= @order.address.mobile %>
-      <%= ChinaCity.get(@order.address.province) %> -
-      <%= ChinaCity.get(@order.address.city) %> -
-      <%= ChinaCity.get(@order.address.district) %>-
-      <%= @order.address.detail %>
-      <%= @order.address.zip_code %>
+
+    <% if @order.address.present? %>
+      <div class="address">
+        <%= @order.address.name %>
+        <%= @order.address.mobile %>
+        <%= ChinaCity.get(@order.address.province) %> -
+        <%= ChinaCity.get(@order.address.city) %> -
+        <%= ChinaCity.get(@order.address.district) %>-
+        <%= @order.address.detail %>
+        <%= @order.address.zip_code %>
+      </div>
+    <% else %>
+      <div class="complete-address">
+        <p class="text-center">
+          <button class="btn btn-default btn-sm" type="button" data-toggle="collapse" data-target="#collapseAddress" aria-expanded="false" aria-controls="collapseExample">
+            填加收货地址 <i class="fa fa-plus"></i>
+          </button>
+        </p>
+        <div class="collapse" id="collapseAddress">
+          <div class="card card-body">
+            <div id="address_list">
+              <%= render "address", addresses: @addresses %>
+            </div>
+            <%= render "new_address" %>
+        </div>
+      </div>
+    <% end %>
+
+    <hr>
+
+    <div class="page-header">
+      <h4><i class="fa fa-plane"></i> 运送方式</h4>
     </div>
 
-     <hr>
+    <% if @order.delivery.present? && @order.payment_method.present? %>
+      <div class="delivery">
+        运送方式：<%= @order.delivery %> - <%= @order.payment_method %>
+      </div>
+    <% else %>
+      <div class="complete-delivery">
+        <p class="text-center">
+          <button class="btn btn-default btn-sm" type="button" data-toggle="collapse" data-target="#collapseDelivery" aria-expanded="false" aria-controls="collapseExample">
+            填加运送方式 <i class="fa fa-plus"></i>
+          </button>
+        </p>
+        <div class="collapse" id="collapseDelivery">
+          <div class="card card-body">
+            <div id="delivery_list">
+              物流方式：
+              <% Order::DELIVERY.map do |delivery| %>
+                <input type="radio" name="delivery" value="<%= delivery %>"> <%= delivery %>
+              <% end %>
+              <br>
+              寄送方式:
+              <% Order::PAYMENT.map do |payment| %>
+                <input type="radio" name="payment" value="<%= payment %>"> <%= payment %>
+              <% end %>
+            </div>
+            <span class="pull-right delivery-update"><%= link_to("确定", update_delivery_order_path(@order.token), class: "btn btn-default btn-sm submit-order-delivery") %></span>
+        </div>
+      </div>
+    <% end %>
+
+    <hr>
 
     <div class="pull-left">
       <% if @order.certificates.present? %>
@@ -61,8 +128,6 @@
       <% else %>
         <span class="label label-warning">订单已提交，等待审核中……</span>
       <% end %>
-
-
     </div>
 
     <div class="payment-desc">
@@ -87,3 +152,59 @@
     </div>
   </div>
 </div>
+
+<script>
+  $(document).on("turbolinks:load", function () {
+    $('.city-group').china_city()
+  })
+
+  // 选择收货地址
+  $(".submit-order-address").on("click", function (e) {
+    e.preventDefault()
+
+    var addressID = $('input[name="address_id"]:checked').val();
+    var url = $(this).attr("href")
+    $.ajax({
+      url: url,
+      data: { address_id: addressID },
+      method: 'POST',
+      dataType: 'json', // 要求服务器回传 json
+      success: function (response) {
+        if (response.success === true) {
+          window.location.reload()
+        }
+      }
+    })
+  })
+
+  // 新增收货地址
+  $(document).bind("ajax:success", ".address-form", function (evt, data, status, xhr) {
+    if (data.success === true) {
+      $('#address_form_modal').modal("hide");
+      window.location.reload()
+    }
+  })
+
+  // 选择运送方式
+  $(".submit-order-delivery").on("click", function (e) {
+    e.preventDefault()
+
+    var delivery = $('input[name="delivery"]:checked').val()
+    var paymentMethod = $('input[name="payment"]:checked').val()
+
+    var data = "delivery=" + delivery + "&payment_method=" + paymentMethod
+    var url = $(this).attr("href")
+
+    $.ajax({
+      url: url,
+      data: data,
+      method: 'POST',
+      dataType: 'json', // 要求服务器回传 json
+      success: function (response) {
+        if (response.success === true) {
+          window.location.reload()
+        }
+      }
+    })
+  })
+</script>

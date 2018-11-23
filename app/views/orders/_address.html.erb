@@ -1,6 +1,6 @@
 <div class="pull-right">
-  <button type="button" class="btn btn-info btn-xs new-address-btn" data-toggle="modal" data-target="#myModal">
-    添加收货地址
+  <button type="button" class="btn btn-info btn-xs new-address-btn" data-toggle="modal" data-target="#address_form_modal">
+    新增收货地址
   </button>
 </div>
 <div class="clearfix"></div>
@@ -24,6 +24,7 @@
         </label>
       </li>
     <% end %>
+    <span class="pull-right address-update"><%= link_to("确定", update_address_order_path(@order.token), class: "btn btn-default btn-sm submit-order-address") %></span>
   <% else %>
     <li class="list-group-item">
       请添加送货地址

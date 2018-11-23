@@ -26,6 +26,7 @@
             <th>商品明细</th>
             <th>单价</th>
             <th>数量</th>
+            <th>操作</th>
           </tr>
         </thead>
         <tbody>
@@ -37,6 +38,24 @@
               </td>
               <td>
                 <%= product_list.product_price %>
+
+                <% if product_list.new_product_price.present? %>
+                  <span class="badge">
+                    <% if product_list.new_product_price > product_list.product_price %>
+                      上调
+                    <% else %>
+                      下调
+                    <% end %>
+                    <%= render_product_price_change(product_list) %>
+                  </span>
+                  调整后价格：<%= product_list.new_product_price %>
+                <% end %>
+
+              </td>
+              <td>
+                <%= product_list.quantity %>
+              </td>
+              <td>
                 <button type="button" class="btn btn-default btn-xs update-product-list-price" data-toggle="modal" data-target="#update-price-modal-<%= product_list.id %>">更新价格</button>
                 <div class="modal fade" id="update-price-modal-<%= product_list.id %>" role="dialog">
                   <div class="modal-dialog modal-sm">
@@ -50,18 +69,14 @@
                         <input type="number" value="<%= product_list.product_price %>" class="form-control" id="product_list_product_price-<%= product_list.id %>" name="product_list[product_price]">
                       </div>
                       <div class="modal-footer">
-                        <%= link_to(" 更新价格", admin_product_list_path(product_list), method: :put, class: "btn btn-primary btn-xs update-product-price-button", id: "#{product_list.id}") %>
+                        <%= link_to(" 更新价格", admin_product_list_path(product_list), class: "btn btn-primary btn-xs update-product-price-button", id: "#{product_list.id}") %>
                       </div>
                     </div>
                   </div>
                 </div>
               </td>
-              <td>
-                <%= product_list.quantity %>
-              </td>
             </tr>
           <% end %>
-
         </tbody>
       </table>
     </div>
@@ -132,9 +147,14 @@
     // 送出 Ajax
     $.ajax({
       url: url,
-      data: {  product_price:  productPrice },
+      data: {  new_product_price:  productPrice },
       method: 'PUT',
-      dataType: 'json'
+      dataType: 'json',
+      success: function (response) {
+        if (response.success == true) {
+          window.location.reload()
+        }
+      }
     })
   })
 

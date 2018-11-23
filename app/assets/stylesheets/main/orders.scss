@@ -1,3 +1,12 @@
 // Place all the styles related to the orders controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.card-body {
+  overflow: auto;
+  background: #ebebeb;
+  padding: 20px;
+  .address-update {
+    padding-top: 20px;
+  }
+}

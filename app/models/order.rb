@@ -4,12 +4,16 @@ class Order < ApplicationRecord
   include AASM
 
   belongs_to :user
-  has_many :product_lists
+  has_many :product_lists, dependent: :destroy
   has_many :certificates
   has_one :invoice
   belongs_to :address, optional: true
 
   scope :recent, -> { order("created_at DESC") }
+
+  DELIVERY = ["德邦物流", "德邦快递", "顺丰", "顺达航空", "圆通"]
+
+  PAYMENT = ["到付", "寄付"]
 
   def generate_token
     self.token = SecureRandom.uuid
