@@ -10,7 +10,21 @@
       <div class="col-md-4 col-sm-6">
         <div class="thumbnail">
           <h4 class="media-heading"><%= product_list.product_name %></h4>
-          <p>价格: <%= product_list.product_price %></p>
+          <p>价格:
+            <%= product_list.product_price %>
+
+            <% if product_list.new_product_price.present? %>
+              <span class="badge">
+                <% if product_list.new_product_price > product_list.product_price %>
+                  上调
+                <% else %>
+                  下调
+                <% end %>
+                <%= render_product_price_change(product_list) %>
+              </span>
+              调整后价格：<%= product_list.new_product_price %>
+            <% end %>
+          </p>
           <p>数量: <%= product_list.quantity %></p>
         </div>
 
@@ -21,7 +35,7 @@
 
     <div class="total">
       <span class="pull-right">
-        <strong>总计: <%= @order.total %> CNY</strong>
+        <strong>总计: <%= render_product_list_total_price(@product_lists) %> CNY</strong>
       </span>
     </div>
 
