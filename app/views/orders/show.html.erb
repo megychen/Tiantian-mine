@@ -58,6 +58,41 @@
 
     <hr>
 
+    <div class="page-header">
+      <h4><i class="fa fa-plane"></i> 运送方式</h4>
+    </div>
+
+    <% if @order.delivery.present? && @order.payment_method.present? %>
+      <div class="delivery">
+        运送方式：<%= @order.delivery %> - <%= @order.payment_method %>
+      </div>
+    <% else %>
+      <div class="complete-delivery">
+        <p class="text-center">
+          <button class="btn btn-default btn-sm" type="button" data-toggle="collapse" data-target="#collapseDelivery" aria-expanded="false" aria-controls="collapseExample">
+            填加运送方式 <i class="fa fa-plus"></i>
+          </button>
+        </p>
+        <div class="collapse" id="collapseDelivery">
+          <div class="card card-body">
+            <div id="delivery_list">
+              物流方式：
+              <% Order::DELIVERY.map do |delivery| %>
+                <input type="radio" name="delivery" value="<%= delivery %>"> <%= delivery %>
+              <% end %>
+              <br>
+              寄送方式:
+              <% Order::PAYMENT.map do |payment| %>
+                <input type="radio" name="payment" value="<%= payment %>"> <%= payment %>
+              <% end %>
+            </div>
+            <span class="pull-right delivery-update"><%= link_to("确定", update_delivery_order_path(@order.token), class: "btn btn-default btn-sm submit-order-delivery") %></span>
+        </div>
+      </div>
+    <% end %>
+
+    <hr>
+
     <div class="pull-left">
       <% if @order.order_placed? || @order.paid? %>
         <%= link_to("申请取消订单", apply_to_cancel_order_path(@order), method: :post, class: "btn btn-info") %>
@@ -130,5 +165,28 @@
       $('#address_form_modal').modal("hide");
       window.location.reload()
     }
+  })
+
+  // 选择运送方式
+  $(".submit-order-delivery").on("click", function (e) {
+    e.preventDefault()
+
+    var delivery = $('input[name="delivery"]:checked').val()
+    var paymentMethod = $('input[name="payment"]:checked').val()
+
+    var data = "delivery=" + delivery + "&payment_method=" + paymentMethod
+    var url = $(this).attr("href")
+
+    $.ajax({
+      url: url,
+      data: data,
+      method: 'POST',
+      dataType: 'json', // 要求服务器回传 json
+      success: function (response) {
+        if (response.success === true) {
+          window.location.reload()
+        }
+      }
+    })
   })
 </script>

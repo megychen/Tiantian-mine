@@ -60,6 +60,7 @@ Rails.application.routes.draw do
       post :pay_with_wechat
       post :apply_to_cancel
       post :update_address
+      post :update_delivery
     end
     resources :certificates
     resources :invoices

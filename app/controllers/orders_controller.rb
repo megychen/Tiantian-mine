@@ -66,6 +66,12 @@ class OrdersController < ApplicationController
     render :json => { "success": true }
   end
 
+  def update_delivery
+    @order = Order.find_by_token(params[:id])
+    @order.update_columns(delivery: params[:delivery], payment_method: params[:payment_method])
+    render :json => { "success": true }
+  end
+
   private
 
   def order_params
