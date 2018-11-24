@@ -90,33 +90,37 @@
     <hr>
 
     <h4> 地址 </h4>
-    <div class="table-responsive">
-      <table>
-       <tbody>
-         <th>姓名</th>
-         <th>电话</th>
-         <th>地址</th>
-         <th>邮政编码</th>
-         <tr>
-           <td>
-             <%= @order.address.name %>
-           </td>
-           <td>
-             <%= @order.address.mobile %>
-           </td>
-           <td>
-             <%= ChinaCity.get(@order.address.province) %> -
-             <%= ChinaCity.get(@order.address.city) %> -
-             <%= ChinaCity.get(@order.address.district) %>-
-             <%= @order.address.detail %>
-           </td>
-           <td>
-             <%= @order.address.zip_code %>
-           </td>
-         </tr>
-       </tbody>
-      </table>
-    </div>
+    <% if @order.address.present? %>
+      <div class="table-responsive">
+        <table>
+         <tbody>
+           <th>姓名</th>
+           <th>电话</th>
+           <th>地址</th>
+           <th>邮政编码</th>
+           <tr>
+             <td>
+               <%= @order.address.name %>
+             </td>
+             <td>
+               <%= @order.address.mobile %>
+             </td>
+             <td>
+               <%= ChinaCity.get(@order.address.province) %> -
+               <%= ChinaCity.get(@order.address.city) %> -
+               <%= ChinaCity.get(@order.address.district) %>-
+               <%= @order.address.detail %>
+             </td>
+             <td>
+               <%= @order.address.zip_code %>
+             </td>
+           </tr>
+         </tbody>
+        </table>
+      </div>
+    <% else %>
+      <p class="label label-warning">未填写地址</p>
+    <% end %>
 
     <hr>
 
@@ -126,6 +130,16 @@
       <%= render :partial => "certificates/certificate_item", :collection => @certificates, :as => :certificate %>
     <% else %>
       <p class="label label-warning">此用户还未上传付款证明</p>
+    <% end %>
+
+    <hr>
+
+    <h4>发票信息</h4>
+
+    <% if @order.invoice.present? %>
+      <%= render "invoices/invoice_item" %>
+    <% else %>
+      <p class="label label-warning">此用户还未填写发票信息</p>
     <% end %>
   </div>
 </div>
