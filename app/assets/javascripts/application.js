@@ -201,6 +201,20 @@ $(document).on('turbolinks:load', function () {
     });
   })
 
+  // 点击全选按钮
+  $(".carts-checked-all").on("change", function() {
+    if (this.checked) {
+      $('input[name="cart_item_id"]').each(function () {
+        $(this).prop("checked", true)
+      })
+    } else {
+      $('input[name="cart_item_id"]').each(function () {
+        $(this).prop("checked", false)
+      })
+    }
+    calculateCartsTotalPrice()
+  })
+
   // 确认结账
   $(".submit-checkout-btn").click(function (e) {
     e.preventDefault()

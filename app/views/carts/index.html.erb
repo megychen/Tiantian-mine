@@ -5,7 +5,7 @@
     <h4 class="cart-title"> 购物车 </h4>
 
     <div class="cart-list">
-      <% current_cart.cart_items.each do |cart_item| %>
+      <% @cart_items.each do |cart_item| %>
         <div class="cart-item">
           <div class="image col-md-3 col-xs-6">
             <input type="checkbox" name="cart_item_id" class="regular-checkbox" id="<%= cart_item.id %>" <%= 'disabled' if cart_item.product.is_maintainable == true %> >
@@ -45,6 +45,9 @@
       <% end %>
 
       <div class="total clearfix">
+        <div class="checked-all">
+          <input type="checkbox" name="check-all" class="carts-checked-all"> 全选
+        </div>
         <div class="pull-right">
           总计：<span class="cart-item-total-price"><%#= render_cart_total_price(current_cart) %>0</span> RMB <br><br>
           <div class="checkout clearfix">
@@ -68,6 +71,9 @@
     var cartItemPrice = parseInt($("#price-" + findCartItem).text().split("￥")[1])
     var quantity = parseInt($("#cart-item-quantity-" + findCartItem).val())
     $(".cart-item-total-price").text(cartItemPrice * quantity)
+  } else {
+    var newItemId = "<%= @cart_items.first.id if @cart_items.present? %>"
+    $("#" + newItemId).prop("checked", true)
   }
 
 </script>
