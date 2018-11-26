@@ -1,6 +1,7 @@
 <div class="row checkout-page">
    <div class="col-md-12">
-
+     <%= render "common/procedure" %>
+     <div class="clearfix"></div>
     <div class="page-header">
       <h4><i class="fa fa-list-alt"></i> 商品列表</h4>
     </div>
@@ -108,6 +109,10 @@
     $(document).on("turbolinks:load", function () {
       $('.city-group').china_city()
     })
+
+    // 步骤条
+    $(".cart-information").addClass("step-done")
+    $(".order-information").addClass("active")
 
     // 协议条款未选择，提交订单按钮disabled
     if ($('#disclaimer').is(':checked') === false) {
