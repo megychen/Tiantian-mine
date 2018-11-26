@@ -14,14 +14,14 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li>
-          <%= link_to("产品列表", products_path) %>          
+          <%= link_to("产品列表", products_path) %>
         </li>
         <li><%= link_to("信息咨询", welcome_index_path) %></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
           <%= link_to carts_path do %>
-            购物车 <i class="fa fa-shopping-cart"></i>
+            <i class="fa fa-shopping-cart fa-lg"></i><span class="cart-item-number"><%= current_cart.cart_items.size %></span>
           <% end %>
         </li>
         <% if !current_user %>

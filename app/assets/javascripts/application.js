@@ -79,6 +79,7 @@ $(document).on('turbolinks:load', function () {
   ***************************** */
 
   var indexNumber, totalQuantity, quantityObj, quantityObjValue;
+  calculateCartsTotalPrice() // 第一次进去购物车页面，计算最近加入购物车总价
 
   function sendQauntityChangeRequest (url, quantity) {
     $.ajax({

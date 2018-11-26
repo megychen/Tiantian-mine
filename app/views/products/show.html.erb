@@ -98,6 +98,8 @@
         if (response.success === true) {
           $(".modal-content").text("成功加入购物车")
           $('#message').modal()
+          var cartItemNumber = parseInt($(".cart-item-number").text()) + 1
+          $(".cart-item-number").text(cartItemNumber)
           $('#message').modal('show')
         } else {
           $(".modal-content").text(response.message)

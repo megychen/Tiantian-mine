@@ -15,7 +15,7 @@
         </li>
       <% end %>
     </ul>
-  </div>  
+  </div>
 <% end %>
 
 
@@ -64,6 +64,8 @@
         success: function (response) {
           if (response.success === true) {
             $('#message').modal()
+            var cartItemNumber = parseInt($(".cart-item-number").text()) + 1
+            $(".cart-item-number").text(cartItemNumber)
             $('#message').modal('show')
           }
         }

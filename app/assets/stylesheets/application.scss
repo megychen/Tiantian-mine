@@ -71,6 +71,18 @@
     margin: 0 auto;
   }
 
+  .cart-item-number {
+    background-color: $color-button-primary;
+    padding: 3px 2px 3px 6px;
+    border-radius: 8px;
+    color: white;
+    display: inline-block;
+    font-size: 12px;
+    line-height: 1;
+    text-align: center;
+    vertical-align: middle;
+  }
+
 
   /*
     Footer style
