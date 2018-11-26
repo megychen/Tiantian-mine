@@ -69,6 +69,9 @@ $(document).on('turbolinks:load', function () {
     $(".modal-content").text(msg)
     $('#message').modal()
     $('#message').modal('show')
+    setTimeout(function() {
+      $('#message').modal('hide')
+    }, 1000)
   }
 
 

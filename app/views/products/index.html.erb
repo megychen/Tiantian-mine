@@ -67,6 +67,9 @@
             var cartItemNumber = parseInt($(".cart-item-number").text()) + 1
             $(".cart-item-number").text(cartItemNumber)
             $('#message').modal('show')
+            setTimeout(function() {
+              $('#message').modal('hide')
+            }, 1000)
           }
         }
       })

@@ -106,6 +106,9 @@
           $('#message').modal()
           $('#message').modal('show')
         }
+        setTimeout(function() {
+          $('#message').modal('hide')
+        }, 1000)
       }
     })
   })
