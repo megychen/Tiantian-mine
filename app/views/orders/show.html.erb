@@ -6,33 +6,31 @@
     <span class="pull-right"><%= link_to("返回我的订单", account_orders_path, class: "btn btn-default") %></span>
     <h4 class="text-center">订单编号：<%= @order.order_no %></h4>
     <div class="page-header">
-      <h4><i class="fa fa-list-alt"></i> 商品列表</h4>
+      <h5><i class="fa fa-list-alt"></i> 商品列表</h5>
     </div>
 
-    <% @product_lists.each do |product_list| %>
-      <div class="col-md-4 col-sm-6">
-        <div class="thumbnail">
-          <h4 class="media-heading"><%= product_list.product_name %></h4>
-          <p>价格:
-            <%= product_list.product_price %>
-
-            <% if product_list.new_product_price.present? %>
-              <span class="badge">
-                <% if product_list.new_product_price > product_list.product_price %>
-                  上调
-                <% else %>
-                  下调
-                <% end %>
-                <%= render_product_price_change(product_list) %>
-              </span>
-              调整后价格：<%= product_list.new_product_price %>
+    <table>
+      <tr>
+        <td>图片</td>
+        <td>名称</td>
+        <td>单价</td>
+        <td>数量</td>
+      </tr>
+      <% @product_lists.each do |product_list| %>
+        <tr>
+          <td>
+            <% if product_list.image.present? %>
+              <%= image_tag(product_list.image.thumb.url, class: "thumbnail", style: "max-width: 50px;") %>
+            <% else %>
+              <%= image_tag("http://placehold.it/200x200&text=No Pic", class: "thumbnail", style: "max-width: 50px;") %>
             <% end %>
-          </p>
-          <p>数量: <%= product_list.quantity %></p>
-        </div>
-
-      </div>
-    <% end %>
+          </td>
+          <td><%= product_list.product_name %></td>
+          <td><%= product_list.product_price %></td>
+          <td><%= product_list.quantity %></td>
+        </tr>
+      <% end %>
+    </table>
 
     <div class="clearfix"></div>
 
@@ -43,7 +41,7 @@
     </div>
 
     <div class="page-header">
-      <h4><i class="fa fa-map-marker"></i> 收货地址</h4>
+      <h5><i class="fa fa-map-marker"></i> 收货地址</h5>
     </div>
 
     <% if @order.address.present? %>
@@ -76,7 +74,7 @@
     <hr>
 
     <div class="page-header">
-      <h4><i class="fa fa-plane"></i> 运送方式</h4>
+      <h5><i class="fa fa-plane"></i> 运送方式</h5>
     </div>
 
     <% if @order.delivery.present? && @order.payment_method.present? %>
