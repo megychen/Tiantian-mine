@@ -68,12 +68,6 @@ class OrdersController < ApplicationController
     redirect_to order_path(@order.token)
   end
 
-  def update_address
-    @order = Order.find_by_token(params[:id])
-    @order.update_columns(address_id: params[:address_id])
-    render :json => { "success": true }
-  end
-
   def update_delivery
     @order = Order.find_by_token(params[:id])
     @order.update_columns(address_id: params[:address_id], delivery: params[:delivery], payment_method: params[:payment_method])

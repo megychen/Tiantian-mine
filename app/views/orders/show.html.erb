@@ -93,6 +93,8 @@
         </div>
       <% end %>
     </div>
+    
+    <br>
 
     <div class="pull-left">
       <% if @order.certificates.present? %>
@@ -113,9 +115,6 @@
 </div>
 
 <script>
-  $(document).on("turbolinks:load", function () {
-    $('.city-group').china_city()
-  })
 
   // 步骤条
   $(".cart-information").addClass("step-done")
@@ -127,53 +126,4 @@
   $(".order-submit").addClass("step-done")
   $(".order-submit-success").addClass("active")
 
-  // 选择收货地址
-  $(".submit-order-address").on("click", function (e) {
-    e.preventDefault()
-
-    var addressID = $('input[name="address_id"]:checked').val();
-    var url = $(this).attr("href")
-    $.ajax({
-      url: url,
-      data: { address_id: addressID },
-      method: 'POST',
-      dataType: 'json', // 要求服务器回传 json
-      success: function (response) {
-        if (response.success === true) {
-          window.location.reload()
-        }
-      }
-    })
-  })
-
-  // 新增收货地址
-  $(document).bind("ajax:success", ".address-form", function (evt, data, status, xhr) {
-    if (data.success === true) {
-      $('#address_form_modal').modal("hide");
-      window.location.reload()
-    }
-  })
-
-  // 选择运送方式
-  $(".submit-order-delivery").on("click", function (e) {
-    e.preventDefault()
-
-    var delivery = $('input[name="delivery"]:checked').val()
-    var paymentMethod = $('input[name="payment"]:checked').val()
-
-    var data = "delivery=" + delivery + "&payment_method=" + paymentMethod
-    var url = $(this).attr("href")
-
-    $.ajax({
-      url: url,
-      data: data,
-      method: 'POST',
-      dataType: 'json', // 要求服务器回传 json
-      success: function (response) {
-        if (response.success === true) {
-          window.location.reload()
-        }
-      }
-    })
-  })
 </script>
