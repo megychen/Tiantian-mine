@@ -8,12 +8,10 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order = Order.new(order_params)
-    # @address = Address.find(params[:order][:address_id])
+    @order = Order.new
     @cart_items = current_cart.cart_items.where(id: params[:cart_item_ids].split(","))
     @order.user = current_user
     @order.total = current_cart.total_price(@cart_items)
-    # @order.address = @address
 
     unless current_cart.have_stock(@cart_items)
       render 'carts/checkout', alert: "库存不足，下单失败"
@@ -74,9 +72,4 @@ class OrdersController < ApplicationController
     render :json => { "success": true }
   end
 
-  private
-
-  def order_params
-    params.require(:order).permit(:address_id)
-  end
 end
