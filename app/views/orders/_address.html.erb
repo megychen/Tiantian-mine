@@ -10,7 +10,7 @@
     <% addresses.each do |address| %>
       <li class="list-group-item">
         <label>
-          <input type="radio" name="address_id" value="<%= address.id %>">
+          <input type="radio" name="address_id" value="<%= address.id %>" <%= "checked" if address.id == addresses.last.id %> >
           <%= address.name %>
           <%= address.mobile %>
           <%= ChinaCity.get(address.province) %> -
@@ -24,7 +24,7 @@
         </label>
       </li>
     <% end %>
-    <span class="pull-right address-update"><%= link_to("确定", update_address_order_path(@order.token), class: "btn btn-default btn-sm submit-order-address") %></span>
+    <span class="pull-right address-update"><%#= link_to("确定", update_address_order_path(@order.token), class: "btn btn-default btn-sm submit-order-address") %></span>
   <% else %>
     <li class="list-group-item">
       请添加送货地址

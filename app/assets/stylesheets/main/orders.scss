@@ -2,10 +2,19 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.invoice-information {
+  display: none;
+}
+
 .card-body {
   overflow: auto;
   background: #ebebeb;
   padding: 20px;
+  .select-options {
+    display: inline-block;
+    padding-left: 20px;
+    width: 100px;
+  }
   .address-update {
     padding-top: 20px;
   }

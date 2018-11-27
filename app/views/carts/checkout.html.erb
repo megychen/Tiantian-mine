@@ -66,7 +66,7 @@
       </div>
     </div>
 
-    <div class="pull-right"><input type="checkbox" id="disclaimer"> <b>协议条款</b></div>
+    <!-- <div class="pull-right"><input type="checkbox" id="disclaimer"> <b>协议条款</b></div> -->
     <br><br>
 
     <!-- 手机验证码提交 -->
@@ -94,8 +94,8 @@
       <%= simple_form_for @order, method: :post, html: { class: "create-order-form" } do |f| %>
         <div class="checkout">
           <input type="hidden" class="cart-item-ids" name="cart_item_ids">
-          <%= f.input :address_id, :as => :hidden, :input_html => { :id => 'input_address_id' } %>
-          <%= f.submit "提交订单", class: "button-base button-secondary pull-right create-order-button",
+          <%#= f.input :address_id, :as => :hidden, :input_html => { :id => 'input_address_id' } %>
+          <%= f.submit "下一步", class: "button-base button-secondary pull-right create-order-button",
                        data: { disable_with: "提交中..." } %>
         </div>
       <% end %>
@@ -110,14 +110,11 @@
       $('.city-group').china_city()
     })
 
+    var isAgree = false
+
     // 步骤条
     $(".cart-information").addClass("step-done")
     $(".order-information").addClass("active")
-
-    // 协议条款未选择，提交订单按钮disabled
-    if ($('#disclaimer').is(':checked') === false) {
-      $(".create-order-button").prop("disabled", true)
-    }
 
     // 收货地址
     $(document).on('click', '.new-address-btn', function() {
@@ -138,20 +135,24 @@
     $(".agree-btn").on("click", function() {
       $(".disclaimer-content-wrapper").css("display", "none");
       $(".disclaimer-content-wrapper").css("z-index", "-10");
-      $(".create-order-button").prop("disabled", false)
+      // $(".create-order-button").prop("disabled", false)
+      isAgree = true
+      verificationCodeValid()
     })
 
     // 不同意协议条款
     $(".disagree-btn").on("click", function() {
       $(".disclaimer-content-wrapper").css("display", "none");
       $(".disclaimer-content-wrapper").css("z-index", "-10");
-      $("#disclaimer").prop("checked", false)
-      $(".create-order-button").prop("disabled", true)
+      // $("#disclaimer").prop("checked", false)
+      // $(".create-order-button").prop("disabled", true)
+      isAgree = false
     })
 
     // 验证码审核
 
     function verificationCodeValid() {
+      console.log(1)
       var result = false;
       var emailAddress = "<%= current_user.email %>";
 
@@ -209,7 +210,11 @@
     $('.create-order-button').click(function(e) {
       e.preventDefault()
 
-      if (!verificationCodeValid()) {
+      // 第一步：协议条款
+      $(".disclaimer-content-wrapper").css("display", "block");
+      $(".disclaimer-content-wrapper").css("z-index", "3000");
+
+      if (!isAgree) {
         return false
       }
     })

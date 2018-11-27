@@ -16,7 +16,8 @@ class InvoicesController < ApplicationController
     @invoice.user = current_user
 
     if @invoice.save!
-      redirect_to order_path(@order.token)
+      # redirect_to order_path(@order.token)
+      redirect_to order_detail_info_order_path(@order.token)
     else
       render :new
     end

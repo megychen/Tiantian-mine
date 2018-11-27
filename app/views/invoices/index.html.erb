@@ -21,7 +21,7 @@
 <div class="page-header">
   <h4><i class="fa fa-credit-card"></i> 发票信息</h4>
 </div>
-<div class="panel panel-info">
+<!-- <div class="panel panel-info">
   <% if @invoice.invoice_type == "电子普通发票" %>
     <div class="panel-heading">电子普通发票</div>
     <div class="panel-body">
@@ -54,6 +54,6 @@
       <%= @invoice.receiver_address %>
     </p>
   </div>
-</div>
+</div> -->
 
-<%= render "invoice_item" %>
+<%= render "invoice_item", invoice: @invoice %>

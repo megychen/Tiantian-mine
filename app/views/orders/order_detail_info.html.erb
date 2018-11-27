@@ -1,0 +1,133 @@
+<div class="row">
+  <div class="col-md-12">
+    <%= render "common/procedure" %>
+    <div class="clearfix"></div>
+
+    <div class="page-header">
+      <h5><i class="fa fa-map-marker"></i> 物流信息</h5>
+    </div>
+
+    <% if @order.address.present? %>
+      <div class="address">
+        <strong>收货地址：</strong>
+        <%= @order.address.name %>
+        <%= @order.address.mobile %>
+        <%= ChinaCity.get(@order.address.province) %> -
+        <%= ChinaCity.get(@order.address.city) %> -
+        <%= ChinaCity.get(@order.address.district) %>-
+        <%= @order.address.detail %>
+        <%= @order.address.zip_code %>
+      </div>
+    <% else %>
+      <div class="delivery-information">
+        <div class="card card-body">
+          <p class="text-center">收货地址</p>
+          <div id="address_list">
+            <%= render "address", addresses: @addresses %>
+          </div>
+          <%= render "new_address" %>
+        </div>
+      </div>
+    <% end %>
+
+
+
+    <% if @order.delivery.present? && @order.payment_method.present? %>
+      <div class="delivery">
+        <strong>运送方式：</strong>
+        <%= @order.delivery %> - <%= @order.payment_method %>
+      </div>
+    <% else %>
+      <div class="delivery-information">
+        <div class="card card-body">
+          <p class="text-center">运送方式</p>
+          <div id="delivery_list">
+            物流方式：
+            <% Order::DELIVERY.map do |delivery| %>
+              <span class="select-options">
+                <input type="radio" name="delivery" value="<%= delivery %>" <%= "checked" if delivery == Order::DELIVERY.first %> > <%= delivery %>
+              </span>
+            <% end %>
+            <br>
+            寄送方式：
+            <% Order::PAYMENT.map do |payment| %>
+              <span class="select-options">
+                <input type="radio" name="payment" value="<%= payment %>" <%= "checked" if payment == Order::PAYMENT.first %> > <%= payment %>
+              </span>
+            <% end %>
+          </div>
+          <span class="pull-right delivery-update">
+            <%= link_to("确定", update_delivery_order_path(@order.token), class: "btn btn-default btn-sm submit-order-delivery") %>
+          </span>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="invoice-information">
+      <div class="page-header">
+        <br>
+        <h5><i class="fa fa-list-alt"></i> 发票信息</h5>
+      </div>
+
+      <% if @order.invoice.present? %>
+        <%= render "invoices/invoice_item", invoice: @order.invoice %>
+      <% else %>
+        <div class="card card-body">
+          <%= render "invoices/new.html.erb" %>
+        </div>
+      <% end %>
+    </div>
+
+    <% if @order.address.present? && @order.invoice.present? %>
+      <%= link_to("下一步", order_path(@order.token), class: "button-base button-secondary pull-right") %>
+    <% end %>
+
+  </div>
+</div>
+
+<script>
+  $(document).on("turbolinks:load", function () {
+    $('.city-group').china_city()
+  })
+
+  // 进度条
+  $(".cart-information").addClass("step-done")
+  $(".order-information").addClass("active")
+  $(".order-information").addClass("step-done")
+  $(".delivery-information").addClass("active")
+
+  // 用户刷新时，地址已已填写，默认显示发票信息的填写
+  var hasAddress = "<%= @order.address %>"
+  if (hasAddress) {
+    $(".invoice-information").css("display", "block")
+  }
+
+  // 提交物流信息
+  $(".submit-order-delivery").on("click", function (e) {
+    e.preventDefault()
+
+    var addressID = $('input[name="address_id"]:checked').val();
+    var delivery = $('input[name="delivery"]:checked').val()
+    var paymentMethod = $('input[name="payment"]:checked').val()
+
+    var data = "address_id=" + addressID + "&delivery=" + delivery + "&payment_method=" + paymentMethod
+    var url = $(this).attr("href")
+
+    $.ajax({
+      url: url,
+      data: data,
+      method: 'POST',
+      dataType: 'json', // 要求服务器回传 json
+      success: function (response) {
+        if (response.success === true) {
+          $(".delivery-information").css("display", "none")
+          $(".invoice-information").css("display", "block")
+          window.location.reload()
+        }
+      }
+    })
+  })
+
+  // 提交发票信息
+
+</script>

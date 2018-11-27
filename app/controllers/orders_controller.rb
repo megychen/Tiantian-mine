@@ -30,14 +30,20 @@ class OrdersController < ApplicationController
         product_list.quantity = cart_item.quantity
         product_list.save
       end
-      CarrierWave.clean_cached_files!
 
       current_cart.clean_item(@cart_items)
       # OrderMailer.notify_order_placed(@order).deliver!
-      redirect_to order_path(@order.token)
+      # redirect_to order_path(@order.token)
+      redirect_to order_detail_info_order_path(@order.token)
     else
       render 'carts/checkout'
     end
+  end
+
+  def order_detail_info
+    @order = Order.find_by_token(params[:id])
+    @addresses = current_user.addresses
+    @invoice = Invoice.new
   end
 
   def pay_with_alipay
@@ -70,7 +76,7 @@ class OrdersController < ApplicationController
 
   def update_delivery
     @order = Order.find_by_token(params[:id])
-    @order.update_columns(delivery: params[:delivery], payment_method: params[:payment_method])
+    @order.update_columns(address_id: params[:address_id], delivery: params[:delivery], payment_method: params[:payment_method])
     render :json => { "success": true }
   end
 

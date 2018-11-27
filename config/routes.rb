@@ -61,6 +61,7 @@ Rails.application.routes.draw do
       post :apply_to_cancel
       post :update_address
       post :update_delivery
+      get :order_detail_info
     end
     resources :certificates
     resources :invoices
