@@ -24,12 +24,15 @@ class OrdersController < ApplicationController
       @cart_items.each do |cart_item|
         product_list = ProductList.new
         product_list.order = @order
+        product = cart_item.product
         product_list.product_name = cart_item.product.title
         product_list.product_price = cart_item.product.price
         product_list.quantity = cart_item.quantity
-        product_list.image = cart_item.product.image
+        product.image.cache_stored_file!
+        product_list.image = product.image
         product_list.save
       end
+      CarrierWave.clean_cached_files!
 
       current_cart.clean_item(@cart_items)
       # OrderMailer.notify_order_placed(@order).deliver!
