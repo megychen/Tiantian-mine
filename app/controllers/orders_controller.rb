@@ -28,8 +28,9 @@ class OrdersController < ApplicationController
         product_list.product_name = cart_item.product.title
         product_list.product_price = cart_item.product.price
         product_list.quantity = cart_item.quantity
-        product.image.cache_stored_file!
-        product_list.image = product.image
+        # product.image.cache_stored_file!
+        # product_list.image = product.image
+        product_list.image = product.image.file 
         product_list.save
       end
       CarrierWave.clean_cached_files!
