@@ -19,3 +19,23 @@
     padding-top: 20px;
   }
 }
+
+.checked-order {
+  color: green;
+}
+
+.checking-order {
+  color: red;
+}
+
+.order-no-information {
+  overflow: auto;
+  border: 1px solid #ebebeb;
+  margin: 15px 0;
+  padding: 5px 0;
+}
+
+.bank-detail-information, .order-detail-information {
+    border: 1px solid #ebebeb;
+    padding: 20px;
+}

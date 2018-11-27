@@ -1,13 +1,14 @@
 <div class="row">
   <div class="col-md-12">
-    <h4 class="text-center">
+    <h5 class="text-center">
+      订单ID:
       <%= @order.order_no %>
       <% if @order.is_confirmed? %>
         <span class="label label-success"><%= render_order_paid_state(@order) %></span>
       <% else %>
         <span class="label label-warning"><%= render_order_confirmed_state(@order) %></span>
       <% end %>
-    </h4>
+    </h5>
     <% if @order.is_confirmed? %>
       <%= render "admin/orders/state_option", order: @order %>
     <% else %>
@@ -17,7 +18,7 @@
     <% end %>
 
     <br>
-    <h4> 商品列表</h4>
+    <h5> 商品列表</h5>
 
     <div class="table-responsive">
       <table>
@@ -62,7 +63,7 @@
                     <div class="modal-content">
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title"><%=  product_list.product_name %><span class="product-price-errors" style="font-size:12px;color:red;"></span></h4>
+                        <h5 class="modal-title"><%=  product_list.product_name %><span class="product-price-errors" style="font-size:12px;color:red;"></span></h5>
                       </div>
                       <div class="modal-body">
                         <label>价格</label>
@@ -89,7 +90,7 @@
 
     <hr>
 
-    <h4> 地址 </h4>
+    <h5> 地址 </h5>
     <% if @order.address.present? %>
       <div class="table-responsive">
         <table>
@@ -124,7 +125,17 @@
 
     <hr>
 
-    <h4>付款证明</h4>
+    <h5>发票信息</h5>
+
+    <% if @order.invoice.present? %>
+      <%= render "invoices/invoice_item", invoice: @order.invoice %>
+    <% else %>
+      <p class="label label-warning">此用户还未填写发票信息</p>
+    <% end %>
+
+    <hr>
+
+    <h5>付款证明</h5>
 
     <% if @order.certificates.present? %>
       <%= render :partial => "certificates/certificate_item", :collection => @certificates, :as => :certificate %>
@@ -132,15 +143,7 @@
       <p class="label label-warning">此用户还未上传付款证明</p>
     <% end %>
 
-    <hr>
 
-    <h4>发票信息</h4>
-
-    <% if @order.invoice.present? %>
-      <%= render "invoices/invoice_item" %>
-    <% else %>
-      <p class="label label-warning">此用户还未填写发票信息</p>
-    <% end %>
   </div>
 </div>
 

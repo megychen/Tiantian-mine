@@ -3,153 +3,111 @@
     <%= render "common/procedure" %>
     <div class="clearfix"></div>
     <br><br>
-    <span class="pull-right"><%= link_to("返回我的订单", account_orders_path, class: "btn btn-default") %></span>
-    <h4 class="text-center">订单编号：<%= @order.order_no %></h4>
-    <div class="page-header">
-      <h5><i class="fa fa-list-alt"></i> 商品列表</h5>
+    <span class="pull-right"><%= link_to("个人订单", account_orders_path, class: "btn btn-sm btn-default") %></span>
+    <br>
+
+    <% if @order.is_confirmed? %>
+      <div class="checked-order">
+        <i class="fa fa-check-circle" aria-hidden="true"></i> 订单审核已通过，请尽快完成付款
+      </div>
+    <% else %>
+      <div class="checking-order">
+        <i class="fa fa-check-circle" aria-hidden="true"></i> 订单已提交审核中……
+      </div>
+    <% end %>
+
+    <div class="order-no-information">
+      <div class="col-md-4"><strong>订单ID：<%= @order.order_no %></strong></div>
+      <div class="col-md-4"><strong>支付方式：人民币转账</strong></div>
+      <div class="col-md-4"><strong>订单应付总金额：<%= @order.total %></strong></div>
     </div>
 
-    <table>
-      <tr>
-        <td>图片</td>
-        <td>名称</td>
-        <td>单价</td>
-        <td>数量</td>
-      </tr>
-      <% @product_lists.each do |product_list| %>
+    <% if @order.is_confirmed? %>
+      <h5><i class="fa fa-user" aria-hidden="true"></i> 银行账户</h5>
+      <div class="bank-detail-information">
+        <p>账户名称： 四川天天慧盈科技有限公司</p>
+        <p>银行账户： xxxxxxxxxxxx</p>
+        <p>银行名称： xxxxxxxx</p>
+
+        <div class="tips">
+          <p>1. 付款后，请登录官网用户中心，选择“我的订单”，点击订单后的“上传付款证明”，填写付款人姓名和付款金额等信息。</p>
+
+          <p>2. 按照目前我国税务法规，订单的付款方（个人或公司）必须与合同购买方以及发票抬头一致；如果付款方、合同购买方、发票抬头不一致，或者一个订单内含有多个付款方（个人或公司）的情况，
+                则无法提供该订单的合同与发票。<p>
+
+          <p>3.如有疑问，可联系售前客服咨询。 </p>
+
+          <p><b>风险提示</b></p>
+
+          <p>特定虚拟商品价格决定矿机价值，付款后即锁定本批订单数量和价格，基于特定虚拟商品价格上涨，本订单不会加价，反之特定虚拟商品价格下跌，本订单也不会退款。</p>
+        </div>
+      </div>
+    <% end %>
+
+    <h5> 订单详情</h5>
+    <div class="order-detail-information">
+      <span class="pull-right"><%= @order.created_at.to_s(:long) %></span>
+      <h6>订单ID：<%= @order.order_no %></h6>
+      <hr>
+      <h6>货物清单：</h6>
+      <table>
         <tr>
-          <td>
-            <% if product_list.image.present? %>
-              <%= image_tag(product_list.image.thumb.url, class: "thumbnail", style: "max-width: 50px;") %>
-            <% else %>
-              <%= image_tag("http://placehold.it/200x200&text=No Pic", class: "thumbnail", style: "max-width: 50px;") %>
-            <% end %>
-          </td>
-          <td><%= product_list.product_name %></td>
-          <td><%= product_list.product_price %></td>
-          <td><%= product_list.quantity %></td>
+          <td>图片</td>
+          <td>名称</td>
+          <td>单价</td>
+          <td>数量</td>
         </tr>
+        <% @product_lists.each do |product_list| %>
+          <tr>
+            <td>
+              <% if product_list.image.present? %>
+                <%= image_tag(product_list.image.thumb.url, class: "thumbnail", style: "max-width: 50px;") %>
+              <% else %>
+                <%= image_tag("http://placehold.it/200x200&text=No Pic", class: "thumbnail", style: "max-width: 50px;") %>
+              <% end %>
+            </td>
+            <td><%= product_list.product_name %></td>
+            <td><%= product_list.product_price %></td>
+            <td><%= product_list.quantity %></td>
+          </tr>
+        <% end %>
+      </table>
+      <h6>地址：
+        <% if @order.address.present? %>
+          <span class="address">
+            <%= @order.address.name %>
+            <%= @order.address.mobile %>
+            <%= ChinaCity.get(@order.address.province) %> -
+            <%= ChinaCity.get(@order.address.city) %> -
+            <%= ChinaCity.get(@order.address.district) %>-
+            <%= @order.address.detail %>
+            <%= @order.address.zip_code %>
+            (<%= @order.delivery %> - <%= @order.payment_method %>)
+          </span>
+        <% end %>
+      </h6>
+      <h6>发票信息：</h6>
+      <% if @order.invoice.present? %>
+        <div class="invoice">
+          <%= render "invoices/invoice_item", invoice: @order.invoice %>
+        </div>
       <% end %>
-    </table>
-
-    <div class="clearfix"></div>
-
-    <div class="total">
-      <span class="pull-right">
-        <strong>总计: <%= render_product_list_total_price(@product_lists) %> CNY</strong>
-      </span>
     </div>
-
-    <div class="page-header">
-      <h5><i class="fa fa-map-marker"></i> 收货地址</h5>
-    </div>
-
-    <% if @order.address.present? %>
-      <div class="address">
-        <%= @order.address.name %>
-        <%= @order.address.mobile %>
-        <%= ChinaCity.get(@order.address.province) %> -
-        <%= ChinaCity.get(@order.address.city) %> -
-        <%= ChinaCity.get(@order.address.district) %>-
-        <%= @order.address.detail %>
-        <%= @order.address.zip_code %>
-      </div>
-    <% else %>
-      <div class="complete-address">
-        <p class="text-center">
-          <button class="btn btn-default btn-sm" type="button" data-toggle="collapse" data-target="#collapseAddress" aria-expanded="false" aria-controls="collapseExample">
-            填加收货地址 <i class="fa fa-plus"></i>
-          </button>
-        </p>
-        <div class="collapse" id="collapseAddress">
-          <div class="card card-body">
-            <div id="address_list">
-              <%= render "address", addresses: @addresses %>
-            </div>
-            <%= render "new_address" %>
-        </div>
-      </div>
-    <% end %>
-
-    <hr>
-
-    <div class="page-header">
-      <h5><i class="fa fa-plane"></i> 运送方式</h5>
-    </div>
-
-    <% if @order.delivery.present? && @order.payment_method.present? %>
-      <div class="delivery">
-        运送方式：<%= @order.delivery %> - <%= @order.payment_method %>
-      </div>
-    <% else %>
-      <div class="complete-delivery">
-        <p class="text-center">
-          <button class="btn btn-default btn-sm" type="button" data-toggle="collapse" data-target="#collapseDelivery" aria-expanded="false" aria-controls="collapseExample">
-            填加运送方式 <i class="fa fa-plus"></i>
-          </button>
-        </p>
-        <div class="collapse" id="collapseDelivery">
-          <div class="card card-body">
-            <div id="delivery_list">
-              物流方式：
-              <% Order::DELIVERY.map do |delivery| %>
-                <input type="radio" name="delivery" value="<%= delivery %>"> <%= delivery %>
-              <% end %>
-              <br>
-              寄送方式:
-              <% Order::PAYMENT.map do |payment| %>
-                <input type="radio" name="payment" value="<%= payment %>"> <%= payment %>
-              <% end %>
-            </div>
-            <span class="pull-right delivery-update"><%= link_to("确定", update_delivery_order_path(@order.token), class: "btn btn-default btn-sm submit-order-delivery") %></span>
-        </div>
-      </div>
-    <% end %>
-
-    <hr>
 
     <div class="pull-left">
       <% if @order.certificates.present? %>
         <%= link_to("查看已上传付款证明 ", order_certificates_path(@order.token), style: "text-decoration: underline;") %>
-      <% end %>
-
-      <% if @order.invoice.present? %>
-        <%= link_to(" 查看已填写发票信息", order_invoices_path(@order.token), style: "text-decoration: underline;") %>
       <% end %>
     </div>
 
     <div class="group pull-right">
       <% if @order.is_confirmed? %>
         <% if !@order.is_paid? %>
-          <%= link_to("填写发票信息", new_order_invoice_path(@order.token), class: "btn btn-info") %>
           <%= link_to("上传付款证明", new_order_certificate_path(@order.token), class: "btn btn-info") %>
         <% else %>
           <p class="text-center">此订单已完成付款</p>
         <% end %>
-      <% else %>
-        <span class="label label-warning">订单已提交，等待审核中……</span>
       <% end %>
-    </div>
-
-    <div class="payment-desc">
-      <h4 class="payment-label">付款方式</h4>
-      <hr>
-      <p>账户名称： 四川天天慧盈科技有限公司</p>
-      <p>银行账户： xxxxxxxxxxxx</p>
-      <p>银行名称： xxxxxxxx</p>
-
-      <div class="tips">
-        <p>1. 付款后，请登录官网用户中心，选择“我的订单”，点击订单后的“上传付款证明”，填写付款人姓名和付款金额等信息。</p>
-
-        <p>2. 按照目前我国税务法规，订单的付款方（个人或公司）必须与合同购买方以及发票抬头一致；如果付款方、合同购买方、发票抬头不一致，或者一个订单内含有多个付款方（个人或公司）的情况，
-              则无法提供该订单的合同与发票。<p>
-
-        <p>3.如有疑问，可联系售前客服咨询。 </p>
-
-        <p><b>风险提示</b></p>
-
-        <p>特定虚拟商品价格决定矿机价值，付款后即锁定本批订单数量和价格，基于特定虚拟商品价格上涨，本订单不会加价，反之特定虚拟商品价格下跌，本订单也不会退款。</p>
-      </div>
     </div>
   </div>
 </div>
