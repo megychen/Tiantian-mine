@@ -1,26 +1,17 @@
 <span class="pull-right"><%= link_to("返回订单列表", account_orders_path, class: "btn btn-default btn-sm") %></span>
 <div class="page-header">
-  <h4><i class="fa fa-list-alt"></i> 订单信息</h4>
+  <h5><i class="fa fa-list-alt"></i> 订单信息</h5>
 </div>
-<div class="order-info" style="overflow: auto;">
-  <% @order.product_lists.each do |product_list| %>
-    <div class="col-md-4 col-sm-6">
-      <div class="thumbnail">
-        <h4 class="media-heading"><%= product_list.product_name %></h4>
-        <p>价格: <%= product_list.product_price %></p>
-        <p>数量: <%= product_list.quantity %></p>
-      </div>
 
-    </div>
-  <% end %>
-  <span class="pull-right">
-    <strong>总计: <%= @order.total %> CNY</strong>
-  </span>
+<div class="order-no-information">
+  <div class="col-md-4"><strong>订单ID：<%= @order.order_no %></strong></div>
+  <div class="col-md-4"><strong>支付方式：人民币转账</strong></div>
+  <div class="col-md-4"><strong>订单应付总金额：<%= @order.total %></strong></div>
 </div>
 
 <div class="page-header">
-  <div class="pull-right"><%= link_to("添加付款证明", new_order_certificate_path(@order.token), class: "btn btn-info btn-sm") %></div>
-  <h4><i class="fa fa-credit-card"></i> 付款证明</h4>
+  <div class="pull-right"><%#= link_to("添加付款证明", new_order_certificate_path(@order.token), class: "btn btn-info btn-sm") %></div>
+  <h5><i class="fa fa-credit-card"></i> 付款证明</h5>
 </div>
 
 <% if @order.certificates.present? %>

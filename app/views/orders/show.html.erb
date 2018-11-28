@@ -97,6 +97,8 @@
         <div class="invoice">
           <%= render "invoices/invoice_item", invoice: @order.invoice %>
         </div>
+      <% else %>
+        <span class="label label-warning">未填写发票信息</span>
       <% end %>
     </div>
 
