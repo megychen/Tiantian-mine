@@ -9,7 +9,7 @@
     <div class="tab-content">
       <div id="normal" class="tab-pane fade in active">
         <div class="group">
-          <%= f.input :organization, label: "发票种类", :collection => ["个人", "公司"], selected: "个人", required: true %>
+          <%= f.input :organization, label: false, :collection => ["个人", "公司"], selected: "个人", required: true %>
         </div>
         <div class="group person-name-tab">
           <%= f.input :person_name, label: "付款人名称", placeholder: "请填写付款人名称" %>

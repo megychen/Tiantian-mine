@@ -72,13 +72,22 @@
       <% if @order.invoice.present? %>
         <%= render "invoices/invoice_item", invoice: @order.invoice %>
       <% else %>
-        <div class="card card-body">
-          <%= render "invoices/new.html.erb" %>
+        <div class="need-invoice-option">
+          <input type="radio" name="invoice-option" value="no-need" checked> 不需要
+          <input type="radio" name="invoice-option" value="need"> 需要
+          <span> (发票信息后续需要，也可在订单完成后补填)</span>
+        </div>
+        <div class="modal fade bs-example-modal-sm" id="new-invoice-form" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="overflow:auto;padding:20px 0;">
+              <%= render "invoices/new.html.erb" %>
+            </div>
+          </div>
         </div>
       <% end %>
     </div>
 
-    <% if @order.address.present? && @order.invoice.present? %>
+    <% if @order.address.present? %>
       <%= link_to("下一步", order_path(@order.token), class: "button-base button-secondary pull-right") %>
     <% end %>
 
@@ -129,5 +138,11 @@
   })
 
   // 提交发票信息
+  $('input[name="invoice-option"]').on("change", function () {
+    if ($(this).val() === "need") {
+      $('#new-invoice-form').modal()
+      $('#new-invoice-form').modal('show')
+    }
+  })
 
 </script>

@@ -7,9 +7,15 @@
     <br>
 
     <% if @order.is_confirmed? %>
-      <div class="checked-order">
-        <i class="fa fa-check-circle" aria-hidden="true"></i> 订单审核已通过，请尽快完成付款
-      </div>
+      <% if @order.is_paid? %>
+        <div class="checked-order">
+          <i class="fa fa-check-circle" aria-hidden="true"></i> 此订单已完成付款
+        </div>
+      <% else %>
+        <div class="checked-order">
+          <i class="fa fa-check-circle" aria-hidden="true"></i> 订单审核已通过，请尽快完成付款
+        </div>
+      <% end %>
     <% else %>
       <div class="checking-order">
         <i class="fa fa-check-circle" aria-hidden="true"></i> 订单已提交审核中……
@@ -93,7 +99,7 @@
         </div>
       <% end %>
     </div>
-    
+
     <br>
 
     <div class="pull-left">
@@ -104,10 +110,11 @@
 
     <div class="group pull-right">
       <% if @order.is_confirmed? %>
-        <% if !@order.is_paid? %>
-          <%= link_to("上传付款证明", new_order_certificate_path(@order.token), class: "btn btn-info") %>
-        <% else %>
-          <p class="text-center">此订单已完成付款</p>
+        <% if !@order.certificates.present? %>
+          <%= link_to("上传付款证明", new_order_certificate_path(@order.token), class: "btn btn-sm btn-info") %>
+        <% end %>
+        <% if !@order.invoice.present? %>
+          <%= link_to("填写发票信息", new_order_invoice_path(@order.token), class: "btn btn-sm btn-info") %>
         <% end %>
       <% end %>
     </div>
