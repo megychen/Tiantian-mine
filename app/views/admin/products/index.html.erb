@@ -13,6 +13,7 @@
         <th>描述</th>
         <th>价格</th>
         <th>库存</th>
+        <th>更新时间</th>
         <th width="100">管理</th>
       </tr>
     </thead>
@@ -31,7 +32,7 @@
           <td>
             <%= product.title %>
           </td>
-          <td>
+          <td width="200">
             <%= product.description %>
           </td>
           <td>
@@ -40,6 +41,7 @@
           <td>
             <%= product.quantity %>
           </td>
+          <td> <%= product.updated_at.to_s(:long) %> </td>
           <td width="150">
             <%= link_to("编辑", edit_admin_product_path(product), class: "btn btn-default btn-xs") %> |
             <% if product.is_maintainable %>
