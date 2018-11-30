@@ -54,6 +54,24 @@ class Admin::ProductsController < ApplicationController
     redirect_to admin_products_path, alert: "#{@product.title} 已暂停交易"
   end
 
+  def bulk_update
+    if params[:product_action] == "暂停交易"
+      is_maintainable = true
+    elsif params[:product_action] == "恢复交易"
+      is_maintainable = false
+    end
+
+    Array(params[:ids]).each do |product_id|
+      product = Product.find(product_id)
+      product.is_maintainable = is_maintainable
+      product.save
+    end
+
+    current_user.logs.create(model: "Product", action: "批次#{params[:product_action]}")
+
+    redirect_to admin_products_path
+  end
+
   private
 
   def product_params

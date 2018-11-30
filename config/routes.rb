@@ -9,6 +9,9 @@ Rails.application.routes.draw do
         post :start_trading
         post :stop_trading
       end
+      collection do
+        post :bulk_update
+      end
     end
     resources :product_lists, only: [:update]
     resources :logs, only: [:index]
