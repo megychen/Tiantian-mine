@@ -1,5 +1,11 @@
 <div class="row">
   <div class="col-md-12">
+    <% if notice_order_updated(@order, @order.product_lists) %>
+      <div class="order-update-hint">
+        请注意：订单价格有更新，总结由 <%= @order.total %> 调整为 <%= render_product_list_total_price(@order.product_lists) %>
+      </div>
+    <% end %>
+
     <%= render "common/procedure" %>
     <div class="clearfix"></div>
     <br><br>
@@ -25,7 +31,7 @@
     <div class="order-no-information">
       <div class="col-md-4"><strong>订单ID：<%= @order.order_no %></strong></div>
       <div class="col-md-4"><strong>支付方式：人民币转账</strong></div>
-      <div class="col-md-4"><strong>订单应付总金额：<%= @order.total %></strong></div>
+      <div class="col-md-4"><strong>订单应付总金额：<%= render_product_list_total_price(@order.product_lists) %></strong></div>
     </div>
 
     <% if @order.is_confirmed? %>
@@ -73,7 +79,20 @@
               <% end %>
             </td>
             <td><%= product_list.product_name %></td>
-            <td><%= product_list.product_price %></td>
+            <td>
+              <%= product_list.product_price %>
+              <% if product_list.new_product_price.present? %>
+                <span class="badge">
+                  <% if product_list.new_product_price > product_list.product_price %>
+                    上调
+                  <% else %>
+                    下调
+                  <% end %>
+                  <%= render_product_price_change(product_list) %>
+                </span>
+                调整后价格：<%= product_list.new_product_price %>
+              <% end %>
+            </td>
             <td><%= product_list.quantity %></td>
           </tr>
         <% end %>

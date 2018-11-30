@@ -6,7 +6,7 @@
 <div class="order-no-information">
   <div class="col-md-4"><strong>订单ID：<%= @order.order_no %></strong></div>
   <div class="col-md-4"><strong>支付方式：人民币转账</strong></div>
-  <div class="col-md-4"><strong>订单应付总金额：<%= @order.total %></strong></div>
+  <div class="col-md-4"><strong>订单应付总金额：<%= render_product_list_total_price(@order.product_lists) %></strong></div>
 </div>
 
 <div class="page-header">

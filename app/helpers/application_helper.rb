@@ -10,4 +10,12 @@ module ApplicationHelper
     end
     sum
   end
+
+  def notice_order_updated(order, product_lists)
+    total = render_product_list_total_price(product_lists)
+    if order.total != total
+      return true
+    end
+    return false
+  end
 end
