@@ -75,7 +75,10 @@
     $(".cart-item-total-price").text(cartItemPrice * quantity)
   } else {
     var newItemId = "<%= @cart_items.first.id if @cart_items.present? %>"
-    $("#" + newItemId).prop("checked", true)
+
+    if (!($("#" + newItemId).is(":disabled"))) {
+      $("#" + newItemId).prop("checked", true)
+    }
   }
 
 </script>

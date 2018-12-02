@@ -209,7 +209,9 @@ $(document).on('turbolinks:load', function () {
   $(".carts-checked-all").on("change", function() {
     if (this.checked) {
       $('input[name="cart_item_id"]').each(function () {
-        $(this).prop("checked", true)
+        if (!$(this).is(":disabled")) {
+          $(this).prop("checked", true)
+        }
       })
     } else {
       $('input[name="cart_item_id"]').each(function () {
