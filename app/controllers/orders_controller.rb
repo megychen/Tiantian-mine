@@ -30,7 +30,7 @@ class OrdersController < ApplicationController
       end
 
       current_cart.clean_item(@cart_items)
-      # OrderMailer.notify_order_placed(@order).deliver!
+      OrderMailer.notify_order_placed(@order).deliver!
       # redirect_to order_path(@order.token)
       redirect_to order_detail_info_order_path(@order.token)
     else
