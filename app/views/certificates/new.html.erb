@@ -1,17 +1,37 @@
 <div class="col-md-8 col-md-offset-2 col-sm-12">
   <h5 class="text-center">付款证明</h5>
+  <br>
+  <div class="order-no-information">
+    <div class="col-md-4"><strong>订单ID：<%= @order.order_no %></strong></div>
+    <div class="col-md-4"><strong>支付方式：人民币转账</strong></div>
+    <div class="col-md-4"><strong>订单应付总金额：<%= render_product_list_total_price(@order.product_lists) %></strong></div>
+  </div>
+  <br>
+
   <%= simple_form_for @certificate, :url => order_certificates_path(@order.token), :method => :post do |f| %>
     <div class="group">
-      <%= f.input :name, label: "付款人姓名" %>
+      <%= f.input :name, label: "付款人银行户名", placeholder: "请填写您的付款人银行户名" %>
     </div>
 
     <div class="group">
-      <%= f.input :amount, label: "付款金额" %>
+      <%= f.input :bank_no, label: "付款人银行账号", placeholder: "请填写您的付款人银行账号" %>
+    </div>
+
+    <div class="group">
+      <%= f.input :amount, label: "付款金额", placeholder: "请填写您的付款金额" %>
+    </div>
+
+    <div class="group">
+      <%= f.input :currency, label: "货币", placeholder: "请填写币种：如人民币" %>
     </div>
 
     <div class="group">
       <span><b>（按Ctrl可以选择多张图片）</b></span>
       <%= f.file_field :image, :multiple => true, name: "photos[image][]" %><br>
+    </div>
+
+    <div class="group">
+      <%= f.input :remark, label: "备注", placeholder: "请填写备注信息" %>
     </div>
 
     <%= f.submit "提交", data: { disable_with: "提交中..." }, class: "btn btn-primary" %>

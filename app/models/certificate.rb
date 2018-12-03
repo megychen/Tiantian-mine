@@ -6,4 +6,6 @@ class Certificate < ApplicationRecord
 
   validates :name, presence: true
   validates :amount, presence: true
+  validates :bank_no, presence: true
+  validates :currency, presence: true
 end

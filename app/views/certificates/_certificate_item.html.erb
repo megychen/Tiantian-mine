@@ -4,9 +4,15 @@
       <%= link_to("编辑", edit_order_certificate_path(@order.token, certificate), class: "btn btn-default btn-sm") %> |
       <%= link_to("删除", order_certificate_path(@order.token, certificate), method: :delete, class: "btn btn-default btn-sm") %>
     </span>
-    <p><b>付款人：</b><%= certificate.name %></p>
+    <p><b>付款人银行户名：</b><%= certificate.name %></p>
+    <p><b>付款人银行账户：</b><%= certificate.bank_no %></p>
     <p><b>付款金额：</b><%= certificate.amount %></p>
+    <p><b>付款币种：</b><%= certificate.currency %></p>
     <p><b>上传时间：</b><%= certificate.created_at.to_s(:long) %></p>
+    <p>
+      <b>备注：</b><br>
+      <%= certificate.remark %>
+    </p>
 
   </div>
   <div class="row">
