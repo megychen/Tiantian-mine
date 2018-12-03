@@ -68,6 +68,6 @@ class CertificatesController < ApplicationController
   end
 
   def certificate_params
-    params.require(:certificate).permit(:name, :amount, :image)
+    params.require(:certificate).permit(:name, :amount, :image, :bank_no, :currency, :remark)
   end
 end
