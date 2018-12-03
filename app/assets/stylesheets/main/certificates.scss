@@ -12,3 +12,11 @@
     border-bottom: none;
   }
 }
+
+.gallery {
+  max-width: 400px;
+  padding-right: 20px;
+  img {
+    width: 100%;
+  }
+}

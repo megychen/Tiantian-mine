@@ -30,6 +30,8 @@
       <%= f.file_field :image, :multiple => true, name: "photos[image][]" %><br>
     </div>
 
+    <div class="gallery"></div>
+
     <div class="group">
       <%= f.input :remark, label: "备注", placeholder: "请填写备注信息" %>
     </div>
@@ -37,3 +39,28 @@
     <%= f.submit "提交", data: { disable_with: "提交中..." }, class: "btn btn-primary" %>
   <% end %>
 </div>
+
+<script>
+  // 上传图片预览
+  var imagesPreview = function(input, placeToInsertImagePreview) {
+
+    if (input.files) {
+        var filesAmount = input.files.length;
+
+        for (i = 0; i < filesAmount; i++) {
+            var reader = new FileReader();
+
+            reader.onload = function(event) {
+                $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+            }
+
+            reader.readAsDataURL(input.files[i]);
+        }
+    }
+
+  };
+
+  $('#certificate_image').on('change', function() {
+      imagesPreview(this, 'div.gallery');
+  });
+</script>
