@@ -1,7 +1,7 @@
 module OrdersHelper
   def render_order_paid_state(order)
     if order.is_paid?
-       "已付款"
+      "已付款"
     else
        "未付款"
     end
@@ -10,25 +10,25 @@ module OrdersHelper
   def render_order_payment_state(order)
     case order.aasm_state
     when "order_placed"
-      "已下单"
+      content_tag(:span, "已下单", :class => "label label-danger")
     when "paid"
-      "已付款"
+      content_tag(:span, "已付款", :class => "label label-info")
     when "shipping"
-      "正在出货"
+      content_tag(:span, "正在出货", :class => "label label-info")
     when "shipped"
-      "已出货"
+      content_tag(:span, "已出货", :class => "label label-primary")
     when "order_cancelled"
-      "订单已取消"
+      content_tag(:span, "订单已取消", :class => "label label-default")
     when "good_returned"
-      "已退货"
+      content_tag(:span, "已退货", :class => "label label-default")
     end
   end
 
   def render_order_confirmed_state(order)
     if order.is_confirmed?
-       "已通过"
+      content_tag(:span, "已通过", :class => "label label-success")
     else
-       "待确认"
+      content_tag(:span, "待确认", :class => "label label-warning")
     end
   end
 end
