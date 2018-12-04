@@ -60,7 +60,7 @@
   .navbar-inverse {
     .navbar-wrapper {
       padding: 0;
-      .mailbox-unread-count {
+      .mailbox-unread-count, .cart-item-number {
         padding: 0px 0px 1px 5px;
         color: #fff;
         background: #f0ad4e;
@@ -68,6 +68,9 @@
         font-size: 75%;
         font-weight: bold;
         margin-left: -10px;
+      }
+      .cart-item-number {
+        margin-left: -2px;
       }
       .fa-shopping-cart {
         color: #fff;
@@ -83,17 +86,14 @@
 
 
   .cart-item-number {
-    background-color: $color-button-primary;
-    padding: 3px 2px 3px 6px;
-    border-radius: 8px;
-    color: white;
-    display: inline-block;
-    font-size: 12px;
-    line-height: 1;
-    text-align: center;
-    vertical-align: middle;
+    // padding: 0px 0px 1px 5px;
+    // color: #fff;
+    // background: #f0ad4e;
+    // border-radius: 2px;
+    // font-size: 75%;
+    // font-weight: bold;
   }
-  
+
 
   /*
 
