@@ -1,0 +1,25 @@
+<div class="pull-right">
+  <% if params[:box] == '已删信息' %>
+    <p><%= link_to '清空', empty_trash_conversations_path, class: 'btn btn-sm btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %></p>
+  <% end %>
+</div>
+
+<div class="row">
+  <div class="col-sm-3">
+    <ul class="nav nav-pills nav-stacked text-center">
+      <%= mailbox_section "收信箱", params[:box] %>
+      <%= mailbox_section '已发信息', params[:box] %>
+      <%= mailbox_section '已删信息', params[:box] %>
+      <li>
+        <%= link_to new_message_path do %>
+          <i class="fa fa-plus"></i> 发消息
+        <% end %>
+      </li>
+    </ul>
+  </div>
+  <div class="col-sm-9">
+    <ul class="list-group">
+      <%= render partial: 'conversations/conversation', collection: @conversations %>
+    </ul>
+  </div>
+</div>

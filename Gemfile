@@ -38,6 +38,8 @@ gem 'figaro'
 gem 'devise-i18n'
 gem 'rest-client'
 gem "rails-i18n"
+gem "mailboxer"
+gem "chosen-rails"
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
