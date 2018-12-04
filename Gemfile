@@ -36,6 +36,7 @@ gem 'china_city'
 gem 'carrierwave-qiniu', '~> 1.1.5'
 gem 'figaro'
 gem 'mailboxer'
+gem 'chosen-rails'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'

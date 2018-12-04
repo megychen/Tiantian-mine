@@ -16,8 +16,10 @@
 //= require turbolinks
 //= require activestorage
 //= require 'china_city/jquery.china_city'
+//= require chosen-jquery
 //= require_tree .
 
 $(document).ready(function () {
   $(".alert").fadeOut(2000);
+  $('.chosen-it').chosen() 
 })

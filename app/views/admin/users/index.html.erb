@@ -9,22 +9,28 @@
         <th>注册时间</th>
         <th>成交订单数量</th>
         <th>备注</th>
+        <th>发送信息</th>
         <th>操作</th>
       </tr>
     </thead>
     <tbody>
       <% index = 0 %>
       <% @users.each do |user| %>
-      <tr>
-        <td> <%= index = index + 1 %> </td>
-        <td> <%= user.email %> </td>
-        <td> <%= user.created_at.to_s(:long) %> </td>
-        <td> <%= link_to(user.orders.count, admin_orders_path) %></td>
-        <td> <%= user.remark %></td>
-        <td>
-          <%= link_to("编辑", edit_admin_user_path(user), class: "btn btn-sm btn-default") %>
-        </td>
-      </tr>
+        <tr>
+          <td> <%= index = index + 1 %> </td>
+          <td> <%= user.email %> </td>
+          <td> <%= user.created_at.to_s(:long) %> </td>
+          <td> <%= link_to(user.orders.count, admin_orders_path) %></td>
+          <td> <%= user.remark %></td>
+          <td>
+            <% unless current_user == user %>
+              <%= link_to 'Send message', new_message_path(to: user.id), class: 'btn btn-default btn-sm' %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to("编辑", edit_admin_user_path(user), class: "btn btn-sm btn-default") %>
+          </td>
+        </tr>
       <% end %>
 
     </tbody>

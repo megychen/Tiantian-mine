@@ -7,7 +7,13 @@ class User < ApplicationRecord
   has_many :orders
   has_many :addresses
 
+  acts_as_messageable
+
   def admin?
     is_admin
+  end
+
+  def mailboxer_email(object)
+    email
   end
 end
