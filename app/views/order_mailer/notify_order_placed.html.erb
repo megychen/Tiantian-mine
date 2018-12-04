@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-12">
     <h2>
-      订单明细 <br>
+      订单信息 <br>
       <small>
         <%= link_to("订单连结", order_url(@order.token)) %>
       </small>
@@ -9,7 +9,7 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th width="70%">商品明细</th>
+          <th width="70%">货物清单</th>
           <th>单价</th>
           <th>数量</th>
           <th>小记</th>
@@ -43,34 +43,5 @@
       </h4>
      </div>
 
-     <hr>
-
-     <h2> 寄送资讯 </h2>
-
-     <table class="table table-striped table-bordered">
-       <tbody>
-         <th>姓名</th>
-         <th>电话</th>
-         <th>地址</th>
-         <th>邮政编码</th>
-         <tr>
-           <td>
-             <%= @order.address.name %>
-           </td>
-           <td>
-             <%= @order.address.mobile %>
-           </td>
-           <td>
-             <%= ChinaCity.get(@order.address.province) %> -
-             <%= ChinaCity.get(@order.address.city) %> -
-             <%= ChinaCity.get(@order.address.district) %>-
-             <%= @order.address.detail %>
-           </td>
-           <td>
-             <%= @order.address.zip_code %>
-           </td>
-         </tr>
-       </tbody>
-    </table>
   </div>
 </div>
