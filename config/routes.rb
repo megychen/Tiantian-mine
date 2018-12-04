@@ -51,6 +51,8 @@ Rails.application.routes.draw do
 
   resources :conversations, only: [:index, :show, :destroy]
 
+  resources :messages, only: [:new, :create]
+
   root "products#index"
 
   get '/addresses/get_address_list', to: 'addresses#get_address_list', as: 'address_list'
