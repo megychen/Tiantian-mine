@@ -24,7 +24,7 @@
           <td> <%= user.remark %></td>
           <td>
             <% unless current_user == user %>
-              <%= link_to 'Send message', new_message_path(to: user.id), class: 'btn btn-default btn-sm' %>
+              <%= link_to '发信息', new_message_path(to: user.id), class: 'btn btn-default btn-sm' %>
             <% end %>
           </td>
           <td>

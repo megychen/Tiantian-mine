@@ -19,7 +19,12 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <%= link_to '站内信', conversations_path %>
+          <%= link_to conversations_path(box: "收信箱") do %>
+            <i class="fa fa-envelope fa-lg"></i>
+            <% if current_user %>
+              <small class="mailbox-unread-count"><%= current_user.unread_inbox_count %></small>
+            <% end %>
+          <% end %>
         </li>
         <li>
           <%= link_to carts_path do %>

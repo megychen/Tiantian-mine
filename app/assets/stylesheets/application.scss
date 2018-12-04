@@ -59,6 +59,15 @@
   .navbar-inverse {
     .navbar-wrapper {
       padding: 0;
+      .mailbox-unread-count {
+        padding: 0px 0px 1px 5px;
+        color: #fff;
+        background: #f0ad4e;
+        border-radius: 2px;
+        font-size: 75%;
+        font-weight: bold;
+        margin-left: -10px;
+      }
       .fa-shopping-cart {
         color: #fff;
         font-size: 18px;

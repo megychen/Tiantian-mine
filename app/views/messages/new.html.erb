@@ -1,18 +1,26 @@
-<%= form_tag messages_path, method: :post do %>
-  <div class="form-group">
-    <%= label_tag 'message[subject]', 'Subject' %>
-    <%= text_field_tag 'message[subject]', nil, class: 'form-control', required: true %>
-  </div>
+<div class="col-md-8 col-md-offset-2 col-sm-12">
+  <h5 class="text-center">发送消息</h5>
+  <%= form_tag messages_path, method: :post do %>
+    <div class="form-group">
+      <%= label_tag 'message[subject]', '主题' %>
+      <%= text_field_tag 'message[subject]', nil, class: 'form-control', required: true %>
+    </div>
 
-  <div class="form-group">
-    <%= label_tag 'message[body]', 'Message' %>
-    <%= text_field_tag 'message[body]', nil, cols: 3, class: 'form-control', required: true %>
-  </div>
+    <div class="form-group">
+      <%= label_tag 'message[body]', '内容' %>
+      <%= text_field_tag 'message[body]', nil, cols: 3, class: 'form-control', required: true %>
+    </div>
 
-  <div class="form-group">
-    <%= label_tag 'recipients', 'Choose recipients' %>
-    <%= select_tag 'recipients', recipients_options(@chosen_recipient), multiple: true, class: 'form-control chosen-it' %>
-  </div>
+    <div class="form-group">
+      <%= label_tag 'recipients', '选择接收人' %>
+      <% if params[:to].present? %>
+        <% user = User.find(params[:to]) %>
+        <%= select_tag 'recipients', recipients_options(@chosen_recipient), class: 'form-control' %>
+      <% else %>
+        <%= select_tag 'recipients', recipients_options(@chosen_recipient), multiple: true, class: 'form-control chosen-it' %>
+      <% end %>
+    </div>
 
-  <%= submit_tag 'Send', class: 'btn btn-primary' %>
-<% end %>
+    <%= submit_tag '发送', class: 'btn btn-primary' %>
+  <% end %>
+</div>

@@ -7,18 +7,26 @@
     <div class="messages">
       <% @conversation.receipts_for(current_user).each do |receipt| %>
         <% message = receipt.message %>
-        <%= message.sender.email %>
-          says at <%= message.created_at.strftime("%F %T") %>
-        <%= message.body %>
+        <p class="receipt-message">
+          <% if message.sender.email == current_user.email %>
+            <strong>我</strong> ( <%= message.created_at.strftime("%F %T") %> ) :
+          <% else %>
+            <strong><%= message.sender.email %></strong> ( <%= message.created_at.strftime("%F %T") %> ) :
+          <% end %>
+        </p>
+        <p class="message-body">
+          <%= message.body %>
+        </p>
+        <hr>
       <% end %>
     </div>
   </div>
 </div>
 
 <%= form_tag reply_conversation_path(@conversation), method: :post do %>
-  <div class="form-control">
-    <%= text_area_tag 'body', nil, cols: 3, class: "form-control", placeholder: "键入内容……", required: true %>
+  <div class="form-group">
+    <%= text_area_tag 'body', nil, cols: 3, class: "form-control", placeholder: "键入内容……", required: true %><br>
   </div>
 
-  <%= submit_tag 'Send Message', class: 'btn btn-primary' %>
+  <%= submit_tag '发送', class: 'btn btn-primary' %>
 <% end %>

@@ -4,9 +4,9 @@ class ConversationsController < ApplicationController
   before_action :get_conversation, except: [:index, :empty_trash]
 
   def index
-    if params[:box].eql? "inbox"
+    if params[:box].eql? "收信箱"
       @conversations = @mailbox.inbox
-    elsif params[:box].eql? "sent"
+    elsif params[:box].eql? "已发信息"
       @conversations = @mailbox.sentbox
     else
       @conversations = @mailbox.trash
