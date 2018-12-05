@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 2018_12_03_064649) do
-=======
 ActiveRecord::Schema.define(version: 2018_12_04_080059) do
->>>>>>> mailbox
 
   create_table "addresses", force: :cascade do |t|
     t.string "province"
@@ -83,8 +79,6 @@ ActiveRecord::Schema.define(version: 2018_12_04_080059) do
     t.string "action"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-<<<<<<< HEAD
-=======
   end
 
   create_table "mailboxer_conversation_opt_outs", force: :cascade do |t|
@@ -139,7 +133,6 @@ ActiveRecord::Schema.define(version: 2018_12_04_080059) do
     t.string "message_id"
     t.index ["notification_id"], name: "index_mailboxer_receipts_on_notification_id"
     t.index ["receiver_id", "receiver_type"], name: "index_mailboxer_receipts_on_receiver_id_and_receiver_type"
->>>>>>> mailbox
   end
 
   create_table "orders", force: :cascade do |t|

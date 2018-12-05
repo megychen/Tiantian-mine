@@ -67,6 +67,12 @@ class Admin::OrdersController < ApplicationController
 
   def confirm
     @order.confirm!
+
+    recipients = User.where(id: @order.user.id)
+    message_body = "订单审核通过"
+    message_subject = "#{@order.order_no}"
+    conversation = current_user.send_message(recipients, message_body, message_subject).conversation
+
     current_user.logs.create(model: "Order", action: "#{current_user.email} 确认订单#{@order.order_no}审核通过")
     redirect_to admin_order_path(@order)
   end

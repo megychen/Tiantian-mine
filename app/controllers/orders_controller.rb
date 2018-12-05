@@ -19,6 +19,11 @@ class OrdersController < ApplicationController
 
     if @order.save!
 
+      recipients = User.where(is_admin: true)
+      message_body = "完成订单"
+      message_subject = "新订单 #{@order.order_no}"
+      conversation = current_user.send_message(recipients, message_body, message_subject).conversation
+
       @cart_items.each do |cart_item|
         product_list = ProductList.new
         product_list.order = @order
