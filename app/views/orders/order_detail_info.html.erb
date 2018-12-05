@@ -111,6 +111,14 @@
     $(".invoice-information").css("display", "block")
   }
 
+  // 新增收货地址
+  $(document).bind("ajax:success", ".address-form", function (evt, data, status, xhr) {
+    if (data.success === true) {
+      $('#address_form_modal').modal("hide");
+      window.location.reload()
+    }
+  })
+
   // 提交物流信息
   $(".submit-order-delivery").on("click", function (e) {
     e.preventDefault()
