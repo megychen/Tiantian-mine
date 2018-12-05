@@ -1,0 +1,5 @@
+zh-CN:
+  mailboxer:
+    message_mailer:
+      subject_new: 'Hey, 你有收到新消息，关于 %{subject}'
+      subject_reply: 'Hey, 你有收到新恢复，关于 %{subject}'
