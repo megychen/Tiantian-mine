@@ -61,6 +61,4 @@
 #   }
 
 set :branch, "master"
-server "47.92.225.118", user: "megychen", roles: %w{app db web}, my_property: :my_value
-
-set :rvm1_map_bins, %w(rake gem bundle ruby honeybadger)
+server "47.92.225.118", user: "deploy", roles: %w{app db web}, my_property: :my_value

@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.5.1'
+ruby '2.4.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.1'
@@ -55,10 +55,6 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
-  gem "capistrano", "~> 3.4"
-  gem 'capistrano-passenger'
-  gem "capistrano-rvm"
-  gem 'capistrano-rails', '>= 1.3.1', '< 1.4.0' 
 end
 
 group :development do
@@ -69,6 +65,8 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'letter_opener'
+  gem "capistrano-rails"
+  gem 'capistrano-passenger'
 end
 
 group :production do
