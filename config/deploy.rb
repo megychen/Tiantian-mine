@@ -27,7 +27,7 @@ set :deploy_to, "/home/deploy/tiantian"
 append :linked_files, "config/database.yml", "config/secrets.yml"
 
 # Default value for linked_dirs is []
-append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', '.bundle', 'public/system', 'public/uploads'
+append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
 set :passenger_restart_with_touch, true
 
 # Default value for default_env is {}
@@ -38,8 +38,6 @@ set :passenger_restart_with_touch, true
 
 # Default value for keep_releases is 5
 set :keep_releases, 5
-set :rvm_type, :system
-set :rvm_bin_path, "$HOME/.rvm/bin"
 
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
