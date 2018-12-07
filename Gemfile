@@ -56,6 +56,7 @@ group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
   gem "capistrano", "~> 3.4"
+  gem 'capistrano-passenger'
   gem "capistrano-rvm"
   gem "capistrano-rails"
 end
