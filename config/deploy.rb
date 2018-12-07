@@ -10,7 +10,7 @@ set :repo_url, "https://github.com/megychen/Tiantian-mine.git"
 
 # Default deploy_to directory is /var/www/my_app_name
 # set :deploy_to, "/var/www/my_app_name"
-set :deploy_to, "/home/deploy/tiantian"
+set :deploy_to, "/home/megychen/tiantian"
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
@@ -29,7 +29,6 @@ append :linked_files, "config/database.yml", "config/secrets.yml"
 # Default value for linked_dirs is []
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', '.bundle', 'public/system', 'public/uploads'
 set :passenger_restart_with_touch, true
-set :migration_role, :app
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
