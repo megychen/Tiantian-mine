@@ -25,13 +25,13 @@ class ConversationsController < ApplicationController
   def destroy
     @conversation.move_to_trash(current_user)
     flash[:success] = 'The conversation was moved to trash.'
-    redirect_to conversations_path
+    redirect_to conversations_path(box: "收信箱")
   end
 
   def restore
     @conversation.untrash(current_user)
     flash[:success] = 'The conversation was restored.'
-    redirect_to conversations_path
+    redirect_to conversations_path(box: "收信箱")
   end
 
   def emtpy_trash
@@ -39,13 +39,13 @@ class ConversationsController < ApplicationController
       conversation.receipts_for(current_user).update_all(deleted: true)
     end
     flash[:success] = 'Your trash was cleaned!'
-    redirect_to conversations_path
+    redirect_to conversations_path(box: "收信箱")
   end
 
   def mark_as_read
     @conversation.mark_as_read(current_user)
     flash[:success] = 'The conversation was marked as read.'
-    redirect_to conversations_path
+    # redirect_to conversations_path
   end
 
   private
