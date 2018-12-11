@@ -100,7 +100,7 @@ Rails.application.configure do
     port: 25,
     domain: "365tiantian.xyz",
     authentication: "login",
-    enable_starttls_auto: true,
+    enable_starttls_auto: false,
     user_name: ENV["SEND_CLOUD_USER_NAME"],
     password: ENV["SEND_CLOUD_USER_KEY"]
   }
