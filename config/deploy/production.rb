@@ -61,4 +61,4 @@
 #   }
 
 set :branch, "master"
-server "47.92.225.118", user: "deploy", roles: %w{app db web}, my_property: :my_value
+server "47.75.157.199", user: "deploy", roles: %w{app db web}, my_property: :my_value
