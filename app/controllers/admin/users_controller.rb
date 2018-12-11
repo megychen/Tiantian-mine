@@ -5,7 +5,7 @@ class Admin::UsersController < ApplicationController
   before_action :admin_required
 
   def index
-    @users = User.all
+    @users = User.paginate(:page => params[:page], :per_page => 20)
   end
 
   def edit

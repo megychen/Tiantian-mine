@@ -13,7 +13,7 @@
     <% @logs.each do |log| %>
       <tr>
         <td> <%= log.id %> </td>
-        <td> <%= log.created_at.to_s(:long) %> </td>
+        <td> <%= log.created_at.strftime("%F %T") %> </td>
         <td> <%= log.action %></td>
         <td> <%= log.user.email %></td>
       </tr>
@@ -21,3 +21,7 @@
 
   </tbody>
 </table>
+
+<div class="text-center">
+  <%= will_paginate @logs, :previous_label => "上一页", :next_label => "下一页", renderer: BootstrapPagination::Rails %>
+</div>

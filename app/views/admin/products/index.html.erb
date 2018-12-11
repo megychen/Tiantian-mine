@@ -46,7 +46,7 @@
             <td>
               <%= product.quantity %>
             </td>
-            <td> <%= product.updated_at.to_s(:long) %> </td>
+            <td> <%= product.updated_at.strftime("%F %T") %> </td>
             <td width="150">
               <%= link_to("编辑", edit_admin_product_path(product), class: "btn btn-default btn-xs") %> |
               <% if product.is_maintainable %>
@@ -65,6 +65,10 @@
     </p>
   </div>
 <% end %>
+
+<div class="text-center">
+  <%= will_paginate @products, :previous_label => "上一页", :next_label => "下一页", renderer: BootstrapPagination::Rails %>
+</div>
 
 <script>
   $("#toggle-all").on("click", function () {

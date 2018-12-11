@@ -19,7 +19,7 @@
         <tr>
           <td> <%= index = index + 1 %> </td>
           <td> <%= user.email %> </td>
-          <td> <%= user.created_at.to_s(:long) %> </td>
+          <td> <%= user.created_at.strftime("%F %T") %> </td>
           <td> <%= link_to(user.orders.count, admin_orders_path) %></td>
           <td> <%= user.remark %></td>
           <td>
@@ -35,4 +35,8 @@
 
     </tbody>
   </table>
+
+  <div class="text-center">
+    <%= will_paginate @users, :previous_label => "上一页", :next_label => "下一页", renderer: BootstrapPagination::Rails %>
+  </div>
 </div>

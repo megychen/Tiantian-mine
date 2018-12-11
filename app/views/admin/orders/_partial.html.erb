@@ -13,7 +13,7 @@
     <% @orders.each do |order| %>
       <tr>
         <td> <%= link_to(order.order_no, admin_order_path(order) ) %> </td>
-        <td> <%= order.created_at.to_s(:long) %> </td>
+        <td> <%= order.created_at.strftime("%F %T") %> </td>
         <td> <%= order.user.email %></td>
         <td> <%= render_order_confirmed_state(order) %> </td>
         <td> <%= render_order_payment_state(order) %> </td>
