@@ -3,26 +3,37 @@
 
 <div class="btn-group" role="group">
   <%= link_to("全部", admin_orders_path, class: "btn button-primary order-filter button-active") %>
-  <%= link_to("待审核", admin_orders_path(:order => "checking"), :remote => true, class: "btn button-primary order-filter") %>
-  <%= link_to("待付款", admin_orders_path(:order => "obligation"), :remote => true, class: "btn button-primary order-filter") %>
-  <%= link_to("已付款", admin_orders_path(:order => "paid"), :remote => true, class: "btn button-primary order-filter") %>
+  <%= link_to("待审核", admin_orders_path(:order => "checking"), class: "btn button-primary order-filter checking") %>
+  <%= link_to("待付款", admin_orders_path(:order => "obligation"), class: "btn button-primary order-filter obligation") %>
+  <%= link_to("已付款", admin_orders_path(:order => "paid"), class: "btn button-primary order-filter paid") %>
 </div>
 
 <div class="order-list">
   <%= render "partial" %>
 </div>
 
+<div class="text-center">
+  <%= will_paginate @orders, :previous_label => "上一页", :next_label => "下一页", renderer: BootstrapPagination::Rails %>
+</div>
+
 
 <script>
 
-  $(".order-filter").on("click", function () {
-    $('.order-filter').removeClass('button-active');
-    $(this).addClass("button-active")
+  var search = window.location.search
 
-    var url = $(this).attr("href")
-    $.get(url, function(response) {
-      $('.order-list').html(response.data);
-    })
-  })
+  if (search.match(/checking/i)) {
+    $('.order-filter').removeClass('button-active');
+    $(".checking").addClass("button-active")
+  }
+
+  if (search.match(/obligation/i)) {
+    $('.order-filter').removeClass('button-active');
+    $(".obligation").addClass("button-active")
+  }
+
+  if (search.match(/paid/i)) {
+    $('.order-filter').removeClass('button-active');
+    $(".paid").addClass("button-active")
+  }
 
 </script>

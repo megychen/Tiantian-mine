@@ -40,6 +40,7 @@ gem 'rest-client'
 gem "rails-i18n"
 gem "mailboxer"
 gem "chosen-rails"
+gem "will_paginate-bootstrap"
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
@@ -55,6 +56,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
+  gem 'awesome_rails_console'
 end
 
 group :development do

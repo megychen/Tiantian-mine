@@ -7,31 +7,19 @@ class Admin::OrdersController < ApplicationController
 
   def index
     if params[:order] == "checking"
-      @orders = Order.where(:is_confirmed => false).recent
-      render json: {
-        success: 'true',
-        data: render_to_string(file: 'admin/orders/_partial', :layout => false)
-      }
+      @orders = Order.where(:is_confirmed => false).recent.paginate(:page => params[:page], :per_page => 20)
     end
 
     if params[:order] == "obligation"
-      @orders = Order.where(:is_confirmed => true, :is_paid => false).recent
-      render json: {
-        success: 'true',
-        data: render_to_string(file: 'admin/orders/_partial', :layout => false)
-      }
+      @orders = Order.where(:is_confirmed => true, :is_paid => false).recent.paginate(:page => params[:page], :per_page => 20)
     end
 
     if params[:order] == "paid"
-      @orders = Order.where(:is_confirmed => true, :is_paid => true).recent
-      render json: {
-        success: 'true',
-        data: render_to_string(file: 'admin/orders/_partial', :layout => false)
-      }
+      @orders = Order.where(:is_confirmed => true, :is_paid => true).recent.paginate(:page => params[:page], :per_page => 20)
     end
 
     if params[:order].nil?
-      @orders = Order.all.recent
+      @orders = Order.all.recent.paginate(:page => params[:page], :per_page => 20)
     end
 
   end
