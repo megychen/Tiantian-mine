@@ -7,6 +7,10 @@ class Admin::ProductListsController < AdminController
   def update
     @product_list = ProductList.find(params[:id])
 
+    unless current_user.is_manager?
+      redirect_to admin_order_path(@product_list.order.token)
+    end
+
     if @product_list.update(product_list_params)
 
       recipients = User.where(id: @product_list.order.user.id)
