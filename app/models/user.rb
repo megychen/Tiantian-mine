@@ -11,8 +11,18 @@ class User < ApplicationRecord
 
   acts_as_messageable
 
+  ROLE = ["manager", "sales"]
+
   def admin?
     is_admin
+  end
+
+  def is_manager?
+    role == "manager"
+  end
+
+  def is_sales?
+    role == "sales"
   end
 
   def mailboxer_email(object)

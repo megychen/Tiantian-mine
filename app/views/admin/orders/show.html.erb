@@ -57,7 +57,13 @@
                 <%= product_list.quantity %>
               </td>
               <td>
-                <button type="button" class="btn btn-default btn-xs update-product-list-price" data-toggle="modal" data-target="#update-price-modal-<%= product_list.id %>">更新价格</button>
+                <% if current_user.is_manager? %>
+                  <button type="button" class="btn btn-default btn-xs update-product-list-price" data-toggle="modal" data-target="#update-price-modal-<%= product_list.id %>">更新价格</button>
+                <% else %>
+                  <button type="button" disabled class="btn btn-default btn-xs update-product-list-price" data-toggle="modal" data-target="#update-price-modal-<%= product_list.id %>">更新价格</button>
+                  <span> ( 暂无权限更改 )</span>
+                <% end %>
+
                 <div class="modal fade" id="update-price-modal-<%= product_list.id %>" role="dialog">
                   <div class="modal-dialog modal-sm">
                     <div class="modal-content">

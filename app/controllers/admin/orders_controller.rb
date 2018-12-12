@@ -1,8 +1,8 @@
-class Admin::OrdersController < ApplicationController
+class Admin::OrdersController < AdminController
   layout "admin"
 
   before_action :authenticate_user!
-  before_action :admin_required
+  before_action :admin_required!
   before_action :find_order, except: [:index]
 
   def index

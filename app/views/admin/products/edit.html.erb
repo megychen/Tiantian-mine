@@ -16,7 +16,11 @@
     </div>
 
     <div class="group">
-      <%= f.input :price, label: "价钱" %>
+      <% if current_user.is_manager? %>
+        <%= f.input :price, label: "价钱" %>
+      <% else %>
+        <%= f.input :price, label: "价钱", disabled: true %> (暂无权限修改价格)
+      <% end %>
     </div>
 
     <% if @product.image.present? %>

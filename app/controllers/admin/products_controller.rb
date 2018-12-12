@@ -1,8 +1,8 @@
-class Admin::ProductsController < ApplicationController
+class Admin::ProductsController < AdminController
   layout "admin"
 
   before_action :authenticate_user!
-  before_action :admin_required
+  before_action :admin_required!
 
   def index
     @products = Product.paginate(:page => params[:page], :per_page => 10)

@@ -1,8 +1,8 @@
-class Admin::UsersController < ApplicationController
+class Admin::UsersController < AdminController
   layout "admin"
 
   before_action :authenticate_user!
-  before_action :admin_required
+  before_action :admin_required!
 
   def index
     @users = User.paginate(:page => params[:page], :per_page => 20)
