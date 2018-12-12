@@ -23,3 +23,22 @@
     </ul>
   </div>
 </div>
+
+<script>
+  $(".mark-as-read").on("click", function (e) {
+    e.preventDefault()
+
+    var url = $(this).attr("href");
+
+    $.ajax({
+      url: url,
+      method: 'POST',
+      dataType: 'json', // 要求服务器回传 json
+      success: function (response) {
+        if (response.success === true) {
+          window.location.reload()
+        }
+      }
+    })
+  })
+</script>

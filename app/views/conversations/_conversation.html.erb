@@ -15,7 +15,7 @@
   </p>
 
   <% if conversation.is_unread?(current_user) %>
-    <%= link_to '标为已读', mark_as_read_conversation_path(conversation), class: 'btn btn-xs btn-info', method: :post %>
+    <%= link_to '标为已读', mark_as_read_conversation_path(conversation), class: 'btn btn-xs btn-info mark-as-read', method: :post %>
   <% else %>
     (已读)
   <% end %>
