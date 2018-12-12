@@ -125,6 +125,25 @@
 
     <hr>
 
+    <h5>运送方式</h5>
+    <div class="table-responsive">
+      <table>
+        <tbody>
+          <tr>
+            <th>物流方式</th>
+            <th>寄送方式</th>
+          </tr>
+          <tr>
+            <td><%= @order.delivery %></td>
+            <td><%= @order.payment_method %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr>
+
+
     <h5>发票信息</h5>
 
     <% if @order.invoice.present? %>
