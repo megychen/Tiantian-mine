@@ -5,11 +5,11 @@ class ConversationsController < ApplicationController
 
   def index
     if params[:box].eql? "收信箱"
-      @conversations = @mailbox.inbox
+      @conversations = @mailbox.inbox.paginate(:page => params[:page], :per_page => 10)
     elsif params[:box].eql? "已发信息"
-      @conversations = @mailbox.sentbox
+      @conversations = @mailbox.sentbox.paginate(:page => params[:page], :per_page => 10)
     else
-      @conversations = @mailbox.trash
+      @conversations = @mailbox.trash.paginate(:page => params[:page], :per_page => 10)
     end
   end
 
